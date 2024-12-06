@@ -58,6 +58,7 @@ object Day6: AocTask {
             }
         }.let { Grid(it) }
 
+    // Part 1
     private fun Grid.findGuard(): Guard {
         data.forEachIndexed { rowIndex, row ->
             row.indices.forEach { colIndex ->
@@ -94,6 +95,7 @@ object Day6: AocTask {
         }
     }
 
+    // Part 2
     private fun Grid.copyWithNewObstacleAt(colIndex: Int, rowIndex: Int): Grid =
         copy(
             data = data.mapIndexed { x, row ->
