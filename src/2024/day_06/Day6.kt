@@ -22,11 +22,11 @@ object Day6: AocTask {
 
         println("Guard = $guard")
 
-        // Part one
+        // Part 1
         guard.startPatrol(grid)
         println("Guard visited ${guard.visitedPositionsCount} distinct positions!")
 
-        // Part two
+        // Part 2
         var loopingObstacles = 0
 
         grid.data.forEachIndexed { rowIndex, row ->
