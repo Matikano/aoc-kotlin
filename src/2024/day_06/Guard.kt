@@ -5,6 +5,7 @@ data class Guard(
 ) {
     private val visitedPositions: MutableSet<Position> = mutableSetOf()
     private val encounteredObstacles: MutableList<Pair<Position, Direction>> = mutableListOf()
+
     val visitedPositionsCount: Int
         get() = visitedPositions.size
 
