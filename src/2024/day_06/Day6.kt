@@ -1,7 +1,9 @@
 package `2024`.day_06
 
 import `2024`.AocTask
-
+import kotlinx.coroutines.*
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.system.measureTimeMillis
 
 
 object Day6: AocTask {
@@ -18,37 +20,89 @@ object Day6: AocTask {
         println()
 
         val grid = readToGrid()
-        val guard = grid.findGuard()
-
-        println("Guard = $guard")
+        val guard = grid.findGuardAndObstacles()
 
         // Part 1
         guard.startPatrol(grid)
         println("Guard visited ${guard.visitedPositionsCount} distinct positions!")
+        println()
 
         // Part 2
-        var loopingObstacles = 0
+        val visitedPositions = guard.visitedPositions
+        measureTimeMillis {
+            var loopingObstacles = 0
+            grid.data.forEachIndexed { rowIndex, row ->
+                row.indices.forEach { colIndex ->
+                    val currentPosition = Position(colIndex, rowIndex)
+                    if (grid.getValue(currentPosition) == CHARACTER)
+                        return@forEach
 
-        grid.data.forEachIndexed { rowIndex, row ->
-            row.indices.forEach { colIndex ->
-                if (grid.getValue(Position(colIndex, rowIndex)) == CHARACTER)
-                    return@forEach
+                    grid.findGuardAndObstacles().apply {
+                        startPatrol(grid, currentPosition)
+                    }.also { if (it.isInALoop) loopingObstacles++ }
+                }
+            }
 
-                grid.copyWithNewObstacleAt(
-                    colIndex = colIndex,
-                    rowIndex = rowIndex
-                ).let { newGrid ->
-                    newGrid.findGuard().apply {
-                        startPatrol(newGrid)
-                    }.also {
-                        if (it.isInALoop)
-                           loopingObstacles++
+            println("There are $loopingObstacles obstructions that would make Guard loop")
+        }.let {
+            println("Part 2 without optimization took $it milliseconds")
+            println()
+        }
+
+        measureTimeMillis {
+            var loopingObstacles = 0
+
+            visitedPositions.forEach { position ->
+                grid.findGuardAndObstacles().apply {
+                    startPatrol(grid, position)
+                }.also { if (it.isInALoop) loopingObstacles++ }
+            }
+
+            println("There are $loopingObstacles obstructions that would make Guard loop")
+        }.let {
+            println("Part 2 with path optimization took $it milliseconds")
+            println()
+        }
+
+        measureTimeMillis {
+            val loopingObstacles = AtomicInteger(0)
+            runBlocking(Dispatchers.Default) {
+                grid.data.forEachIndexed { rowIndex, row ->
+                    row.indices.forEach { colIndex ->
+                        launch {
+                            val currentPosition = Position(colIndex, rowIndex)
+                            if (grid.getValue(currentPosition) == CHARACTER)
+                                throw CancellationException()
+
+                            grid.findGuardAndObstacles().apply {
+                                startPatrol(grid, currentPosition)
+                            }.also { if (it.isInALoop) loopingObstacles.incrementAndGet() }
+                        }
                     }
                 }
             }
+            println("There are $loopingObstacles obstructions that would make Guard loop")
+        }.let {
+            println("Part 2 with coroutine optimization took $it milliseconds")
+            println()
         }
 
-        println("There are $loopingObstacles obstructions that would make Guard loop")
+        measureTimeMillis {
+            val loopingObstacles = AtomicInteger(0)
+            runBlocking(Dispatchers.Default) {
+                visitedPositions.forEach { position ->
+                    launch {
+                        grid.findGuardAndObstacles().apply {
+                            startPatrol(grid, position)
+                        }.also { if (it.isInALoop) loopingObstacles.incrementAndGet() }
+                    }
+                }
+            }
+            println("There are $loopingObstacles obstructions that would make Guard loop")
+        }.let {
+            println("Part 2 with coroutine and path optimization took $it milliseconds")
+            println()
+        }
     }
 
     private fun readToGrid(): Grid =
@@ -59,58 +113,40 @@ object Day6: AocTask {
         }.let { Grid(it) }
 
     // Part 1
-    private fun Grid.findGuard(): Guard {
+    private fun Grid.findGuardAndObstacles(): Guard {
         data.forEachIndexed { rowIndex, row ->
             row.indices.forEach { colIndex ->
-                if (row[colIndex] == CHARACTER)
+                val currentPosition = Position(colIndex, rowIndex)
+                if (row[colIndex] == CHARACTER) {
                     return Guard(
                         direction = Direction.UP
                     ).apply {
-                        position = Position(
-                            colIndex = colIndex,
-                            rowIndex = rowIndex
-                        )
+                        position = currentPosition
                     }
+                }
             }
         }
 
-        throw IllegalStateException("Guard was not found in the input data")
+        error("Guard was not found in input data!")
     }
 
-    private fun Guard.startPatrol(grid: Grid) {
+    private fun Guard.startPatrol(
+        grid: Grid,
+        newObstacle: Position? = null
+    ) {
         while (true) {
             val nextPosition = position.nextPosition(direction)
 
             if (!grid.isInsideGrid(nextPosition))
                 break
 
-            if (grid.getValue(nextPosition) == OBSTACLE) {
+            if (grid.getValue(nextPosition) == OBSTACLE || nextPosition == newObstacle) {
                 turn(nextPosition)
                 if (isInALoop)
                     break
-            }
-            else {
+            } else {
                 moveToPosition(nextPosition)
             }
         }
     }
-
-    // Part 2
-    private fun Grid.copyWithNewObstacleAt(colIndex: Int, rowIndex: Int): Grid =
-        copy(
-            data = data.mapIndexed { x, row ->
-                if (x == rowIndex)
-                    row.replaceCharAt(colIndex, OBSTACLE)
-                else row
-            }
-        )
-
-    private fun String.replaceCharAt(index: Int, char: Char): String =
-        if (index in indices)
-            buildString {
-                append(this@replaceCharAt)
-                setCharAt(index, char)
-            }
-        else throw StringIndexOutOfBoundsException()
-
 }

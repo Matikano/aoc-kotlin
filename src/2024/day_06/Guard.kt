@@ -1,9 +1,11 @@
 package `2024`.day_06
 
 data class Guard(
-    var direction: Direction,
+    var direction: Direction
 ) {
-    private val visitedPositions: MutableSet<Position> = mutableSetOf()
+    private val _visitedPositions: MutableSet<Position> = mutableSetOf()
+    val visitedPositions get() = _visitedPositions.toSet()
+
     private val encounteredObstacles: MutableList<Pair<Position, Direction>> = mutableListOf()
 
     val visitedPositionsCount: Int
@@ -15,9 +17,8 @@ data class Guard(
     var position: Position = Position(0, 0)
         set(value)  {
             field = value
-            visitedPositions.add(value)
+            _visitedPositions.add(value)
         }
-
     fun moveToPosition(newPosition: Position) {
         position = newPosition
     }

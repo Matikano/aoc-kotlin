@@ -21,6 +21,7 @@ tasks {
 }
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
