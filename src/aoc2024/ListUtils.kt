@@ -7,14 +7,12 @@ fun <T> List<T>.head(): T = first()
 fun <T> List<T>.tail(): List<T> = drop(1)
 
 fun <T> List<T>.middleElement(): T =
-    if (size % 2 == 0)
-        throw IllegalStateException("List size is even - no middle element")
-    else
-        get(size / 2)
+    if (size % 2 == 0) throw IllegalStateException("List size is even - no middle element")
+    else this[size / 2]
 
 fun <T> List<T>.swap(firstIndex: Int, secondIndex: Int): List<T> =
     toMutableList().apply {
-        val temp = get(firstIndex)
+        val temp = this[firstIndex]
         this[firstIndex] = this[secondIndex]
         this[secondIndex] = temp
     }.toList()
@@ -32,11 +30,13 @@ fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
 
     val list = mutableListOf<Pair<T, T>>()
 
-    for(indexOfFirst in 0 until size - 1)
-        for (indexOfSecond in indexOfFirst + 1 until size)
-            list += get(indexOfFirst) to get(indexOfSecond)
+    (0 until size - 1).forEach { indexOfFirst ->
+        (indexOfFirst + 1 until size).forEach { indexOfSecond ->
+            list.add(this@uniquePairs[indexOfFirst] to this@uniquePairs[indexOfSecond])
+        }
+    }
 
-    return list.toList()
+    return list
 }
 
 fun <T> List<T>.repeatingPermutations(length: Int): List<List<T>> {
@@ -51,8 +51,8 @@ fun <T> List<T>.repeatingPermutations(length: Int): List<List<T>> {
             return
         }
 
-        indices.forEach { i ->
-            backtrack(current + this@backtrack[i],)
+        indices.forEach { index ->
+            backtrack(current + this@backtrack[index],)
         }
     }
 
