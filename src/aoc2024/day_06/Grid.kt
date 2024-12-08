@@ -1,4 +1,6 @@
-package `2024`.day_06
+package aoc2024.day_06
+
+import aoc2024.Position
 
 data class Grid(
     val data: List<String>

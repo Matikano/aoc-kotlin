@@ -1,6 +1,7 @@
-package `2024`.day_06
+package aoc2024.day_06
 
-import `2024`.AocTask
+import aoc2024.AocTask
+import aoc2024.Position
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
@@ -12,7 +13,7 @@ object Day6: AocTask {
     private const val CHARACTER = '^'
 
     override val fileName: String
-        get() = "src/2024/day_06/input.txt"
+        get() = "src/aoc2024/day_06/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -135,7 +136,7 @@ object Day6: AocTask {
         newObstacle: Position? = null
     ) {
         while (true) {
-            val nextPosition = position.nextPosition(direction)
+            val nextPosition = position + direction
 
             if (!grid.isInsideGrid(nextPosition))
                 break

@@ -1,7 +1,8 @@
-package `2024`.day_05
+package aoc2024.day_05
 
-import `2024`.AocTask
-import java.lang.IllegalStateException
+import aoc2024.AocTask
+import aoc2024.middleElement
+import aoc2024.swap
 
 object Day5: AocTask {
 
@@ -9,7 +10,7 @@ object Day5: AocTask {
     private const val PAGE_SEPARATOR = ','
 
     override val fileName: String
-        get() = "src/2024/day_05/input.txt"
+        get() = "src/aoc2024/day_05/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -81,12 +82,6 @@ object Day5: AocTask {
         return true
     }
 
-    private fun <T> List<T>.middleElement(): T =
-        if (size % 2 == 0)
-            throw IllegalStateException("List size is even - no middle element")
-        else
-            get(size / 2)
-
     // Part 2
     private fun List<Int>.correctList(rules: List<Pair<Int, Int>>): List<Int> {
         var list = this
@@ -108,11 +103,4 @@ object Day5: AocTask {
 
         return this
     }
-
-    private fun <T> List<T>.swap(firstIndex: Int, secondIndex: Int): List<T> =
-        toMutableList().apply {
-            val temp = get(firstIndex)
-            this[firstIndex] = this[secondIndex]
-            this[secondIndex] = temp
-        }.toList()
 }

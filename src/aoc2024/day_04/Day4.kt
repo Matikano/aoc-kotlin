@@ -1,6 +1,6 @@
-package `2024`.day_04
+package aoc2024.day_04
 
-import `2024`.AocTask
+import aoc2024.AocTask
 
 object Day4: AocTask {
 
@@ -17,7 +17,7 @@ object Day4: AocTask {
         -1 to  1 // up-right
     )
     override val fileName: String
-        get() = "src/2024/day_04/input.txt"
+        get() = "src/aoc2024/day_04/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")

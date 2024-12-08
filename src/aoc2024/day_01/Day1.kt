@@ -1,12 +1,12 @@
-package `2024`.day_01
+package aoc2024.day_01
 
-import `2024`.AocTask
+import aoc2024.AocTask
 import kotlin.math.absoluteValue
 
 object Day1: AocTask {
     private const val VALUE_SEPARATOR = "   "
     override val fileName: String
-        get() = "src/2024/day_01/input.txt"
+        get() = "src/aoc2024/day_01/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")

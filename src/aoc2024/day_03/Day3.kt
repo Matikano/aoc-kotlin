@@ -1,6 +1,6 @@
-package `2024`.day_03
+package aoc2024.day_03
 
-import `2024`.AocTask
+import aoc2024.AocTask
 
 
 object Day3: AocTask {
@@ -9,7 +9,7 @@ object Day3: AocTask {
     private const val DO_REGEX = """do\(\)"""
     private const val DONT_REGEX = """don't\(\)"""
     override val fileName: String
-        get() = "src/2024/day_03/input.txt"
+        get() = "src/aoc2024/day_03/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -55,8 +55,3 @@ object Day3: AocTask {
                 a.toInt() * b.toInt()
             }.first()
 }
-
-
-
-
-

@@ -1,4 +1,4 @@
-package `2024`.day_07
+package aoc2024.day_07
 
 data class Equation(
     val expectedValue: Long,

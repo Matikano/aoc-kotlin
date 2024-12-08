@@ -1,15 +1,18 @@
-package `2024`.day_07
+package aoc2024.day_07
 
-import `2024`.AocTask
+import aoc2024.AocTask
+import aoc2024.head
+import aoc2024.repeatingPermutations
+import aoc2024.tail
 import kotlin.system.measureTimeMillis
 
 object Day7: AocTask {
 
-    const val EQUATION_SEPARATOR = ": "
-    const val OPERANDS_SEPARATOR = " "
+    private const val EQUATION_SEPARATOR = ": "
+    private const val OPERANDS_SEPARATOR = " "
 
     override val fileName: String
-        get() = "src/2024/day_07/input.txt"
+        get() = "src/aoc2024/day_07/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -44,43 +47,21 @@ object Day7: AocTask {
             }
         }
 
-    private fun <T> List<T>.generatePermutations(length: Int): List<List<T>> {
-        if (length == 0) return listOf(emptyList())
-        if (isEmpty()) return emptyList()
-
-        val permutations = mutableListOf<List<T>>()
-
-        fun List<T>.backtrack(current: List<T>) {
-            if (current.size == length) {
-                permutations.add(current)
-                return
-            }
-
-            indices.forEach { i ->
-                backtrack(current + this@backtrack[i],)
-            }
-        }
-
-        backtrack(emptyList())
-
-        return permutations
-    }
-
     private fun Equation.isValid(operators: List<Operator>): Boolean =
         operators
-            .generatePermutations(operands.size - 1)
+            .repeatingPermutations(operands.size - 1)
             .any { evaluateOperators(it) }
 
-    private fun Equation.evaluateOperators(operators: List<Operator>): Boolean {
-        val firstOperand = operands.first()
-        val preparedOperands = operands.drop(1)
-
-        return preparedOperands.foldIndexed(
-            initial = firstOperand
-        ) { index, acc, value ->
-            operators[index].calcualte(acc, value)
-        } == expectedValue
-    }
+    private fun Equation.evaluateOperators(operators: List<Operator>): Boolean =
+        with(operands) {
+            tail().foldIndexed(
+                initial = head()
+            ) { index, acc, value ->
+                if (acc > expectedValue)
+                    return false
+                operators[index].calcualte(acc, value)
+            } == expectedValue
+        }
 
     private fun List<Equation>.sumOfValid(operators: List<Operator>): Long =
         filter { it.isValid(operators) }

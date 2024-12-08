@@ -1,10 +1,17 @@
-package `2024`
+package aoc2024
 
 import java.io.File
 
 interface AocTask {
     val fileName: String
     fun executeTask()
+
+    fun readFileToList(): List<String> =
+        File(fileName)
+            .inputStream()
+            .bufferedReader()
+            .readLines()
+
     fun readFileByLines(action: (String) -> Unit) {
         File(fileName)
             .inputStream()

@@ -1,6 +1,7 @@
-package `2024`.day_02
+package aoc2024.day_02
 
-import `2024`.AocTask
+import aoc2024.AocTask
+import aoc2024.subListsWithOneDroppedElement
 
 
 object Day2: AocTask {
@@ -10,7 +11,7 @@ object Day2: AocTask {
     private const val SEPARATOR = " "
 
     override val fileName: String
-        get() = "src/2024/day_02/input.txt"
+        get() = "src/aoc2024/day_02/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -54,17 +55,8 @@ object Day2: AocTask {
         }.all { it in minDifference..maxDifference }
 
     // Part 2
-    private fun <T> List<T>.getListsWithOneItemDropped(): List<List<T>> =
-        mutableListOf<List<T>>().also { list ->
-            indices.forEach {
-                list.add(
-                    this.filterIndexed { index, _ -> index != it }
-                )
-            }
-        }
-
     private fun List<Int>.isSafeAfterDampening(): Boolean =
-        getListsWithOneItemDropped()
+        subListsWithOneDroppedElement()
             .any { it.isDescendingWithDifference() or it.isAscendingWithDifference() }
 
     private fun List<List<Int>>.countSafeRecordsWithDampener(): Int =
