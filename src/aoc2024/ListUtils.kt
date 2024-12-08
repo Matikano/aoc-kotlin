@@ -3,7 +3,9 @@ package aoc2024
 import java.lang.IllegalStateException
 
 fun <T> List<T>.head(): T = first()
+
 fun <T> List<T>.tail(): List<T> = drop(1)
+
 fun <T> List<T>.middleElement(): T =
     if (size % 2 == 0)
         throw IllegalStateException("List size is even - no middle element")
@@ -17,14 +19,13 @@ fun <T> List<T>.swap(firstIndex: Int, secondIndex: Int): List<T> =
         this[secondIndex] = temp
     }.toList()
 
-fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> =
-    mutableListOf<List<T>>().apply {
-        indices.forEach {
-            add(
-                this@subListsWithOneDroppedElement.filterIndexed { index, _ -> index != it }
-            )
-        }
+fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> = buildList {
+    indices.forEach {
+        add(
+           this@subListsWithOneDroppedElement.filterIndexed { index, _ -> index != it }
+        )
     }
+}
 
 fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
     if (size < 2) return emptyList()
