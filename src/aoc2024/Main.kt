@@ -8,14 +8,16 @@ import aoc2024.day_05.Day5
 import aoc2024.day_06.Day6
 import aoc2024.day_07.Day7
 import aoc2024.day_08.Day8
+import aoc2024.day_09.Day9
 
 fun main() {
-    Day1.executeTask()
-    Day2.executeTask()
-    Day3.executeTask()
-    Day4.executeTask()
-    Day5.executeTask()
-    Day6.executeTask()
-    Day7.executeTask()
-    Day8.executeTask()
+//    Day1.executeTask()
+//    Day2.executeTask()
+//    Day3.executeTask()
+//    Day4.executeTask()
+//    Day5.executeTask()
+//    Day6.executeTask()
+//    Day7.executeTask()
+//    Day8.executeTask()
+    Day9.executeTask()
 }

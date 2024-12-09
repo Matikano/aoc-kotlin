@@ -17,6 +17,19 @@ fun <T> List<T>.swap(firstIndex: Int, secondIndex: Int): List<T> =
         this[secondIndex] = temp
     }.toList()
 
+fun <T> List<T>.swapRange(firstRange: List<Int>, secondRange: List<Int>): List<T> =
+    if (firstRange.size != secondRange.size) error("Ranges have different sizes")
+    else toMutableList().apply {
+        firstRange.indices.forEach {
+            val firstIndex = firstRange[it]
+            val secondIndex = secondRange[it]
+
+            val temp = this[firstIndex]
+            this[firstIndex] = this[secondIndex]
+            this[secondIndex] = temp
+        }
+    }.toList()
+
 fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> = buildList {
     indices.forEach {
         add(
@@ -59,4 +72,26 @@ fun <T> List<T>.repeatingPermutations(length: Int): List<List<T>> {
     backtrack(emptyList())
 
     return permutations
+}
+
+fun <T> List<T?>.emptySpaces(): List<IntRange> = buildList {
+    var startIndex = 0
+    var endIndex = -1
+    var currentValue: T? = null
+    this@emptySpaces.forEachIndexed { index, value ->
+        if (currentValue == null) {
+            if (value == null) {
+                endIndex = index
+            } else {
+                if (startIndex <= endIndex)
+                    add(startIndex .. endIndex)
+            }
+        } else {
+            if (value == null) {
+                startIndex = index
+                endIndex = index
+            }
+        }
+        currentValue = value
+    }
 }
