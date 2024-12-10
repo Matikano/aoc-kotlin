@@ -1,7 +1,7 @@
 package aoc2024.day_08
 
 import aoc2024.AocTask
-import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 object Day8: AocTask {
     override val fileName: String
@@ -13,7 +13,7 @@ object Day8: AocTask {
         println()
 
 
-        measureTimeMillis {
+        measureTime {
             // Part 1
             with(readToGrid()) {
                 println("Part 1")
@@ -21,16 +21,16 @@ object Day8: AocTask {
                 println()
                 println("Sum of antinodes = $antinodeCount")
             }
-        }.let { println("Part 1 took $it millis\n") }
+        }.let { println("Part 1 took $it \n") }
 
-        measureTimeMillis {
+        measureTime {
             // Part 2
             with(readToGrid()) {
                 println("Part 2")
                 puAllAntinodes()
                 println("Sum of antinodes = $antinodeCount")
             }
-        }.let { println("Part 2 took $it millis\n") }
+        }.let { println("Part 2 took $it\n") }
 
     }
 

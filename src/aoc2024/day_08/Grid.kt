@@ -1,7 +1,8 @@
 package aoc2024.day_08
 
-import aoc2024.Position
-import aoc2024.uniquePairs
+import utils.GridCell
+import utils.Position
+import utils.uniquePairs
 
 class Grid(
     private var rows: MutableList<String>,
@@ -13,7 +14,7 @@ class Grid(
     private val width: Int
         get() = rows.first().length
 
-    val cells: Set<GridCell>
+    val cells: Set<GridCell<Char>>
         get() = rows.flatMapIndexed { rowIndex, row ->
             row.mapIndexed { colIndex, char ->
                 GridCell(
@@ -28,7 +29,7 @@ class Grid(
             .map { it.position }
             .toSet()
 
-    val occupiedSpaces: Set<GridCell>
+    val occupiedSpaces: Set<GridCell<Char>>
         get() = cells.filter { it.value != EMPTY_SPACE_CHAR }
             .toSet()
 

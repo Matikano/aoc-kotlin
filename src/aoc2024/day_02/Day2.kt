@@ -1,7 +1,7 @@
 package aoc2024.day_02
 
 import aoc2024.AocTask
-import aoc2024.subListsWithOneDroppedElement
+import utils.subListsWithOneDroppedElement
 
 
 object Day2: AocTask {

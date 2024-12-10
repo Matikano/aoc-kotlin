@@ -1,4 +1,4 @@
-package aoc2024.day_06
+package utils
 
 enum class Direction(val x: Int, val y: Int) {
     UP(0, -1),

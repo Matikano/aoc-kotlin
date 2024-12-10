@@ -1,8 +1,6 @@
 package aoc2024.day_09
 
-import aoc2024.emptySpaces
-import aoc2024.swap
-import aoc2024.swapRange
+import utils.*
 
 data class DiskMap(
     private val layout: String
@@ -18,16 +16,10 @@ data class DiskMap(
         get() = diskBlocksChain.compressDiskBlockChain()
 
     val checkSum: Long
-        get() = compressedDiskBlocksChain
-            .foldIndexed(0L) { index, acc, number ->
-                acc + (number ?: 0) * index
-            }
+        get() = compressedDiskBlocksChain.checkSum()
 
     val compactedCheckSum: Long
-        get() = compactedDiskBlocksChain
-            .foldIndexed(0L) { index, acc, number ->
-                acc + (number ?: 0) * index
-            }
+        get() = compactedDiskBlocksChain.checkSum()
 
     private fun String.calculateDiskBlocks(): List<Int?> = buildList {
         var blockId = 0
@@ -47,14 +39,14 @@ data class DiskMap(
     }
 
     private fun <T> List<T>.compressDiskBlockChain(): List<T> {
-        var indexOfFirstEmptySpace = indexOfFirst { it == null }
-        var indexOfLastDigit = indexOfLast { it != null }
+        var indexOfFirstEmptySpace = indexOfNextNull(0)
+        var indexOfLastDigit = indexOfPreviousNotNull(size - 1)
         var output = this
 
         while (indexOfFirstEmptySpace <= indexOfLastDigit) {
             output = output.swap(indexOfFirstEmptySpace, indexOfLastDigit)
-            indexOfFirstEmptySpace = output.indexOfFirst { it == null }
-            indexOfLastDigit = output.indexOfLast { it != null }
+            indexOfFirstEmptySpace = output.indexOfNextNull(indexOfFirstEmptySpace)
+            indexOfLastDigit = output.indexOfPreviousNotNull(indexOfLastDigit)
         }
 
         return output
@@ -76,7 +68,7 @@ data class DiskMap(
             emptySpaces
                 .firstOrNull { it.size >= digitChainSize }
                 ?.let {
-                    if (indexOfFirstNumber > it.last() )
+                    if (indexOfFirstNumber > it.last())
                         output = output.swapRange(
                             firstRange = it.take(digitChainSize),
                             secondRange = (indexOfFirstNumber..indexOfLastNumber).toList()
@@ -86,4 +78,9 @@ data class DiskMap(
 
         return output
     }
+
+    private fun List<Int?>.checkSum(): Long =
+        foldIndexed(0) { index, acc, number ->
+            acc + (number ?: 0) * index
+        }
 }

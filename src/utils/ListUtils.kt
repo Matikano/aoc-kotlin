@@ -1,10 +1,6 @@
-package aoc2024
+package utils
 
 import java.lang.IllegalStateException
-
-fun <T> List<T>.head(): T = first()
-
-fun <T> List<T>.tail(): List<T> = drop(1)
 
 fun <T> List<T>.middleElement(): T =
     if (size % 2 == 0) throw IllegalStateException("List size is even - no middle element")
@@ -43,7 +39,7 @@ fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
 
     val list = mutableListOf<Pair<T, T>>()
 
-    (0 until size - 1).forEach { indexOfFirst ->
+    (0 ..< size - 1).forEach { indexOfFirst ->
         (indexOfFirst + 1 until size).forEach { indexOfSecond ->
             list.add(this@uniquePairs[indexOfFirst] to this@uniquePairs[indexOfSecond])
         }
@@ -94,4 +90,18 @@ fun <T> List<T?>.emptySpaces(): List<IntRange> = buildList {
         }
         currentValue = value
     }
+}
+
+fun <T> List<T?>.indexOfPreviousNotNull(startIndex: Int): Int {
+    for (i in startIndex downTo    0) {
+        if (this[i] != null) return i
+    }
+    return -1
+}
+
+fun <T> List<T?>.indexOfNextNull(startIndex: Int): Int {
+    for (i in startIndex ..< size) {
+        if (this[i] == null) return i
+    }
+    return -1
 }

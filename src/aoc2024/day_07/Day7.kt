@@ -1,10 +1,10 @@
 package aoc2024.day_07
 
 import aoc2024.AocTask
-import aoc2024.head
-import aoc2024.repeatingPermutations
-import aoc2024.tail
-import kotlin.system.measureTimeMillis
+import utils.head
+import utils.repeatingPermutations
+import utils.tail
+import kotlin.time.measureTime
 
 object Day7: AocTask {
 
@@ -19,18 +19,18 @@ object Day7: AocTask {
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
-        val basicOperators = Operator.values().toList() - Operator.CONCATENATE
-        val extendedOperators = Operator.values().toList()
+        val basicOperators = Operator.entries - Operator.CONCATENATE
+        val extendedOperators = Operator.entries
         with(readToList()) {
             // Part 1
-            measureTimeMillis {
+            measureTime {
                 println("Sum of valid equations = ${sumOfValid(basicOperators)}")
-            }.let { println("Part one took $it millis") }
+            }.let { println("Part one took $it") }
 
             // Part 2
-            measureTimeMillis {
+            measureTime {
                 println("Sum of valid equations with concatenation = ${sumOfValid(extendedOperators)}")
-            }.let { println("Part two took $it millis") }
+            }.let { println("Part two took $it") }
         }
     }
 

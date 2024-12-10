@@ -1,10 +1,11 @@
 package aoc2024.day_06
 
 import aoc2024.AocTask
-import aoc2024.Position
+import utils.Direction
+import utils.Position
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicInteger
-import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 
 object Day6: AocTask {
@@ -30,7 +31,7 @@ object Day6: AocTask {
 
         // Part 2
         val visitedPositions = guard.visitedPositions
-        measureTimeMillis {
+        measureTime {
             var loopingObstacles = 0
             grid.data.forEachIndexed { rowIndex, row ->
                 row.indices.forEach { colIndex ->
@@ -46,11 +47,11 @@ object Day6: AocTask {
 
             println("There are $loopingObstacles obstructions that would make Guard loop")
         }.let {
-            println("Part 2 without optimization took $it milliseconds")
+            println("Part 2 without optimization took $it")
             println()
         }
 
-        measureTimeMillis {
+        measureTime {
             var loopingObstacles = 0
 
             visitedPositions.forEach { position ->
@@ -61,11 +62,11 @@ object Day6: AocTask {
 
             println("There are $loopingObstacles obstructions that would make Guard loop")
         }.let {
-            println("Part 2 with path optimization took $it milliseconds")
+            println("Part 2 with path optimization took $it")
             println()
         }
 
-        measureTimeMillis {
+        measureTime {
             val loopingObstacles = AtomicInteger(0)
             runBlocking(Dispatchers.Default) {
                 grid.data.forEachIndexed { rowIndex, row ->
@@ -84,11 +85,11 @@ object Day6: AocTask {
             }
             println("There are $loopingObstacles obstructions that would make Guard loop")
         }.let {
-            println("Part 2 with coroutine optimization took $it milliseconds")
+            println("Part 2 with coroutine optimization took $it")
             println()
         }
 
-        measureTimeMillis {
+        measureTime {
             val loopingObstacles = AtomicInteger(0)
             runBlocking(Dispatchers.Default) {
                 visitedPositions.forEach { position ->
@@ -101,7 +102,7 @@ object Day6: AocTask {
             }
             println("There are $loopingObstacles obstructions that would make Guard loop")
         }.let {
-            println("Part 2 with coroutine and path optimization took $it milliseconds")
+            println("Part 2 with coroutine and path optimization took $it")
             println()
         }
     }
