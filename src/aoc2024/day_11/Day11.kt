@@ -8,12 +8,9 @@ typealias Iterations = Int
 
 object Day11: AocTask {
 
-    private const val FILE_SPLITTING_DELIMETER = " "
+    private const val FILE_SPLITTING_DELIMITER = " "
     private const val PART_1_ITERATIONS = 25
     private const val PART_2_ITERATIONS = 75
-    private const val COPY_FACTOR = 2024
-
-    private val cache = mutableMapOf<Pair<Stone, Iterations>, Long>()
 
     override val fileName: String
         get() = "src/aoc2024/day_11/input.txt"
@@ -38,8 +35,6 @@ object Day11: AocTask {
 
     private fun readToList(): List<Stone> =
         readFileToString()
-            .trim()
-            .split(FILE_SPLITTING_DELIMETER)
-            .filter { it.isNotEmpty() }
+            .split(FILE_SPLITTING_DELIMITER)
             .map { it.toLong() }
 }
