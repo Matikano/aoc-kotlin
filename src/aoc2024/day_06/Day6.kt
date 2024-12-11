@@ -32,64 +32,6 @@ object Day6: AocTask {
         // Part 2
         val visitedPositions = guard.visitedPositions
         measureTime {
-            var loopingObstacles = 0
-            grid.data.forEachIndexed { rowIndex, row ->
-                row.indices.forEach { colIndex ->
-                    val currentPosition = Position(colIndex, rowIndex)
-                    if (grid.getValue(currentPosition) == CHARACTER)
-                        return@forEach
-
-                    grid.findGuardAndObstacles().apply {
-                        startPatrol(grid, currentPosition)
-                    }.also { if (it.isInALoop) loopingObstacles++ }
-                }
-            }
-
-            println("There are $loopingObstacles obstructions that would make Guard loop")
-        }.let {
-            println("Part 2 without optimization took $it")
-            println()
-        }
-
-        measureTime {
-            var loopingObstacles = 0
-
-            visitedPositions.forEach { position ->
-                grid.findGuardAndObstacles().apply {
-                    startPatrol(grid, position)
-                }.also { if (it.isInALoop) loopingObstacles++ }
-            }
-
-            println("There are $loopingObstacles obstructions that would make Guard loop")
-        }.let {
-            println("Part 2 with path optimization took $it")
-            println()
-        }
-
-        measureTime {
-            val loopingObstacles = AtomicInteger(0)
-            runBlocking(Dispatchers.Default) {
-                grid.data.forEachIndexed { rowIndex, row ->
-                    row.indices.forEach { colIndex ->
-                        launch {
-                            val currentPosition = Position(colIndex, rowIndex)
-                            if (grid.getValue(currentPosition) == CHARACTER)
-                                throw CancellationException()
-
-                            grid.findGuardAndObstacles().apply {
-                                startPatrol(grid, currentPosition)
-                            }.also { if (it.isInALoop) loopingObstacles.incrementAndGet() }
-                        }
-                    }
-                }
-            }
-            println("There are $loopingObstacles obstructions that would make Guard loop")
-        }.let {
-            println("Part 2 with coroutine optimization took $it")
-            println()
-        }
-
-        measureTime {
             val loopingObstacles = AtomicInteger(0)
             runBlocking(Dispatchers.Default) {
                 visitedPositions.forEach { position ->

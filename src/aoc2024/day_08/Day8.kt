@@ -16,9 +16,7 @@ object Day8: AocTask {
         measureTime {
             // Part 1
             with(readToGrid()) {
-                println("Part 1")
                 putFirstAntinodes()
-                println()
                 println("Sum of antinodes = $antinodeCount")
             }
         }.let { println("Part 1 took $it \n") }
@@ -26,7 +24,6 @@ object Day8: AocTask {
         measureTime {
             // Part 2
             with(readToGrid()) {
-                println("Part 2")
                 puAllAntinodes()
                 println("Sum of antinodes = $antinodeCount")
             }
