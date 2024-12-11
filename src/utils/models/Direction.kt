@@ -1,4 +1,4 @@
-package utils
+package utils.models
 
 enum class Direction(val x: Int, val y: Int) {
     UP(0, -1),

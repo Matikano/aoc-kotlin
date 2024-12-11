@@ -1,8 +1,8 @@
 package aoc2024.day_10
 
 import aoc2024.AocTask
-import utils.GridCell
-import utils.Position
+import utils.models.GridCell
+import utils.models.Position
 
 object Day10: AocTask {
 

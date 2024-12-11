@@ -1,10 +1,10 @@
 package aoc2024.day_10
 
-import utils.Direction
-import utils.GridCell
-import utils.Position
+import utils.models.Direction
+import utils.models.GridCell
+import utils.models.Position
 import aoc2024.day_10.Digit.*
-import utils.head
+import utils.extensions.head
 
 typealias Path = Set<GridCell<Digit>>
 

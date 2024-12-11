@@ -1,9 +1,9 @@
 package aoc2024.day_07
 
 import aoc2024.AocTask
-import utils.head
-import utils.repeatingPermutations
-import utils.tail
+import utils.extensions.head
+import utils.extensions.repeatingPermutations
+import utils.extensions.tail
 import kotlin.time.measureTime
 
 object Day7: AocTask {

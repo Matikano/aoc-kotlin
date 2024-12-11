@@ -1,6 +1,6 @@
 package aoc2024.day_09
 
-import utils.*
+import utils.extensions.*
 
 data class DiskMap(
     private val layout: String

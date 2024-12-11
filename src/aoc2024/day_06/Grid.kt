@@ -1,6 +1,6 @@
 package aoc2024.day_06
 
-import utils.Position
+import utils.models.Position
 
 data class Grid(
     val data: List<String>

@@ -1,4 +1,4 @@
-package utils
+package utils.models
 
 data class Position(
     val colIndex: Int,
@@ -10,15 +10,15 @@ data class Position(
             rowIndex + direction.y
         )
 
+    operator fun plus(other: Position): Position =
+        Position(
+            colIndex + other.colIndex,
+            rowIndex + other.rowIndex
+        )
+
     operator fun minus(other: Position): Position =
         Position(
             colIndex - other.colIndex,
             rowIndex - other.rowIndex
-        )
-
-    operator fun plus(other: Position): Position =
-        Position(
-            other.colIndex + colIndex,
-            other.rowIndex + rowIndex
         )
 }

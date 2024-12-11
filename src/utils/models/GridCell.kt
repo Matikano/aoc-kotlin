@@ -1,4 +1,4 @@
-package utils
+package utils.models
 
 data class GridCell<T>(
     val value: T,

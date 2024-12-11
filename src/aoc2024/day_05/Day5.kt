@@ -1,8 +1,8 @@
 package aoc2024.day_05
 
 import aoc2024.AocTask
-import utils.middleElement
-import utils.swap
+import utils.extensions.middleElement
+import utils.extensions.swap
 
 object Day5: AocTask {
 

@@ -1,8 +1,8 @@
 package aoc2024.day_06
 
 import aoc2024.AocTask
-import utils.Direction
-import utils.Position
+import utils.models.Direction
+import utils.models.Position
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.measureTime

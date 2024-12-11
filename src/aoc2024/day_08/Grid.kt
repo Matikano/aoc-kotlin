@@ -1,8 +1,8 @@
 package aoc2024.day_08
 
-import utils.GridCell
-import utils.Position
-import utils.uniquePairs
+import utils.models.GridCell
+import utils.models.Position
+import utils.extensions.uniquePairs
 
 class Grid(
     private var rows: MutableList<String>,

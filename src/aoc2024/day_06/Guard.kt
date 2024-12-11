@@ -1,7 +1,7 @@
 package aoc2024.day_06
 
-import utils.Direction
-import utils.Position
+import utils.models.Direction
+import utils.models.Position
 
 data class Guard(
     var direction: Direction

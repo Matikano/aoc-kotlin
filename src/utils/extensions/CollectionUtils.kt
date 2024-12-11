@@ -1,4 +1,4 @@
-package utils
+package utils.extensions
 
 fun <T> Collection<T>.head(): T = first()
 
