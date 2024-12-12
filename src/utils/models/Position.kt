@@ -21,4 +21,11 @@ data class Position(
             colIndex - other.colIndex,
             rowIndex - other.rowIndex
         )
+
+    operator fun compareTo(other: Position): Int =
+        when {
+            rowIndex < other.rowIndex -> -1
+            rowIndex > other.rowIndex -> 1
+            else -> colIndex.compareTo(other.colIndex)
+        }
 }
