@@ -125,7 +125,6 @@ data class Garden(
                 2 -> if (cornerConfig == opposingConfig || cornerConfig == opposingConfig.reversed()) {
                     acc + 2
                 } else acc
-
                 else -> acc
             }
         }

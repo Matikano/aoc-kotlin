@@ -14,7 +14,7 @@ object Day12: AocTask {
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
-        with(readToGrid()) {
+        with(readToGarden()) {
             findAllPlants()
 
             // Part 1
@@ -28,7 +28,7 @@ object Day12: AocTask {
         }
     }
 
-    private fun readToGrid(): Garden =
+    private fun readToGarden(): Garden =
         Garden(
             fields = buildList {
                 readFileToList().forEachIndexed { rowIndex, row ->
