@@ -49,13 +49,7 @@ object Day6: AocTask {
         }
     }
 
-    private fun readToGrid(): Grid =
-        mutableListOf<String>().apply {
-            readFileByLines { line ->
-                add(line)
-            }
-        }.let { Grid(it) }
-
+    private fun readToGrid(): Grid = Grid(data = readFileToList())
     // Part 1
     private fun Grid.findGuardAndObstacles(): Guard {
         data.forEachIndexed { rowIndex, row ->

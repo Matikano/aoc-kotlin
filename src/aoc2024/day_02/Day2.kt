@@ -1,6 +1,7 @@
 package aoc2024.day_02
 
 import aoc2024.AocTask
+import utils.extensions.numsInt
 import utils.extensions.subListsWithOneDroppedElement
 
 
@@ -27,12 +28,7 @@ object Day2: AocTask {
         }
     }
 
-    private fun readToList(): List<List<Int>> =
-        mutableListOf<List<Int>>().apply {
-            readFileByLines { line ->
-                add(line.split(SEPARATOR).map { it.toInt() })
-            }
-        }
+    private fun readToList(): List<List<Int>> = readFileToList().map { it.numsInt() }
 
     // Part 1
     private fun List<List<Int>>.countSafeRecords(): Int =

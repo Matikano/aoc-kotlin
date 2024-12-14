@@ -1,6 +1,7 @@
 package aoc2024.day_03
 
 import aoc2024.AocTask
+import utils.extensions.numsInt
 
 
 object Day3: AocTask {
@@ -23,24 +24,22 @@ object Day3: AocTask {
         println("Calculated filtered multiplications = ${readToListFiltered().calculateMultiplications()}")
     }
 
-    private fun readToList(): List<String> {
-        return mutableListOf<String>().also { list ->
-            MUL_REGEX.toRegex().findAll(readFileToString()).forEach { matchResult ->
-                list.add(matchResult.value)
-            }
-        }
-    }
+    private fun readToList(): List<String> =
+        MUL_REGEX.toRegex()
+            .findAll(readFileToString())
+            .map { matchResult ->
+                matchResult.value
+            }.toList()
 
-    private fun readToListFiltered(): List<String> {
+    private fun readToListFiltered(): List<String> = buildList {
         val regex = "$MUL_REGEX|$DO_REGEX|$DONT_REGEX".toRegex()
         var enabled = true
-        return mutableListOf<String>().apply {
-            regex.findAll(readFileToString()).forEach { matchResult ->
-                when (matchResult.value) {
-                    "do()" -> enabled = true
-                    "don't()" -> enabled = false
-                    else -> if (enabled) add(matchResult.value)
-                }
+
+        regex.findAll(readFileToString()).forEach { matchResult ->
+            when (matchResult.value) {
+                "do()" -> enabled = true
+                "don't()" -> enabled = false
+                else -> if (enabled) add(matchResult.value)
             }
         }
     }
@@ -49,9 +48,5 @@ object Day3: AocTask {
         sumOf { it.multiplyExpression() }
 
     private fun String.multiplyExpression(): Int =
-        removeSurrounding("mul(", ")")
-            .split(',')
-            .zipWithNext { a, b ->
-                a.toInt() * b.toInt()
-            }.first()
+        numsInt().fold(1) { acc, value -> acc * value }
 }

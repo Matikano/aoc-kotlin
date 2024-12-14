@@ -1,6 +1,8 @@
 package aoc2024.day_11
 
 import aoc2024.AocTask
+import utils.extensions.numsInt
+import utils.extensions.numsLong
 import kotlin.time.measureTime
 
 typealias Stone = Long
@@ -34,7 +36,5 @@ object Day11: AocTask {
     }
 
     private fun readToList(): List<Stone> =
-        readFileToString()
-            .split(FILE_SPLITTING_DELIMITER)
-            .map { it.toLong() }
+        readFileToString().numsLong()
 }

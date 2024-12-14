@@ -1,6 +1,8 @@
 package aoc2024.day_13
 
 import aoc2024.AocTask
+import utils.extensions.numsInt
+import utils.extensions.numsLong
 import kotlin.time.measureTime
 
 object Day13: AocTask {
@@ -52,39 +54,28 @@ object Day13: AocTask {
         for (line in split('\n')) {
             when {
                 line.contains('A') -> {
-                    val (dx, dy) = line.toDxDy()
+                    val (dx, dy) = line.numsLong()
                     buttonA = Button(dx, dy, BUTTON_A_COST)
                 }
 
                 line.contains('B') -> {
-                    val (dx, dy) = line.toDxDy()
+                    val (dx, dy) = line.numsLong()
                     buttonB = Button(dx, dy, BUTTON_B_COST)
                 }
 
                 line.contains("Prize") -> {
+                    val (prizeX, prizeY) = line.numsLong()
                     add(
                         ClawMachine(
                             buttonA = buttonA!!,
                             buttonB = buttonB!!,
-                            prize = line.toPrize()
+                            prize = prizeX to prizeY
                         )
                     )
                 }
 
-                line.isEmpty() -> Unit
+                else -> Unit
             }
         }
     }
-
-    private fun String.toPrize(): Pair<Long, Long> =
-        substringAfter(LABEL_SEPARATOR)
-            .split(COORDINATES_SEPARATOR)
-            .map { it.substringAfter(PRIZE_VALUE_SEPARATOR).toLong() }
-            .let { it.first() to it.last() }
-
-    private fun String.toDxDy(): Pair<Long, Long> =
-        substringAfter(LABEL_SEPARATOR)
-            .split(COORDINATES_SEPARATOR)
-            .map { it.substringAfter(BUTTON_VALUE_SEPARATOR).toLong() }
-            .let { it.first() to it.last() }
 }

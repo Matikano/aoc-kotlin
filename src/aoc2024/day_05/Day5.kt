@@ -2,6 +2,7 @@ package aoc2024.day_05
 
 import aoc2024.AocTask
 import utils.extensions.middleElement
+import utils.extensions.numsInt
 import utils.extensions.swap
 
 object Day5: AocTask {
@@ -42,14 +43,11 @@ object Day5: AocTask {
         val pages = mutableListOf<List<Int>>()
 
         readFileByLines { line ->
-            if (line.contains(RULE_SEPARATOR))
-                line.split(RULE_SEPARATOR)
-                    .map { it.toInt() }
-                    .let { orderRules.add(it.first() to it.last()) }
-            else if (line.contains(PAGE_SEPARATOR)) {
-                line.split(PAGE_SEPARATOR)
-                    .map { it.toInt() }
-                    .let { pages.add(it) }
+            if (line.contains(RULE_SEPARATOR)) {
+                val (first, second) = line.numsInt()
+                orderRules.add(first to second)
+            } else if (line.contains(PAGE_SEPARATOR)) {
+                pages.add(line.numsInt())
             }
         }
 

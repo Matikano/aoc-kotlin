@@ -1,9 +1,7 @@
 package aoc2024.day_07
 
 import aoc2024.AocTask
-import utils.extensions.head
-import utils.extensions.repeatingPermutations
-import utils.extensions.tail
+import utils.extensions.*
 import kotlin.time.measureTime
 
 object Day7: AocTask {
@@ -35,16 +33,12 @@ object Day7: AocTask {
     }
 
     private fun readToList(): List<Equation> =
-        mutableListOf<Equation>().apply {
-            readFileByLines { line ->
-               val (testValue, operandsChain) = line.split(EQUATION_SEPARATOR)
-                add(
-                    Equation(
-                        expectedValue = testValue.toLong(),
-                        operands = operandsChain.split(OPERANDS_SEPARATOR).map { it.toLong() }
-                    )
-                )
-            }
+        readFileToList().map { line ->
+            val numbers = line.numsLong()
+            Equation(
+                expectedValue = numbers.head(),
+                operands = numbers.tail().toList()
+            )
         }
 
     private fun Equation.isValid(operators: List<Operator>): Boolean =

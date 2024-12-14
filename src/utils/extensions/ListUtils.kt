@@ -27,13 +27,10 @@ fun <T> List<T>.swapRange(firstRange: List<Int>, secondRange: List<Int>): List<T
         }
     }.toList()
 
-fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> = buildList {
-    indices.forEach {
-        add(
-           this@subListsWithOneDroppedElement.filterIndexed { index, _ -> index != it }
-        )
+fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> =
+    indices.map {
+       filterIndexed { index, _ -> index != it }
     }
-}
 
 fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
     if (size < 2) return emptyList()

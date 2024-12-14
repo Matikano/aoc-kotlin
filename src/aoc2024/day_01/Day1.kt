@@ -1,6 +1,7 @@
 package aoc2024.day_01
 
 import aoc2024.AocTask
+import utils.extensions.numsInt
 import kotlin.math.absoluteValue
 
 object Day1: AocTask {
@@ -22,19 +23,13 @@ object Day1: AocTask {
         println("Similarity score = ${firstColumn.calculateSimilarityScore(secondColumn)}")
     }
 
-    private fun readToLists(): Pair<List<Int>, List<Int>> {
-        val firstList = mutableListOf<Int>()
-        val secondList = mutableListOf<Int>()
-
-        readFileByLines { line ->
-            val (first, second) = line.split(VALUE_SEPARATOR)
-
-            firstList.add(first.toInt())
-            secondList.add(second.toInt())
+    private fun readToLists(): Pair<List<Int>, List<Int>> =
+        readFileToList().map {
+            val (first, second) = it.numsInt()
+            first to second
+        }.let { list ->
+            list.map { it.first } to list.map { it.second }
         }
-
-        return firstList to secondList
-    }
 
     // Part 1
     private fun List<Int>.calculateSumOfSortedDifferences(

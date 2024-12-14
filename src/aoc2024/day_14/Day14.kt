@@ -1,7 +1,7 @@
 package aoc2024.day_14
 
 import aoc2024.AocTask
-import utils.extensions.nums
+import utils.extensions.numsInt
 import utils.models.Position
 import kotlin.time.measureTime
 
@@ -57,7 +57,7 @@ object Day14: AocTask {
 
     private fun readToList(): List<Robot> =
         readFileToList().map { line ->
-            line.nums().let { (px, py, dx, dy) ->
+            line.numsInt().let { (px, py, dx, dy) ->
                 Robot(
                     position = Position(
                         colIndex = px,
