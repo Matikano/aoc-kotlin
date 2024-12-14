@@ -1,5 +1,6 @@
 package utils.extensions
 
+import utils.models.Position
 import java.lang.IllegalStateException
 
 fun <T> List<T>.middleElement(): T =
@@ -104,4 +105,24 @@ fun <T> List<T?>.indexOfNextNull(startIndex: Int): Int {
         if (this[i] == null) return i
     }
     return -1
+}
+
+fun List<Position>.printPositions(
+    gridBounds: Pair<Int, Int>,
+    markerChar: Char = '#',
+    emptyChar: Char = '.'
+) {
+    val (rows, cols) = gridBounds
+    val grid = Array(rows) { CharArray(cols) { emptyChar } }
+
+    forEach { position ->
+        val (colIndex, rowIndex) = position
+        if (rowIndex in 0 ..< rows && colIndex in 0 ..< cols) {
+            grid[rowIndex][colIndex] = markerChar
+        }
+    }
+
+    for (row in grid) {
+        println(row.joinToString(""))
+    }
 }
