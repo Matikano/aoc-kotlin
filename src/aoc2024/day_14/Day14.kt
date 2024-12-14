@@ -30,7 +30,7 @@ object Day14: AocTask {
         with(readToList()) {
             // Part 1
             measureTime {
-                repeat(ITERATIONS) { moveRobots() }
+                moveRobots(ITERATIONS)
 
                 val robotsInQuadrants = quadrants.map { quadrant ->
                     filter { it.position in quadrant }
@@ -72,7 +72,7 @@ object Day14: AocTask {
             }
         }
 
-    private fun List<Robot>.moveRobots() = forEach { it.move() }
+    private fun List<Robot>.moveRobots(times: Int = 1) = forEach { it.move(times) }
 
     private fun Bounds.toQuadrants(): List<Quadrant> =
         listOf(

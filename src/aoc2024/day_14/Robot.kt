@@ -10,11 +10,11 @@ data class Robot(
 
     operator fun Position.plus(velocity: Velocity): Position =
         Position(
-            colIndex = (colIndex + velocity.dx + bounds.width) % (bounds.width),
-            rowIndex =  (rowIndex + velocity.dy + bounds.height) % (bounds.height)
+            colIndex = (colIndex + velocity.dx).mod(bounds.width),
+            rowIndex =  (rowIndex + velocity.dy).mod(bounds.height)
         )
 
-    fun move() {
-        position += velocity
+    fun move(times: Int = 1) {
+        position += velocity * times
     }
 }
