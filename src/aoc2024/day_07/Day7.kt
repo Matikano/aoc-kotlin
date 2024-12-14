@@ -6,9 +6,6 @@ import kotlin.time.measureTime
 
 object Day7: AocTask {
 
-    private const val EQUATION_SEPARATOR = ": "
-    private const val OPERANDS_SEPARATOR = " "
-
     override val fileName: String
         get() = "src/aoc2024/day_07/input.txt"
 

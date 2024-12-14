@@ -9,7 +9,6 @@ object Day2: AocTask {
 
     private const val MIN_DIFFERENCE = 1
     private const val MAX_DIFFERENCE = 3
-    private const val SEPARATOR = " "
 
     override val fileName: String
         get() = "src/aoc2024/day_02/input.txt"

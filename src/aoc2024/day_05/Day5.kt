@@ -5,6 +5,9 @@ import utils.extensions.middleElement
 import utils.extensions.numsInt
 import utils.extensions.swap
 
+typealias Rule = Pair<Int, Int>
+typealias Page = List<Int>
+
 object Day5: AocTask {
 
     private const val RULE_SEPARATOR = '|'
@@ -38,7 +41,7 @@ object Day5: AocTask {
         println("Sum of middle elements of corrected pages = $sumOfMiddleElementsOfCorrectedPages")
     }
 
-    private fun readFile(): Pair<List<Pair<Int, Int>>, List<List<Int>>> {
+    private fun readFile(): Pair<List<Rule>, List<Page>> {
         val orderRules = mutableListOf<Pair<Int, Int>>()
         val pages = mutableListOf<List<Int>>()
 
@@ -55,7 +58,7 @@ object Day5: AocTask {
     }
 
     // Part 1
-    private fun List<Int>.isInValidOrder(rules: List<Pair<Int, Int>>): Boolean {
+    private fun List<Int>.isInValidOrder(rules: List<Rule>): Boolean {
         forEachIndexed { index, value ->
             val shouldBeBefore = rules
                 .filter { it.first == value }
@@ -81,7 +84,7 @@ object Day5: AocTask {
     }
 
     // Part 2
-    private fun List<Int>.correctList(rules: List<Pair<Int, Int>>): List<Int> {
+    private fun List<Int>.correctList(rules: List<Rule>): List<Int> {
         var list = this
 
         while (!list.isInValidOrder(rules))
@@ -90,7 +93,7 @@ object Day5: AocTask {
         return list
     }
 
-    private fun List<Int>.swapIncorrectness(rules: List<Pair<Int, Int>>): List<Int> {
+    private fun List<Int>.swapIncorrectness(rules: List<Rule>): List<Int> {
         rules.forEach {
             val indexOfFirst = indexOf(it.first)
             val indexOfSecond = indexOf(it.second)

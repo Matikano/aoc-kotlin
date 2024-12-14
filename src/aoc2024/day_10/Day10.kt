@@ -25,17 +25,12 @@ object Day10: AocTask {
 
     private fun readToGrid(): Grid =
         Grid(
-            cells = buildList {
-                val digits = Digit.entries
-                readFileToList().forEachIndexed { rowIndex, row ->
-                    row.indices.forEach { colIndex ->
-                        add(
-                            GridCell(
-                                value = digits[row[colIndex].digitToInt()],
-                                position = Position(colIndex, rowIndex)
-                            )
-                        )
-                    }
+            cells = readFileToList().flatMapIndexed { rowIndex, row ->
+                row.indices.map { colIndex ->
+                    GridCell(
+                        value = Digit.entries[row[colIndex].digitToInt()],
+                        position = Position(colIndex, rowIndex)
+                    )
                 }
             }
         )

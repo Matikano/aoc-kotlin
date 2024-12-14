@@ -5,7 +5,6 @@ import utils.extensions.numsInt
 import kotlin.math.absoluteValue
 
 object Day1: AocTask {
-    private const val VALUE_SEPARATOR = "   "
     override val fileName: String
         get() = "src/aoc2024/day_01/input.txt"
 

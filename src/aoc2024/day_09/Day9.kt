@@ -1,14 +1,12 @@
 package aoc2024.day_09
 
 import aoc2024.AocTask
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 object Day9: AocTask {
     override val fileName: String
         get() = "src/aoc2024/day_09/input.txt"
 
-    @OptIn(ExperimentalTime::class)
     override fun executeTask() {
         println("-------------------------------------")
         println("AoC 2024 Task ${this.javaClass.simpleName}")

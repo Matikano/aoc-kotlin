@@ -30,16 +30,12 @@ object Day12: AocTask {
 
     private fun readToGarden(): Garden =
         Garden(
-            fields = buildList {
-                readFileToList().forEachIndexed { rowIndex, row ->
-                    row.indices.forEach { colIndex ->
-                        add(
-                            GridCell(
-                                value = row[colIndex],
-                                position = Position(colIndex, rowIndex)
-                            )
-                        )
-                    }
+            fields = readFileToList().flatMapIndexed {  rowIndex, row ->
+                row.indices.map { colIndex ->
+                    GridCell(
+                        value = row[colIndex],
+                        position = Position(colIndex, rowIndex)
+                    )
                 }
             }
         )

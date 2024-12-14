@@ -1,7 +1,6 @@
 package aoc2024.day_13
 
 import aoc2024.AocTask
-import utils.extensions.numsInt
 import utils.extensions.numsLong
 import kotlin.time.measureTime
 
@@ -10,11 +9,6 @@ object Day13: AocTask {
     private const val BUTTON_A_COST = 3L
     private const val BUTTON_B_COST = 1L
     private const val PART_2_PRIZE_CORRECTION = 10000000000000L
-
-    private const val COORDINATES_SEPARATOR = ", "
-    private const val LABEL_SEPARATOR = ": "
-    private const val BUTTON_VALUE_SEPARATOR = '+'
-    private const val PRIZE_VALUE_SEPARATOR = '='
 
     override val fileName: String
         get() = "src/aoc2024/day_13/input.txt"
