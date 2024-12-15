@@ -142,8 +142,10 @@ object Day15: AocTask {
             }
 
             if (nextPosition !in walls) {
-                boxes.removeAll(boxPositionsToMove)
-                boxes.addAll(boxPositionsToMove.map { it + direction })
+                boxes.apply {
+                    removeAll(boxPositionsToMove)
+                    addAll(boxPositionsToMove.map { it + direction })
+                }
                 robot += direction
             }
         }
