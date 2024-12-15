@@ -14,20 +14,22 @@ import aoc2024.day_11.Day11
 import aoc2024.day_12.Day12
 import aoc2024.day_13.Day13
 import aoc2024.day_14.Day14
+import aoc2024.day_15.Day15
 
 fun main() {
-    Day1.executeTask()
-    Day2.executeTask()
-    Day3.executeTask()
-    Day4.executeTask()
-    Day5.executeTask()
-    Day6.executeTask()
-    Day7.executeTask()
-    Day8.executeTask()
-    Day9.executeTask()
-    Day10.executeTask()
-    Day11.executeTask()
-    Day12.executeTask()
-    Day13.executeTask()
-    Day14.executeTask()
+//    Day1.executeTask()
+//    Day2.executeTask()
+//    Day3.executeTask()
+//    Day4.executeTask()
+//    Day5.executeTask()
+//    Day6.executeTask()
+//    Day7.executeTask()
+//    Day8.executeTask()
+//    Day9.executeTask()
+//    Day10.executeTask()
+//    Day11.executeTask()
+//    Day12.executeTask()
+//    Day13.executeTask()
+//    Day14.executeTask()
+    Day15.executeTask()
 }

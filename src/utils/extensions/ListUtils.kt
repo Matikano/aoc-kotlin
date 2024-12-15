@@ -123,3 +123,70 @@ fun List<Position>.printPositions(
         println(row.joinToString(""))
     }
 }
+
+fun printPositions(
+    gridBounds: Pair<Int, Int>,
+    firstList: List<Position>,
+    firstChar: Char,
+    secondList: List<Position>,
+    secondChar: Char,
+    thirdList: List<Position>,
+    thirdChar: Char,
+    emptyChar: Char = '.'
+) {
+    val (rows, cols) = gridBounds
+    val grid = Array(rows) { CharArray(cols) { emptyChar } }
+
+    fun List<Position>.markPositions(markerChar: Char) {
+        forEach { position ->
+            val (colIndex, rowIndex) = position
+            if (rowIndex in 0 ..< rows && colIndex in 0 ..< cols) {
+                grid[rowIndex][colIndex] = markerChar
+            }
+        }
+    }
+
+    firstList.markPositions(firstChar)
+    secondList.markPositions(secondChar)
+    thirdList.markPositions(thirdChar)
+
+    for (row in grid) {
+        println(row.joinToString(""))
+    }
+}
+
+fun printScaledPositions(
+    gridBounds: Pair<Int, Int>,
+    firstList: List<Position>,
+    firstChars: List<Char>,
+    secondList: List<Position>,
+    secondChars: List<Char>,
+    thirdList: List<Position>,
+    thirdChars: List<Char>,
+    emptyChar: Char = '.',
+    scale: Int = 2
+) {
+    val (rows, cols) = gridBounds
+    val grid = Array(rows) { CharArray(cols * scale) { emptyChar } }
+
+    val scaledCols = cols * scale
+
+    fun List<Position>.markPositions(markerChars: List<Char>) {
+        forEach { position ->
+            val (colIndex, rowIndex) = position
+            if (rowIndex in 0 ..< rows && colIndex in 0 ..< scaledCols) {
+                markerChars.forEachIndexed { index, markerChar ->
+                    grid[rowIndex][colIndex + index] = markerChar
+                }
+            }
+        }
+    }
+
+    firstList.markPositions(firstChars)
+    secondList.markPositions(secondChars)
+    thirdList.markPositions(thirdChars)
+
+    for (row in grid) {
+        println(row.joinToString(""))
+    }
+}
