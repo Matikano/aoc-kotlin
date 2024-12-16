@@ -1,6 +1,6 @@
 package aoc2024.day_02
 
-import aoc2024.AocTask
+import utils.AocTask
 import utils.extensions.numsInt
 import utils.extensions.subListsWithOneDroppedElement
 

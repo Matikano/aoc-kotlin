@@ -1,6 +1,6 @@
 package aoc2024.day_08
 
-import aoc2024.AocTask
+import utils.AocTask
 import kotlin.time.measureTime
 
 object Day8: AocTask {

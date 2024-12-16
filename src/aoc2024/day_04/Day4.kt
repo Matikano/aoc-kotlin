@@ -1,6 +1,6 @@
 package aoc2024.day_04
 
-import aoc2024.AocTask
+import utils.AocTask
 
 object Day4: AocTask {
 

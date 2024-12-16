@@ -1,6 +1,6 @@
 package aoc2024.day_15
 
-import aoc2024.AocTask
+import utils.AocTask
 import utils.extensions.contains
 import utils.extensions.printPositions
 import utils.extensions.printScaledPositions

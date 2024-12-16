@@ -1,6 +1,6 @@
 package aoc2024.day_06
 
-import aoc2024.AocTask
+import utils.AocTask
 import utils.models.Direction
 import utils.models.Position
 import kotlinx.coroutines.*

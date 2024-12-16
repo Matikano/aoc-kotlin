@@ -1,6 +1,6 @@
 package aoc2024.day_16
 
-import aoc2024.AocTask
+import utils.AocTask
 import utils.models.Grid
 import utils.models.GridCell
 import utils.models.Position

@@ -1,6 +1,6 @@
 package aoc2024.day_03
 
-import aoc2024.AocTask
+import utils.AocTask
 import utils.extensions.numsInt
 
 
