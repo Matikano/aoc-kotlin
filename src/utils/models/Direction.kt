@@ -6,11 +6,21 @@ enum class Direction(val x: Int, val y: Int) {
     DOWN(0, 1),
     LEFT(-1, 0);
 
-    fun nextDirection(): Direction =
+    // Clockwise next direction
+    fun next(): Direction =
         when (this) {
             UP -> RIGHT
             RIGHT -> DOWN
             DOWN -> LEFT
             LEFT -> UP
+        }
+
+    // Clockwise previous direction (counter-clockwise next)
+    fun previous(): Direction =
+        when (this) {
+            UP -> LEFT
+            LEFT -> DOWN
+            DOWN -> RIGHT
+            RIGHT -> UP
         }
 }

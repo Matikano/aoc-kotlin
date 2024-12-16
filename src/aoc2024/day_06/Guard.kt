@@ -28,6 +28,6 @@ data class Guard(
 
     fun turn(obstaclePosition: Position) {
         encounteredObstacles.add(obstaclePosition to direction)
-        direction = direction.nextDirection()
+        direction = direction.next()
     }
 }
