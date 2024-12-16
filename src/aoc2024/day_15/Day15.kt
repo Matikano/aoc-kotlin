@@ -40,30 +40,6 @@ object Day15: AocTask {
     override val fileName: String
         get() = "src/aoc2024/day_15/input.txt"
 
-    private val testInput: String = """
-        ##########
-        #..O..O.O#
-        #......O.#
-        #.OO..O.O#
-        #..O@..O.#
-        #O#..O...#
-        #O..O..O.#
-        #.OO.O.OO#
-        #....O...#
-        ##########
-
-        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
-        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
-        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
-        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
-        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
-        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
-        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
-        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
-        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
-        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
-    """.trimIndent()
-
     override fun executeTask() {
         println("-------------------------------------")
         println("AoC 2024 Task ${this.javaClass.simpleName}")
@@ -91,10 +67,12 @@ object Day15: AocTask {
         boxes.clear()
         walls.clear()
         robot = Position(0, 0)
-        val (grid, directionChain) = split("\n\n")
 
+        val (grid, directionChain) = split("\n\n")
         val gridRows = grid.split('\n')
+
         bounds = gridRows.first().length to gridRows.size
+        directions = directionChain.mapNotNull { it.toDirection() }
 
         gridRows.forEachIndexed { rowIndex, row ->
             row.forEachIndexed { colIndex, char ->
@@ -107,8 +85,6 @@ object Day15: AocTask {
                 }
             }
         }
-
-        directions = directionChain.mapNotNull { it.toDirection() }
     }
 
     private fun Char.toDirection(): Direction? =
@@ -166,15 +142,17 @@ object Day15: AocTask {
             }
 
             if (nextPosition !in walls) {
-                boxes.removeAll(boxPositionsToMove)
-                boxes.addAll(boxPositionsToMove.map { it + direction })
+                boxes.apply {
+                    removeAll(boxPositionsToMove)
+                    addAll(boxPositionsToMove.map { it + direction })
+                }
                 robot += direction
             }
         }
     }
 
     private fun predictRobotMovementScaled() {
-        for (direction in directions) {
+        directions.forEach { direction ->
             val boxPositionsToMove = mutableSetOf(scaledRobot.first)
             var iteration = 0
             var hitWall = false
@@ -194,7 +172,7 @@ object Day15: AocTask {
                 iteration++
             }
 
-            if (hitWall) continue
+            if (hitWall) return@forEach
 
             scaledBoxes.apply {
                 val boxesToMove = filter { it in boxPositionsToMove }.toSet()
