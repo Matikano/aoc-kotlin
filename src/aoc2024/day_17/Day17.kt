@@ -22,20 +22,19 @@ object Day17: AocTask {
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
+        val (computer, program) = readFileToString().toComputer()
+
         measureTime {
-            val (computer, program) = readFileToString().toComputer()
             val output = computer.runProgram(program)
 
             println("Part 1 computer output = $output")
         }.let { println("Part 1 took $it") }
 
         measureTime {
-            val (computer, program) = readFileToString().toComputer()
-            val output = computer.findAForSelfReturn(program)
+            val registerA = computer.findAForSelfReturn(program)
 
-            println("Part 2 computer output = $output")
+            println("Part 2 registerA value for returning input = $registerA")
         }.let { println("Part 2 took $it") }
-
     }
 
     private fun String.toComputer(): Pair<Computer, List<Int>> {
