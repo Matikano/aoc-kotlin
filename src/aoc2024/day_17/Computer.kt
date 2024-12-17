@@ -63,50 +63,6 @@ data class Computer(
         return null
     }
 
-    fun findMinimalRegisterAToOutputItself(
-        target: List<Int>,
-        answer: Long = 0L
-    ): Long? {
-        if (target.isEmpty())
-            return answer
-
-        var a: Long
-        var b: Long
-        var c: Long
-
-        for (t in 0..< 8L) {
-            a = answer shl 3 or t
-            println("T = $t for a = $a")
-
-            /*  Reverse engineered loop body of my program input = 2,4,1,1,7,5,1,5,0,3,4,3,5,5,3,0
-                    Input formatted to pairs:
-                        (2,4) | (1,1) | (7,5) | (1,5) | (0,3) | (4,3) | (5,5) | (3,0)
-
-                        (2,4) -> b = a % 8
-                        (1,1) -> b = b ^ 1
-                        (7,5) -> c = a >> b
-                        (1,5) -> b = b ^ 5
-                        (0,3) -> a = a >> 3
-                        (4,3) -> b = b ^ c
-                        (5,5) -> ouput.add(b % 8)
-                        (3,0) -> if (a != 0) jump 0 else terminate
-            */
-            b = a % 8L
-            b = b xor 1L
-            c = a shr b.toInt()
-            b = b xor 5
-            b = b xor c
-
-            val output = (b % 8).toInt()
-            if (output == target.last()) {
-                return findMinimalRegisterAToOutputItself(target.dropLast(1), a)
-                    ?: continue
-            }
-        }
-
-        return null
-    }
-
     fun runProgram(input: List<Int>): String {
         output.clear()
         var pointer = 0
