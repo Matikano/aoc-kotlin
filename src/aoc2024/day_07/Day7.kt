@@ -14,17 +14,15 @@ object Day7: AocTask {
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
-        val basicOperators = Operator.entries - Operator.CONCATENATE
-        val extendedOperators = Operator.entries
         with(readToList()) {
             // Part 1
             measureTime {
-                println("Sum of valid equations = ${sumOfValid(basicOperators)}")
+                println("Sum of valid equations = ${sumOfValid()}")
             }.let { println("Part one took $it") }
 
             // Part 2
             measureTime {
-                println("Sum of valid equations with concatenation = ${sumOfValid(extendedOperators)}")
+                println("Sum of valid equations with concatenation = ${sumOfValidWithConcat()}")
             }.let { println("Part two took $it") }
         }
     }
@@ -38,23 +36,43 @@ object Day7: AocTask {
             )
         }
 
-    private fun Equation.isValid(operators: List<Operator>): Boolean =
-        operators
-            .repeatingPermutations(operands.size - 1)
-            .any { evaluateOperators(it) }
-
-    private fun Equation.evaluateOperators(operators: List<Operator>): Boolean =
-        with(operands) {
-            tail().foldIndexed(
-                initial = head()
-            ) { index, acc, value ->
-                if (acc > expectedValue)
-                    return false
-                operators[index].calcualte(acc, value)
-            } == expectedValue
+    private fun canObtain(target: Long, operands: List<Long>): Boolean =
+        when {
+            operands.size == 1 -> operands.head() == target
+            else -> {
+                val last = operands.last()
+                val lastDropped = operands.dropLast(1)
+                target % last == 0L && canObtain(target / last, lastDropped) ||
+                        target > last && canObtain(target - last, lastDropped)
+            }
         }
 
-    private fun List<Equation>.sumOfValid(operators: List<Operator>): Long =
-        filter { it.isValid(operators) }
+    private fun canObtainWithConcat(target: Long, operands: List<Long>): Boolean =
+        when {
+            operands.size == 1 -> operands.head() == target
+            else -> {
+                val last = operands.last()
+                val lastDropped = operands.dropLast(1)
+                val targetString = target.toString()
+                val lastString = last.toString()
+                (target % last == 0L && canObtainWithConcat(target / last, lastDropped)) ||
+                        (target > last && canObtainWithConcat(target - last, lastDropped)) ||
+                        (targetString.length > lastString.length && targetString.endsWith(last.toString()) &&
+                            canObtainWithConcat(targetString.dropLast(lastString.length).toLong(), lastDropped))
+            }
+        }
+
+    private val Equation.isValid: Boolean
+        get() = canObtain(expectedValue, operands)
+
+    private val Equation.isValidWithConcat: Boolean
+        get() = canObtainWithConcat(expectedValue, operands)
+
+    private fun List<Equation>.sumOfValid(): Long =
+        filter { it.isValid }
+            .sumOf { it.expectedValue }
+
+    private fun List<Equation>.sumOfValidWithConcat(): Long =
+        filter { it.isValidWithConcat }
             .sumOf { it.expectedValue }
 }

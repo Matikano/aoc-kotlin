@@ -25,7 +25,7 @@ fun main() {
 //    Day4.executeTask()
 //    Day5.executeTask()
 //    Day6.executeTask()
-//    Day7.executeTask()
+    Day7.executeTask()
 //    Day8.executeTask()
 //    Day9.executeTask()
 //    Day10.executeTask()
@@ -35,5 +35,5 @@ fun main() {
 //    Day14.executeTask()
 //    Day15.executeTask()
 //    Day16.executeTask()
-    Day17.executeTask()
+//    Day17.executeTask()
 }
