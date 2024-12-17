@@ -55,9 +55,11 @@ object Day7: AocTask {
                 val lastDropped = operands.dropLast(1)
                 val targetString = target.toString()
                 val lastString = last.toString()
+
                 (target % last == 0L && canObtainWithConcat(target / last, lastDropped)) ||
                         (target > last && canObtainWithConcat(target - last, lastDropped)) ||
-                        (targetString.length > lastString.length && targetString.endsWith(last.toString()) &&
+                        (targetString.length > lastString.length &&
+                            targetString.endsWith(last.toString()) &&
                             canObtainWithConcat(targetString.dropLast(lastString.length).toLong(), lastDropped))
             }
         }
