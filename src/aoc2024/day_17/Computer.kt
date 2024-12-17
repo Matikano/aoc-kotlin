@@ -86,7 +86,8 @@ data class Computer(
             5 -> pointer + out(operand)
             6 -> pointer + bdv(operand)
             7 -> pointer + cdv(operand)
-            else -> throw IllegalArgumentException("Malformed program input! Combo operands of 7 and higher should not appear in the program!")
+            else -> throw IllegalArgumentException("Malformed program input! " +
+                    "Combo operands of 7 and higher should not appear in the program!")
         }
     }
 
