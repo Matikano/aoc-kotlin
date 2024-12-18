@@ -1,9 +1,7 @@
-package aoc2024.day_16
-
-import utils.models.Direction
-import utils.models.Position
+package utils.models
 
 typealias NodeSate = Pair<Position, Direction>
+
 data class Node(
     val position: Position,
     val direction: Direction,

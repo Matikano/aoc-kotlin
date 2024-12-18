@@ -190,3 +190,21 @@ fun printScaledPositions(
         println(row.joinToString(""))
     }
 }
+
+fun <T> List<T>.binarySearchWithCostFunction(startLeft: Int = 0, costFunction: (T) -> Int): T? {
+    var left = startLeft
+    var right = size - 1
+
+    while (left < right) {
+        val mid = (left + right) / 2
+        val value = this[mid]
+
+        if (costFunction(value) == Int.MAX_VALUE) {
+            right = mid
+        } else left = mid + 1
+    }
+
+    return if (left < size && costFunction(this[left]) == Int.MAX_VALUE)
+        this[left]
+    else null
+}

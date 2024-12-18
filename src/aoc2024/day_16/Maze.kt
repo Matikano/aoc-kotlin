@@ -1,9 +1,7 @@
 package aoc2024.day_16
 
 import utils.extensions.printPositions
-import utils.models.Direction
-import utils.models.Grid
-import utils.models.Position
+import utils.models.*
 import java.util.*
 import kotlin.collections.ArrayDeque
 
