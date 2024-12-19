@@ -35,7 +35,7 @@ object Day19: AocTask {
 
             println("Number of valid test input designs = $validDesignsCount")
             println("Sum of possible test arrangement count = $possibleArrangementCount")
-        }.let { println("Test part took $it") }
+        }.let { println("Test part took $it\n") }
 
 
         val (patterns, designs) = Input.data.readToData()
@@ -43,12 +43,12 @@ object Day19: AocTask {
         measureTime {
             val validDesignsCount = designs.count { it.isPossibleDesign(patterns) }
             println("Number of valid designs = $validDesignsCount")
-        }.let { println("Part 1 took $it") }
+        }.let { println("Part 1 took $it\n") }
 
         measureTime {
             val possibleArrangementCount = designs.sumOf {  PossibleDesignArrangementsCount(patterns).invoke(it) }
             println("Sum of possible arrangement count = $possibleArrangementCount")
-        }.let { println("Part 2 took $it") }
+        }.let { println("Part 2 took $it\n") }
     }
 
     private fun String.readToData(): Pair<List<String>, List<String>> {
