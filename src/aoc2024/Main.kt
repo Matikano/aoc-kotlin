@@ -18,6 +18,7 @@ import aoc2024.day_15.Day15
 import aoc2024.day_16.Day16
 import aoc2024.day_17.Day17
 import aoc2024.day_18.Day18
+import aoc2024.day_19.Day19
 
 fun main() {
 //    Day1.executeTask()
@@ -37,5 +38,6 @@ fun main() {
 //    Day15.executeTask()
 //    Day16.executeTask()
 //    Day17.executeTask()
-    Day18.executeTask()
+//    Day18.executeTask()
+    Day19.executeTask()
 }
