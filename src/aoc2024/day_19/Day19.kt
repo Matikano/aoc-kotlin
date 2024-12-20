@@ -20,7 +20,7 @@ object Day19: AocTask {
 
 
     override val fileName: String
-        get() = "src/aoc2024/day_18/input.txt"
+        get() = "src/aoc2024/day_19/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -38,7 +38,7 @@ object Day19: AocTask {
         }.let { println("Test part took $it") }
 
 
-        val (patterns, designs) = Input.data.readToData()
+        val (patterns, designs) = readFileToString().readToData()
 
         measureTime {
             val validDesignsCount = designs.count { it.isPossibleDesign(patterns) }

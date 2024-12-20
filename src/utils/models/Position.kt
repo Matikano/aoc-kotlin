@@ -1,5 +1,7 @@
 package utils.models
 
+import kotlin.math.absoluteValue
+
 data class Position(
     val colIndex: Int,
     val rowIndex: Int
@@ -16,11 +18,20 @@ data class Position(
             rowIndex + other.rowIndex
         )
 
+    operator fun plus(other: Pair<Int, Int>): Position =
+        Position(
+            colIndex + other.first,
+            rowIndex + other.second
+        )
+
     operator fun minus(other: Position): Position =
         Position(
             colIndex - other.colIndex,
             rowIndex - other.rowIndex
         )
+
+    fun difference(other: Position): Int =
+        (colIndex - other.colIndex).absoluteValue + (rowIndex - other.rowIndex).absoluteValue
 
     operator fun compareTo(other: Position): Int =
         when {
