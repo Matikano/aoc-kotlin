@@ -42,7 +42,7 @@ data class Grid(
 
     // Utils
     private fun GridCell<Digit>.getNextSteps(): Set<GridCell<Digit>> =
-        Direction.entries.mapNotNull { direction ->
+        Direction.validDirections.mapNotNull { direction ->
             this@Grid[this@getNextSteps.position + direction]
         }.filter {
             it.value.isNext(value)

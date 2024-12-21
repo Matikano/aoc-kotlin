@@ -22,12 +22,8 @@ data class Maze(
     private val endPosition: Position
         get() = Position(grid.width - 1, grid.height - 1)
 
-    private fun Position.inBounds(): Boolean =
-        colIndex in 0 ..< grid.width &&
-                rowIndex in 0 ..< grid.height
-
     private fun Position.isValid(walls: List<Position>): Boolean =
-        inBounds() && this !in walls
+        grid.isInBounds(this) && this !in walls
 
     fun findBlockingByte(): Position? =
         walls.binarySearchWithCostFunction(
@@ -35,7 +31,6 @@ data class Maze(
         ) { position ->
             solveFor(walls.indexOf(position) + 1)
         }
-
 
     fun solveFor(byteCount: Int): Int {
         val walls = walls.take(byteCount)

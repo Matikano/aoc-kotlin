@@ -19,9 +19,9 @@ data class Maze(
             a.cost compareTo b.cost
         }
         var bestCost = Int.MAX_VALUE
-        val costs = mutableMapOf<NodeSate, Int>().withDefault { Int.MAX_VALUE }
-        val backtrack = mutableMapOf<NodeSate, MutableSet<NodeSate>>()
-        val endStates = mutableSetOf<NodeSate>()
+        val costs = mutableMapOf<NodeState, Int>().withDefault { Int.MAX_VALUE }
+        val backtrack = mutableMapOf<NodeState, MutableSet<NodeState>>()
+        val endStates = mutableSetOf<NodeState>()
         val startingNode = Node(
             position = startPosition,
             direction = Direction.RIGHT,

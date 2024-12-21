@@ -45,7 +45,7 @@ data class Garden(
 
 
     private fun depthFirstSearch(position: Position, char: Char, plantNumber: Int) {
-        val directions = Direction.entries
+        val directions = Direction.validDirections
         if (isValidPosition(position)) {
             if (positionToPlantNumberMap.containsKey(position))
                 return
@@ -72,7 +72,7 @@ data class Garden(
                 position.rowIndex in 0..rows
 
     private fun Plant.perimeter(): Plant = buildList {
-        val directions = Direction.entries
+        val directions = Direction.validDirections
 
         this@perimeter.forEach { cell ->
             val isCellInPerimeter = directions.map { direction ->
@@ -88,7 +88,7 @@ data class Garden(
 
     fun Plant.calculatePerimeter(): Int =
         perimeter().sumOf { cell ->
-            Direction.entries.count { direction ->
+            Direction.validDirections.count { direction ->
                 this[cell.position + direction] == null
             }
         }

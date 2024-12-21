@@ -32,6 +32,13 @@ fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> =
        filterIndexed { index, _ -> index != it }
     }
 
+fun <T> List<T>.pairs(): List<Pair<T, T>> =
+    flatMap { first ->
+        map { second ->
+            first to second
+        }
+    }
+
 fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
     if (size < 2) return emptyList()
 

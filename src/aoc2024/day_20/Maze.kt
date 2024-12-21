@@ -16,10 +16,6 @@ data class Maze(
     private val walls: List<Position>
         get() = grid.cells.filter { it.value == WALL }.map { it.position }
 
-    private fun Position.inBounds(): Boolean =
-        colIndex in 0 ..< grid.width &&
-                rowIndex in 0 ..< grid.height
-
     private val distances = grid.cells.associate {
         it.position to if (it.position == startPosition) 0 else -1
     }.toMutableMap()
@@ -77,9 +73,9 @@ data class Maze(
 
             seen.add(current.position)
 
-            Direction.entries.forEach { direction ->
+            Direction.validDirections.forEach { direction ->
                 val newPosition = current.position + direction
-                if (!newPosition.inBounds() || grid[newPosition]!!.value == WALL || distances[newPosition] != -1)
+                if (!grid.isInBounds(newPosition) || grid[newPosition]!!.value == WALL || distances[newPosition] != -1)
                     return@forEach
                 distances[newPosition] = distances[current.position]!! + 1
                 queue.offer(
