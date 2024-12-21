@@ -1,7 +1,7 @@
 package utils.extensions
 
 import utils.models.Position
-import java.lang.IllegalStateException
+import kotlin.reflect.KFunction
 
 fun <T> List<T>.middleElement(): T =
     if (size % 2 == 0) throw IllegalStateException("List size is even - no middle element")
@@ -32,13 +32,6 @@ fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> =
        filterIndexed { index, _ -> index != it }
     }
 
-fun <T> List<T>.pairs(): List<Pair<T, T>> =
-    flatMap { first ->
-        map { second ->
-            first to second
-        }
-    }
-
 fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
     if (size < 2) return emptyList()
 
@@ -51,28 +44,6 @@ fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
     }
 
     return list
-}
-
-fun <T> List<T>.repeatingPermutations(length: Int): List<List<T>> {
-    if (length == 0) return listOf(emptyList())
-    if (isEmpty()) return emptyList()
-
-    val permutations = mutableListOf<List<T>>()
-
-    fun List<T>.backtrack(current: List<T>) {
-        if (current.size == length) {
-            permutations.add(current)
-            return
-        }
-
-        indices.forEach { index ->
-            backtrack(current + this@backtrack[index],)
-        }
-    }
-
-    backtrack(emptyList())
-
-    return permutations
 }
 
 fun <T> List<T?>.emptySpaces(): List<IntRange> = buildList {
@@ -215,3 +186,21 @@ fun <T> List<T>.binarySearchWithCostFunction(startLeft: Int = 0, costFunction: (
         this[left]
     else null
 }
+
+/**
+ * Create the cartesian product of any number of sets of any size. Useful for parameterized tests
+ * to generate a large parameter space with little code. Note that any type information is lost, as
+ * the returned set contains list of any combination of types in the input set.
+ *
+ *
+ * @param sets Sets.
+ */
+fun cartesianProduct(a: List<*>, vararg sets: List<*>): List<List<*>> =
+    listOf(a).plus(sets).fold(listOf(listOf<Any?>())) { acc, set ->
+            acc.flatMap { list -> set.map { element -> list + element } }
+        }
+
+/**
+ * Transform elements of a cartesian product.
+ */
+fun <T> List<List<*>>.map(transform: KFunction<T>) = map { transform.call(*it.toTypedArray()) }

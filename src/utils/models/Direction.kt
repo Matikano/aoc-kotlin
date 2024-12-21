@@ -27,16 +27,7 @@ enum class Direction(val x: Int, val y: Int) {
             NONE -> NONE
         }
 
-    fun reversed(): Direction =
-        when (this) {
-            UP -> DOWN
-            RIGHT -> LEFT
-            DOWN -> UP
-            LEFT -> RIGHT
-            NONE -> NONE
-        }
-
-    val symobl: Char
+    val symbol: Char
         get() = when (this) {
             UP -> '^'
             RIGHT -> '>'
@@ -47,5 +38,7 @@ enum class Direction(val x: Int, val y: Int) {
 
     companion object {
         val validDirections = Direction.entries.filterNot { it == NONE }
+
+        fun List<Direction>.toSequence(): String = map { it.symbol }.joinToString("") { it.toString() }
     }
 }
