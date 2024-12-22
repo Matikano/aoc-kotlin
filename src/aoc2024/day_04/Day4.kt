@@ -6,7 +6,7 @@ object Day4: AocTask {
 
     private const val TARGET_WORD = "XMAS"
     private const val TARGET_CROSS_WORD = "MAS"
-    private val anyDirectons = listOf(
+    private val anyDirections = listOf(
          0 to  1, // right
          0 to -1, // left
          1 to  0, // down
@@ -53,8 +53,8 @@ object Day4: AocTask {
             val newY = y + second * index
 
             newX in 0 until rows
-                    && newY in 0 until cols
-                    && list[newX][newY] == target[index]
+                && newY in 0 until cols
+                && list[newX][newY] == target[index]
         }
     }
 
@@ -64,7 +64,7 @@ object Day4: AocTask {
 
         indices.forEach { xIndex ->
             (0 until cols).forEach { yIndex ->
-                anyDirectons.forEach { direction ->
+                anyDirections.forEach { direction ->
                     if (direction.isWordFound(xIndex, yIndex, this, target))
                         count++
                 }
@@ -89,10 +89,9 @@ object Day4: AocTask {
             target.indices.forEach { index ->
                 val newX = x + index
                 val newY = y + index
-                if (newX in 0 until rows && newY in 0 until  cols)
+                if (newX in 0 ..< rows && newY in 0 ..<  cols)
                     append(this@isCrossedWordFound[newX][newY])
-                else
-                    return false
+                else return false
             }
         }
 
@@ -100,10 +99,9 @@ object Day4: AocTask {
             target.indices.forEach { index ->
                 val newX = x + index
                 val newY = yWordEnd - index
-                if (newX in 0 until rows && newY in 0 until  cols)
+                if (newX in 0 ..< rows && newY in 0 ..<  cols)
                     append(this@isCrossedWordFound[newX][newY])
-                else
-                    return false
+                else return false
             }
         }
 
@@ -119,7 +117,7 @@ object Day4: AocTask {
         val cols = get(0).length
 
         indices.forEach { xIndex ->
-            (0 until cols).forEach { yIndex ->
+            (0 ..< cols).forEach { yIndex ->
                 if (isCrossedWordFound(xIndex, yIndex, target))
                     count++
             }

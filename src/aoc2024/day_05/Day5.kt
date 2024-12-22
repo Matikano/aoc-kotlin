@@ -24,19 +24,15 @@ object Day5: AocTask {
         val (orderRules, pages) = readFile()
 
         // Part 1
-        val sumOfMiddleElementsOfValidPages =
-            pages
-                .filter { it.isInValidOrder(orderRules) }
-                .sumOf { it.middleElement() }
+        val sumOfMiddleElementsOfValidPages = pages.filter { it.isInValidOrder(orderRules) }
+            .sumOf { it.middleElement() }
 
         println("Sum of middle elements of valid pages = $sumOfMiddleElementsOfValidPages")
 
         // Part 2
-        val sumOfMiddleElementsOfCorrectedPages =
-            pages
-                .filterNot { it.isInValidOrder(orderRules) }
-                .map { it.correctList(orderRules) }
-                .sumOf { it.middleElement() }
+        val sumOfMiddleElementsOfCorrectedPages = pages.filterNot { it.isInValidOrder(orderRules) }
+            .map { it.correctList(orderRules) }
+            .sumOf { it.middleElement() }
 
         println("Sum of middle elements of corrected pages = $sumOfMiddleElementsOfCorrectedPages")
     }

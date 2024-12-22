@@ -43,7 +43,7 @@ object Day7: AocTask {
                 val last = operands.last()
                 val lastDropped = operands.dropLast(1)
                 target % last == 0L && canObtain(target / last, lastDropped) ||
-                        target > last && canObtain(target - last, lastDropped)
+                    target > last && canObtain(target - last, lastDropped)
             }
         }
 
@@ -57,10 +57,10 @@ object Day7: AocTask {
                 val lastString = last.toString()
 
                 (target % last == 0L && canObtainWithConcat(target / last, lastDropped)) ||
-                        (target > last && canObtainWithConcat(target - last, lastDropped)) ||
-                        (targetString.length > lastString.length &&
-                            targetString.endsWith(last.toString()) &&
-                            canObtainWithConcat(targetString.dropLast(lastString.length).toLong(), lastDropped))
+                    (target > last && canObtainWithConcat(target - last, lastDropped)) ||
+                    (targetString.length > lastString.length &&
+                        targetString.endsWith(last.toString()) &&
+                        canObtainWithConcat(targetString.dropLast(lastString.length).toLong(), lastDropped))
             }
         }
 

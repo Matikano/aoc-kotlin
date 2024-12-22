@@ -43,8 +43,8 @@ object Day14: AocTask {
         }
 
         with(readToList()) {
+            // Part 2
             measureTime {
-                // Part 2
                 var count = 0
                 while (map { it.position }.distinct().size != size) {
                     moveRobots()
@@ -72,8 +72,6 @@ object Day14: AocTask {
             }
         }
 
-    private fun List<Robot>.moveRobots(times: Int = 1) = forEach { it.move(times) }
-
     private fun Bounds.toQuadrants(): List<Quadrant> =
         listOf(
             0..< width / 2 to 0..< height / 2,
@@ -82,8 +80,7 @@ object Day14: AocTask {
             width / 2 + 1..< width to height / 2 + 1..< height
         )
 
-    private fun List<List<Robot>>.calculateSafetyFactor(): Int =
-        fold(1) { acc, robots ->
-            acc * robots.size
-        }
+    private fun List<Robot>.moveRobots(times: Int = 1) = forEach { it.move(times) }
+
+    private fun List<List<Robot>>.calculateSafetyFactor(): Int = fold(1) { acc, robots -> acc * robots.size }
 }

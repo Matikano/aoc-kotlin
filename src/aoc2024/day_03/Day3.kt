@@ -27,9 +27,8 @@ object Day3: AocTask {
     private fun readToList(): List<String> =
         MUL_REGEX.toRegex()
             .findAll(readFileToString())
-            .map { matchResult ->
-                matchResult.value
-            }.toList()
+            .map { it.value }
+            .toList()
 
     private fun readToListFiltered(): List<String> = buildList {
         val regex = "$MUL_REGEX|$DO_REGEX|$DONT_REGEX".toRegex()
@@ -44,9 +43,7 @@ object Day3: AocTask {
         }
     }
 
-    private fun List<String>.calculateMultiplications(): Int =
-        sumOf { it.multiplyExpression() }
+    private fun List<String>.calculateMultiplications(): Int = sumOf { it.multiplyExpression() }
 
-    private fun String.multiplyExpression(): Int =
-        numsInt().fold(1) { acc, value -> acc * value }
+    private fun String.multiplyExpression(): Int = numsInt().fold(1) { acc, value -> acc * value }
 }

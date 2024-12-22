@@ -12,7 +12,6 @@ object Day8: AocTask {
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
-
         measureTime {
             // Part 1
             with(readToGrid()) {

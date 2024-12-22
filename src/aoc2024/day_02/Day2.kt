@@ -57,8 +57,8 @@ object Day2: AocTask {
     private fun List<List<Int>>.countSafeRecordsWithDampener(): Int =
         count {
             it.isAscendingWithDifference() or
-                    it.isDescendingWithDifference() or
-                    it.isSafeAfterDampening()
+                it.isDescendingWithDifference() or
+                it.isSafeAfterDampening()
         }
 }
 

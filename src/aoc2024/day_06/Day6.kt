@@ -50,6 +50,7 @@ object Day6: AocTask {
     }
 
     private fun readToGrid(): Grid = Grid(data = readFileToList())
+
     // Part 1
     private fun Grid.findGuardAndObstacles(): Guard {
         data.forEachIndexed { rowIndex, row ->
@@ -82,9 +83,7 @@ object Day6: AocTask {
                 turn(nextPosition)
                 if (isInALoop)
                     break
-            } else {
-                moveToPosition(nextPosition)
-            }
+            } else moveToPosition(nextPosition)
         }
     }
 }

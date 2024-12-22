@@ -12,8 +12,8 @@ data class Grid(
         get() = if (data.isNotEmpty()) data[0].length else 0
 
     fun isInsideGrid(position: Position): Boolean =
-        position.colIndex in 0 until cols &&
-            position.rowIndex in 0 until rows
+        position.colIndex in 0 ..< cols &&
+            position.rowIndex in 0 ..< rows
 
     fun getValue(position: Position): Char =
         data[position.rowIndex][position.colIndex]

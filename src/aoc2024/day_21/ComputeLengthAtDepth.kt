@@ -12,15 +12,13 @@ class ComputeLengthAtDepth(
         sequence: String,
         depth: Int
     ): Long = getOrPut(sequence to depth) {
-        val sequencePairs = (Direction.NONE.symbol + sequence).zip(sequence)
-        if (depth == 1)
-            sequencePairs.sumOf { keypadLengths[it]!! }.toLong()
-        else {
-            sequencePairs.sumOf { symbolPair ->
-                keypadSequences[symbolPair]!!.minOf { subsequence ->
+        (Direction.NONE.symbol + sequence)
+            .zip(sequence)
+            .sumOf { symbolPair ->
+                if (depth == 1) keypadLengths[symbolPair]!!.toLong()
+                else keypadSequences[symbolPair]!!.minOf { subsequence ->
                     recurse(subsequence.toSequence(), depth - 1)
                 }
             }
-        }
     }
 }

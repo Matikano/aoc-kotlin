@@ -18,8 +18,8 @@ data class Computer(
         if (target.isEmpty())
             return answer
 
-        (0..< 8L).forEach { testValue ->
-            val a = answer shl 3 or testValue
+        repeat(8) { testValue ->
+            val a = answer shl 3 or testValue.toLong()
             var b = 0L
             var c = 0L
             var output: Int? = null
@@ -55,9 +55,8 @@ data class Computer(
                     7 -> c = a shr operand.toComboOperand().toInt()
                 }
 
-                if (output == target.last()) {
+                if (output == target.last())
                     return findAForSelfReturn(program = program, target = target.dropLast(1), a) ?: continue
-                }
             }
         }
         return null
