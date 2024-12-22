@@ -1,6 +1,7 @@
 package aoc2024.day_19
 
 import utils.AocTask
+import utils.extensions.tail
 import kotlin.time.measureTime
 
 object Day19: AocTask {
@@ -27,7 +28,7 @@ object Day19: AocTask {
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
-        val (testPatterns, testDesigns) = testInput.readToData()
+        val (testPatterns, testDesigns) = testInput.lines().readToData()
 
         measureTime {
             val validDesignsCount = testDesigns.count { it.isPossibleDesign(testPatterns) }
@@ -38,7 +39,7 @@ object Day19: AocTask {
         }.let { println("Test part took $it\n") }
 
 
-        val (patterns, designs) = readFileToString().readToData()
+        val (patterns, designs) = readFileToList().readToData()
 
         measureTime {
             val validDesignsCount = designs.count { it.isPossibleDesign(patterns) }
@@ -51,11 +52,11 @@ object Day19: AocTask {
         }.let { println("Part 2 took $it\n") }
     }
 
-    private fun String.readToData(): Pair<List<String>, List<String>> {
-        val (patternsChain, designsSegment) = split("\n\n")
+    private fun List<String>.readToData(): Pair<List<String>, List<String>> {
+        val (patternsChain, designsSegment) = first() to tail().tail().toList()
 
         val patterns = patternsChain.split(", ").map { it.trim() }
-        val designs = designsSegment.lines().map { it.trim() }
+        val designs = designsSegment.map { it.trim() }
 
         return patterns to designs
     }

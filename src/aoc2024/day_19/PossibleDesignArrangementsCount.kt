@@ -8,13 +8,9 @@ class PossibleDesignArrangementsCount(
     override fun MutableMap<String, Long>.recurse(design: String): Long =
         getOrPut(design) {
             if (design.isEmpty()) 1L
-            else {
-                var count = 0L
-                for (pattern in patterns) {
-                    if (design.startsWith(pattern))
-                        count += recurse(design.substringAfter(pattern))
-                }
-                count
+            else patterns.sumOf { pattern ->
+                if (design.startsWith(pattern)) recurse(design.substringAfter(pattern))
+                else 0
             }
         }
 }
