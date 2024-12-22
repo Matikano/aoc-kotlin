@@ -19,7 +19,6 @@ object Day19: AocTask {
         bbrgwb
     """.trimIndent()
 
-
     override val fileName: String
         get() = "src/aoc2024/day_19/input.txt"
 
@@ -31,8 +30,8 @@ object Day19: AocTask {
         val (testPatterns, testDesigns) = testInput.lines().readToData()
 
         measureTime {
-            val validDesignsCount = testDesigns.count { it.isPossibleDesign(testPatterns) }
-            val possibleArrangementCount = testDesigns.sumOf { PossibleDesignArrangementsCount(testPatterns).invoke(it) }
+            val validDesignsCount = testDesigns.count { it.isPossible(testPatterns) }
+            val possibleArrangementCount = testDesigns.sumOf { it.possibleDesignArrangements(testPatterns) }
 
             println("Number of valid test input designs = $validDesignsCount")
             println("Sum of possible test arrangement count = $possibleArrangementCount")
@@ -42,12 +41,12 @@ object Day19: AocTask {
         val (patterns, designs) = readFileToList().readToData()
 
         measureTime {
-            val validDesignsCount = designs.count { it.isPossibleDesign(patterns) }
+            val validDesignsCount = designs.count { it.isPossible(patterns) }
             println("Number of valid designs = $validDesignsCount")
         }.let { println("Part 1 took $it\n") }
 
         measureTime {
-            val possibleArrangementCount = designs.sumOf {  PossibleDesignArrangementsCount(patterns).invoke(it) }
+            val possibleArrangementCount = designs.sumOf {  it.possibleDesignArrangements(patterns) }
             println("Sum of possible arrangement count = $possibleArrangementCount")
         }.let { println("Part 2 took $it\n") }
     }
@@ -61,9 +60,9 @@ object Day19: AocTask {
         return patterns to designs
     }
 
-    private fun String.isPossibleDesign(patterns: List<String>): Boolean =
-        if (isEmpty()) true
-        else patterns.any { pattern ->
-            startsWith(pattern) && substringAfter(pattern).isPossibleDesign(patterns)
-        }
+    private fun String.possibleDesignArrangements(patterns: List<String>): Long =
+        PossibleDesignArrangementsCount(patterns)(this)
+
+    private fun String.isPossible(patterns: List<String>): Boolean =
+        CheckDesignPossibility(patterns)(this)
 }
