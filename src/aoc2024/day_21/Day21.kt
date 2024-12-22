@@ -45,15 +45,15 @@ object Day21: AocTask {
     override val fileName: String
         get() = "src/aoc2024/day_21/input.txt"
 
-    val numpadSequences by lazy {
+    private val numpadSequences by lazy {
         NUMERIC_LAYOUT.layoutToGrid().sequences()
     }
 
-    val keypadSequences by lazy {
+    private val keypadSequences by lazy {
         KEYPAD_LAYOUT.layoutToGrid().sequences()
     }
 
-    val keypadLengths by lazy {
+    private val keypadLengths by lazy {
         keypadSequences.map { (key, value) ->
             key to value.first().size
         }.toMap()
