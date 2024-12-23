@@ -7,7 +7,7 @@ import kotlin.time.measureTime
 
 typealias Quadrant = Pair<IntRange, IntRange>
 
-object Day14: AocTask {
+object Day14: AocTask() {
 
     private const val ITERATIONS = 100
     private val GRID_BOUNDS = Bounds(
@@ -18,9 +18,6 @@ object Day14: AocTask {
     private val quadrants = GRID_BOUNDS.toQuadrants()
     private operator fun Quadrant.contains(position: Position): Boolean =
         position.colIndex in first && position.rowIndex in second
-
-    override val fileName: String
-        get() = "src/aoc2024/day_14/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -56,7 +53,7 @@ object Day14: AocTask {
     }
 
     private fun readToList(): List<Robot> =
-        readFileToList().map { line ->
+        inputToList().map { line ->
             line.numsInt().let { (px, py, dx, dy) ->
                 Robot(
                     position = Position(

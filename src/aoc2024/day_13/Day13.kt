@@ -4,21 +4,18 @@ import utils.AocTask
 import utils.extensions.numsLong
 import kotlin.time.measureTime
 
-object Day13: AocTask {
+object Day13: AocTask() {
 
     private const val BUTTON_A_COST = 3L
     private const val BUTTON_B_COST = 1L
     private const val PART_2_PRIZE_CORRECTION = 10000000000000L
-
-    override val fileName: String
-        get() = "src/aoc2024/day_13/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
-        with(readFileToString().toClawMachineList()) {
+        with(inputToString().toClawMachineList()) {
             measureTime {
                 // Part 1
                 println("Sum of tokens = ${sumOfTokens()}")

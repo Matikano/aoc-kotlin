@@ -9,7 +9,7 @@ import utils.models.Position
 import utils.models.Position.Companion.plus
 import kotlin.time.measureTime
 
-object Day15: AocTask {
+object Day15: AocTask() {
 
     private const val SCALE_FACTOR = 2
 
@@ -37,16 +37,13 @@ object Day15: AocTask {
     private lateinit var directions: List<Direction>
     private lateinit var bounds: Pair<Int, Int>
 
-    override val fileName: String
-        get() = "src/aoc2024/day_15/input.txt"
-
     override fun executeTask() {
         println("-------------------------------------")
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
         measureTime {
-            readFileToString().loadInput()
+            inputToString().loadInput()
             predictRobotMovement()
 
             val sumOfGPSCoordinates = boxes.toList().sumOfGPSCoordinates()
@@ -54,7 +51,7 @@ object Day15: AocTask {
         }.let { println("Part 1 took $it") }
 
         measureTime {
-            readFileToString().loadInput()
+            inputToString().loadInput()
             scaleInput()
             predictRobotMovementScaled()
 

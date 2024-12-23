@@ -3,49 +3,10 @@ package aoc2024.day_23
 import utils.AocTask
 import kotlin.time.measureTime
 
-
-object Day23: AocTask {
+object Day23: AocTask() {
 
     private const val INTERCONNECTION_SIZE = 3
     private const val COMPUTER_FIRST_CHAR = 't'
-
-    private val testInput = """
-        kh-tc
-        qp-kh
-        de-cg
-        ka-co
-        yn-aq
-        qp-ub
-        cg-tb
-        vc-aq
-        tb-ka
-        wh-tc
-        yn-cg
-        kh-ub
-        ta-co
-        de-co
-        tc-td
-        tb-wq
-        wh-td
-        ta-ka
-        td-qp
-        aq-cg
-        wq-ub
-        ub-vc
-        de-ta
-        wq-aq
-        wq-vc
-        wh-yn
-        ka-de
-        kh-ta
-        co-tc
-        wh-qp
-        tb-vc
-        td-yn
-    """.trimIndent()
-
-    override val fileName: String
-        get() = "src/aoc2024/day_23/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -65,7 +26,7 @@ object Day23: AocTask {
         lateinit var network: Network
 
         measureTime {
-            network = readFileToList().toNetwork()
+            network = inputToList().toNetwork()
         }.let { println("Network initialization took $it") }
 
         measureTime {

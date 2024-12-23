@@ -3,9 +3,7 @@ package aoc2024.day_09
 import utils.AocTask
 import kotlin.time.measureTime
 
-object Day9: AocTask {
-    override val fileName: String
-        get() = "src/aoc2024/day_09/input.txt"
+object Day9: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -28,5 +26,5 @@ object Day9: AocTask {
     }
 
     private fun readToDiskMap(): DiskMap =
-        DiskMap(readFileToString().trim())
+        DiskMap(inputToString().trim())
 }

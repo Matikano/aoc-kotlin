@@ -16,11 +16,11 @@ import kotlin.time.measureTime
 
 typealias Sequences = Map<Pair<Char, Char>, MutableList<List<Direction>>>
 
-object Day21: AocTask {
+object Day21: AocTask() {
 
-    const val GAP_SYMBOL = '#'
-    const val PART_1_KEYPAD_ROBOTS_COUNT = 2
-    const val PART_2_KEYPAD_ROBOTS_COUNT = 25
+    private const val GAP_SYMBOL = '#'
+    private const val PART_1_KEYPAD_ROBOTS_COUNT = 2
+    private const val PART_2_KEYPAD_ROBOTS_COUNT = 25
 
     private val NUMERIC_LAYOUT = """
         789
@@ -33,17 +33,6 @@ object Day21: AocTask {
         #^A
         <v>
         """.trimIndent()
-
-    private val testInput = """
-        029A
-        980A
-        179A
-        456A
-        379A
-    """.trimIndent()
-
-    override val fileName: String
-        get() = "src/aoc2024/day_21/input.txt"
 
     private val numpadSequences by lazy {
         NUMERIC_LAYOUT.layoutToGrid().sequences()
@@ -66,18 +55,18 @@ object Day21: AocTask {
 
         measureTime {
             val sumOfComplexities = testInput.lines()
-                .sumOf { it.complexity(PART_1_KEYPAD_ROBOTS_COUNT)}
+                .sumOf { it.complexity(PART_1_KEYPAD_ROBOTS_COUNT) }
             println("Test part complexity sum = $sumOfComplexities")
         }.let { println("Test part took $it") }
 
         measureTime {
-            val complexitySum = readFileToList()
-                .sumOf { it.complexity(PART_1_KEYPAD_ROBOTS_COUNT )}
+            val complexitySum = inputToList()
+                .sumOf { it.complexity(PART_1_KEYPAD_ROBOTS_COUNT ) }
             println("Complexity sum for $PART_1_KEYPAD_ROBOTS_COUNT keypadRobots equals: $complexitySum")
         }.let { println("Part 1 took $it") }
 
         measureTime {
-            val complexitySum = readFileToList()
+            val complexitySum = inputToList()
                 .sumOf { it.complexity(PART_2_KEYPAD_ROBOTS_COUNT ) }
             println("Complexity sum for $PART_2_KEYPAD_ROBOTS_COUNT keypadRobots equals: $complexitySum")
         }.let { println("Part 2 took $it") }

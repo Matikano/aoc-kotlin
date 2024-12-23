@@ -4,10 +4,7 @@ import utils.AocTask
 import utils.extensions.*
 import kotlin.time.measureTime
 
-object Day7: AocTask {
-
-    override val fileName: String
-        get() = "src/aoc2024/day_07/input.txt"
+object Day7: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -28,7 +25,7 @@ object Day7: AocTask {
     }
 
     private fun readToList(): List<Equation> =
-        readFileToList().map { line ->
+        inputToList().map { line ->
             val numbers = line.numsLong()
             Equation(
                 expectedValue = numbers.head(),

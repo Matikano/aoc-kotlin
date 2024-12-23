@@ -5,9 +5,7 @@ import utils.models.GridCell
 import utils.models.Position
 import kotlin.time.measureTime
 
-object Day12: AocTask {
-    override val fileName: String
-        get() = "src/aoc2024/day_12/input.txt"
+object Day12: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -30,7 +28,7 @@ object Day12: AocTask {
 
     private fun readToGarden(): Garden =
         Garden(
-            fields = readFileToList().flatMapIndexed {  rowIndex, row ->
+            fields = inputToList().flatMapIndexed { rowIndex, row ->
                 row.indices.map { colIndex ->
                     GridCell(
                         value = row[colIndex],

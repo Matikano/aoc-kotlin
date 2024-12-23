@@ -8,13 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.measureTime
 
 
-object Day6: AocTask {
+object Day6: AocTask() {
 
     private const val OBSTACLE = '#'
     private const val CHARACTER = '^'
-
-    override val fileName: String
-        get() = "src/aoc2024/day_06/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -49,7 +46,7 @@ object Day6: AocTask {
         }
     }
 
-    private fun readToGrid(): Grid = Grid(data = readFileToList())
+    private fun readToGrid(): Grid = Grid(data = inputToList())
 
     // Part 1
     private fun Grid.findGuardAndObstacles(): Guard {

@@ -4,9 +4,7 @@ import utils.AocTask
 import utils.extensions.numsInt
 import kotlin.math.absoluteValue
 
-object Day1: AocTask {
-    override val fileName: String
-        get() = "src/aoc2024/day_01/input.txt"
+object Day1: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -23,7 +21,7 @@ object Day1: AocTask {
     }
 
     private fun readToLists(): Pair<List<Int>, List<Int>> =
-        readFileToList().map {
+        inputToList().map {
             val (first, second) = it.numsInt()
             first to second
         }.let { list ->

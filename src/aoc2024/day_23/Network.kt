@@ -34,8 +34,7 @@ data class Network(
             }
         }
 
-    private fun List<Connection>.storeConnections() =
-        forEach(connections::safeAdd)
+    private fun List<Connection>.storeConnections() = forEach(connections::safeAdd)
 
     private fun search(
         computer: String,

@@ -7,13 +7,10 @@ import kotlin.time.measureTime
 typealias Stone = Long
 typealias Iterations = Int
 
-object Day11: AocTask {
+object Day11: AocTask() {
 
     private const val PART_1_ITERATIONS = 25
     private const val PART_2_ITERATIONS = 75
-
-    override val fileName: String
-        get() = "src/aoc2024/day_11/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -34,5 +31,5 @@ object Day11: AocTask {
     }
 
     private fun readToList(): List<Stone> =
-        readFileToString().numsLong()
+        inputToString().numsLong()
 }

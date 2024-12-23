@@ -4,10 +4,7 @@ import utils.AocTask
 import utils.models.GridCell
 import utils.models.Position
 
-object Day10: AocTask {
-
-    override val fileName: String
-        get() = "src/aoc2024/day_10/input.txt"
+object Day10: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -25,7 +22,7 @@ object Day10: AocTask {
 
     private fun readToGrid(): Grid =
         Grid(
-            cells = readFileToList().flatMapIndexed { rowIndex, row ->
+            cells = inputToList().flatMapIndexed { rowIndex, row ->
                 row.indices.map { colIndex ->
                     GridCell(
                         value = Digit.entries[row[colIndex].digitToInt()],

@@ -4,13 +4,11 @@ import utils.AocTask
 import utils.extensions.numsInt
 
 
-object Day3: AocTask {
+object Day3: AocTask() {
 
     private const val MUL_REGEX = """mul\(\d{1,3},\d{1,3}\)"""
     private const val DO_REGEX = """do\(\)"""
     private const val DONT_REGEX = """don't\(\)"""
-    override val fileName: String
-        get() = "src/aoc2024/day_03/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -26,7 +24,7 @@ object Day3: AocTask {
 
     private fun readToList(): List<String> =
         MUL_REGEX.toRegex()
-            .findAll(readFileToString())
+            .findAll(inputToString())
             .map { it.value }
             .toList()
 
@@ -34,7 +32,7 @@ object Day3: AocTask {
         val regex = "$MUL_REGEX|$DO_REGEX|$DONT_REGEX".toRegex()
         var enabled = true
 
-        regex.findAll(readFileToString()).forEach { matchResult ->
+        regex.findAll(inputToString()).forEach { matchResult ->
             when (matchResult.value) {
                 "do()" -> enabled = true
                 "don't()" -> enabled = false

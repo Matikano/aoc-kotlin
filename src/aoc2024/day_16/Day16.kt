@@ -6,17 +6,14 @@ import utils.models.GridCell
 import utils.models.Position
 import kotlin.time.measureTime
 
-object Day16: AocTask {
-
-    override val fileName: String
-        get() = "src/aoc2024/day_16/input.txt"
+object Day16: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
         println("AoC 2024 Task ${this.javaClass.simpleName}")
         println()
 
-        with(readFileToList().toMaze()) {
+        with(inputToList().toMaze()) {
             measureTime {
                 val mazeResult = solve()
 

@@ -5,13 +5,10 @@ import utils.extensions.numsInt
 import utils.extensions.subListsWithOneDroppedElement
 
 
-object Day2: AocTask {
+object Day2: AocTask() {
 
     private const val MIN_DIFFERENCE = 1
     private const val MAX_DIFFERENCE = 3
-
-    override val fileName: String
-        get() = "src/aoc2024/day_02/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -27,7 +24,7 @@ object Day2: AocTask {
         }
     }
 
-    private fun readToList(): List<List<Int>> = readFileToList().map { it.numsInt() }
+    private fun readToList(): List<List<Int>> = inputToList().map { it.numsInt() }
 
     // Part 1
     private fun List<List<Int>>.countSafeRecords(): Int =

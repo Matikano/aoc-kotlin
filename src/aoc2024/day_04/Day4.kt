@@ -2,7 +2,7 @@ package aoc2024.day_04
 
 import utils.AocTask
 
-object Day4: AocTask {
+object Day4: AocTask() {
 
     private const val TARGET_WORD = "XMAS"
     private const val TARGET_CROSS_WORD = "MAS"
@@ -16,8 +16,6 @@ object Day4: AocTask {
          1 to -1, // up-left
         -1 to  1 // up-right
     )
-    override val fileName: String
-        get() = "src/aoc2024/day_04/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -35,7 +33,7 @@ object Day4: AocTask {
 
     private fun readToList(): List<String> =
         mutableListOf<String>().apply {
-            readFileByLines { add(it) }
+            inputByLines { add(it) }
         }
 
     // Part 1

@@ -4,7 +4,7 @@ import utils.AocTask
 import utils.extensions.numsInt
 import kotlin.time.measureTime
 
-object Day2: AocTask {
+object Day2: AocTask() {
 
     private const val MAX_RED = 12
     private const val MAX_GREEN = 13
@@ -16,15 +16,12 @@ object Day2: AocTask {
         "red"
     )
 
-    override val fileName: String
-        get() = "src/aoc2023/day_02/input.txt"
-
     override fun executeTask() {
         println("-------------------------------------")
         println("AoC 2023 Task ${this.javaClass.simpleName}")
         println()
 
-        with(readFileToList().toGames()) {
+        with(inputToList().toGames()) {
             measureTime {
                 val sumOfIds = filter { it.isValid() }.sumOf { it.id }
                 println("Sum of valid games ids = $sumOfIds")

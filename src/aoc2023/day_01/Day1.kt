@@ -1,19 +1,9 @@
 package aoc2023.day_01
 
 import utils.AocTask
-import utils.extensions.numsInt
-import java.util.Collections
 import kotlin.time.measureTime
 
-object Day1: AocTask {
-
-    private val testInput = """two1nine
-eightwothree
-abcone2threexyz
-xtwone3four
-4nineeightseven2
-zoneight234
-7pqrstsixteen"""
+object Day1: AocTask() {
 
     private val correctionTable = mapOf(
         "one" to 1,
@@ -27,21 +17,18 @@ zoneight234
         "nine" to 9
     )
 
-    override val fileName: String
-        get() = "src/aoc2023/day_01/input.txt"
-
     override fun executeTask() {
         println("-------------------------------------")
         println("AoC 2023 Task ${this.javaClass.simpleName}")
         println()
 
-        with(readFileToList().toListOfNumbers()) {
+        with(inputToList().toListOfNumbers()) {
             measureTime {
                 println("Calibration sum = ${calibrationSum()}")
             }.let { println("Part 1 took $it") }
         }
 
-        with(readFileToList().toListOfNumbersCorrected()) {
+        with(inputToList().toListOfNumbersCorrected()) {
             measureTime {
                 println("Calibration sum of corrected list = ${sum()}")
             }.let { println("Part 2 took $it") }

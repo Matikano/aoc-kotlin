@@ -3,9 +3,7 @@ package aoc2024.day_08
 import utils.AocTask
 import kotlin.time.measureTime
 
-object Day8: AocTask {
-    override val fileName: String
-        get() = "src/aoc2024/day_08/input.txt"
+object Day8: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -31,5 +29,5 @@ object Day8: AocTask {
     }
 
     private fun readToGrid(): Grid =
-        Grid(rows = readFileToList().toMutableList())
+        Grid(rows = inputToList().toMutableList())
 }

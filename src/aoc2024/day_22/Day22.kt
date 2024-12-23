@@ -4,7 +4,7 @@ import utils.AocTask
 import utils.extensions.numsLong
 import kotlin.time.measureTime
 
-object Day22: AocTask {
+object Day22: AocTask() {
 
     private const val PRICE_CHANGE_SEQUENCE_SIZE = 4
     private const val SECRET_NUMBERS_COUNT = 2000
@@ -13,17 +13,7 @@ object Day22: AocTask {
     private const val STEP_2_SHIFT = 5
     private const val STEP_3_SHIFT = 11
 
-    private val testInput = """
-            1
-            2
-            3
-            2024
-    """.trimIndent()
-
     private val sequenceToTotal: MutableMap<List<Long>, Long> = mutableMapOf()
-
-    override val fileName: String
-        get() = "src/aoc2024/day_22/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -39,7 +29,7 @@ object Day22: AocTask {
         }.let { println("Test of Part 1 took $it") }
 
         measureTime {
-            readFileToString().numsLong().sumOf {
+            inputToString().numsLong().sumOf {
                 it.getNthSecretNumber(SECRET_NUMBERS_COUNT)
             }.let { sum ->
                 println("Sum of part 1 values of 2000th secret numbers = $sum")
@@ -47,7 +37,7 @@ object Day22: AocTask {
         }.let { println("Part 1 took $it") }
 
         measureTime {
-            val initialSecretNumbers = readFileToString().numsLong()
+            val initialSecretNumbers = inputToString().numsLong()
             val prices = initialSecretNumbers.map { it.toListOfSecretNumbers(SECRET_NUMBERS_COUNT).toPrices() }
             prices.forEach { it.getBananasForEachSequence() }
 

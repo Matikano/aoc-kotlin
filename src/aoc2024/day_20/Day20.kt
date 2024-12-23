@@ -6,31 +6,10 @@ import utils.models.GridCell
 import utils.models.Position
 import kotlin.time.measureTime
 
-object Day20: AocTask {
+object Day20: AocTask() {
 
     const val MIN_SAVE_TIME = 100
-    const val MAX_CHEATS = 20
-
-    private val testInput = """
-        ###############
-        #...#...#.....#
-        #.#.#.#.#.###.#
-        #S#...#.#.#...#
-        #######.#.#.###
-        #######.#.#...#
-        #######.#.###.#
-        ###..E#...#...#
-        ###.#######.###
-        #...###...#...#
-        #.#####.#.###.#
-        #.#...#.#.#...#
-        #.#.#.#.#.#.###
-        #...#...#...###
-        ###############
-    """.trimIndent()
-
-    override val fileName: String
-        get() = "src/aoc2024/day_20/input.txt"
+    private const val MAX_CHEATS = 20
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -41,21 +20,19 @@ object Day20: AocTask {
             measureTime {
                 val standardRaceTime = solve()
                 println("Test race standard race time = $standardRaceTime")
-                printDistances()
                 solveFromEnd()
-                println("--------------------------------------------")
-                printReversedDistances()
-                val cheatPositionsCount = cheatPositionsCount(minDifference = 2)
 
+                val cheatPositionsCount = cheatPositionsCount(minDifference = 2)
                 println("Count of cheat paths = $cheatPositionsCount")
             }
         }
 
-        with(readFileToList().toMaze()) {
+        with(inputToList().toMaze()) {
             measureTime {
                 val standardRaceTime = solve()
                 solveFromEnd()
                 println("Standard race time = $standardRaceTime")
+
                 val cheatScoresCount = cheatPositionsCount()
                 println("Number of cheats that would save at least $MIN_SAVE_TIME = $cheatScoresCount")
             }.let { println("Part 1 took $it") }

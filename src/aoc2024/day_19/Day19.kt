@@ -4,23 +4,7 @@ import utils.AocTask
 import utils.extensions.tail
 import kotlin.time.measureTime
 
-object Day19: AocTask {
-
-    private val testInput = """
-        r, wr, b, g, bwu, rb, gb, br
-
-        brwrr
-        bggr
-        gbbr
-        rrbgbr
-        ubwu
-        bwurrg
-        brgr
-        bbrgwb
-    """.trimIndent()
-
-    override val fileName: String
-        get() = "src/aoc2024/day_19/input.txt"
+object Day19: AocTask() {
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -38,7 +22,7 @@ object Day19: AocTask {
         }.let { println("Test part took $it\n") }
 
 
-        val (patterns, designs) = readFileToList().readToData()
+        val (patterns, designs) = inputToList().readToData()
 
         measureTime {
             val validDesignsCount = designs.count { it.isPossible(patterns) }

@@ -8,13 +8,10 @@ import utils.extensions.swap
 typealias Rule = Pair<Int, Int>
 typealias Page = List<Int>
 
-object Day5: AocTask {
+object Day5: AocTask() {
 
     private const val RULE_SEPARATOR = '|'
     private const val PAGE_SEPARATOR = ','
-
-    override val fileName: String
-        get() = "src/aoc2024/day_05/input.txt"
 
     override fun executeTask() {
         println("-------------------------------------")
@@ -41,7 +38,7 @@ object Day5: AocTask {
         val orderRules = mutableListOf<Pair<Int, Int>>()
         val pages = mutableListOf<List<Int>>()
 
-        readFileByLines { line ->
+        inputByLines { line ->
             if (line.contains(RULE_SEPARATOR)) {
                 val (first, second) = line.numsInt()
                 orderRules.add(first to second)
