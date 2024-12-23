@@ -83,7 +83,8 @@ object Day23: AocTask {
 
     private fun search(computer: String, requiredConnections: Set<String>) {
         val key = requiredConnections.sorted().toSet()
-        if (key in interconnections) return
+        if (key in interconnections)
+            return
         interconnections.add(key)
 
         connections[computer]!!.forEach { neighbour ->
