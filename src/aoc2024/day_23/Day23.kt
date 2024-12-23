@@ -1,14 +1,13 @@
 package aoc2024.day_23
 
 import utils.AocTask
-import utils.extensions.initializeIfNotPresent
 import kotlin.time.measureTime
 
-typealias Connection = Pair<String, String>
 
 object Day23: AocTask {
 
-    private const val INITIAL_TUPLE_SIZE = 3
+    private const val INTERCONNECTION_SIZE = 3
+    private const val COMPUTER_FIRST_CHAR = 't'
 
     private val testInput = """
         kh-tc
@@ -45,8 +44,7 @@ object Day23: AocTask {
         td-yn
     """.trimIndent()
 
-    private val connections = mutableMapOf<String, MutableSet<String>>()
-    private val interconnections = mutableSetOf<Set<String>>()
+
 
     override val fileName: String
         get() = "src/aoc2024/day_23/input.txt"
@@ -57,75 +55,40 @@ object Day23: AocTask {
         println()
 
         measureTime {
-            testInput.lines().toConnections().populateConnectionMaps()
-            val connectionTriplesWithTSize = countOfConnectionThatStartWithOfSize('t')
-            println("TEST: Number of interconnected triplets with computer that starts with 't' = $connectionTriplesWithTSize")
+            val network = testInput.lines().toNetwork()
+            val connectionTriplesWithTSize = network.countOfConnectionThatStartWithOfSize(
+                firstChar = COMPUTER_FIRST_CHAR,
+                size = INTERCONNECTION_SIZE
+            )
+            println("TEST: Number of interconnected triplets " +
+                    "with computer that starts with $COMPUTER_FIRST_CHAR = $connectionTriplesWithTSize")
         }.let { println("Test part took $it") }
 
+        lateinit var network: Network
+
         measureTime {
-            readFileToList().toConnections().populateConnectionMaps()
-            val connectionTriplesWithTSize = countOfConnectionThatStartWithOfSize('t')
-            println("Number of interconnected triplets with computer that starts with 't' = $connectionTriplesWithTSize")
+            network = readFileToList().toNetwork()
+        }.let { println("Network initialization took $it") }
+
+        measureTime {
+            val connectionTriplesWithTSize = network.countOfConnectionThatStartWithOfSize(
+                firstChar = COMPUTER_FIRST_CHAR,
+                size = INTERCONNECTION_SIZE
+            )
+            println("Number of interconnections of size = $INTERCONNECTION_SIZE " +
+                    "with computer that starts with $COMPUTER_FIRST_CHAR = $connectionTriplesWithTSize")
         }.let { println("Part 1 took $it") }
 
         measureTime {
-            println("Password for part 2 = ${getPassword()}")
+            println("Password for part 2 = ${network.password}")
         }.let { println("Part 2 took $it") }
     }
 
-    private fun getPassword(): String {
-        val biggestInterconnectionSize = interconnections.maxOf { it.size }
-        return interconnections
-            .first { it.size == biggestInterconnectionSize }
-            .sorted()
-            .joinToString(",")
-    }
-
-    private fun search(computer: String, requiredConnections: Set<String>) {
-        val key = requiredConnections.sorted().toSet()
-        if (key in interconnections)
-            return
-        interconnections.add(key)
-
-        connections[computer]!!.forEach { neighbour ->
-            if (neighbour in requiredConnections) return@forEach
-            if (requiredConnections.any { query -> neighbour !in connections[query]!! }) return@forEach
-            search(neighbour, requiredConnections + neighbour)
-        }
-    }
-
-    private fun countOfConnectionThatStartWithOfSize(firstChar: Char, size: Int = INITIAL_TUPLE_SIZE): Int =
-        findInterconnectionOfSize(size).count { interconnection ->
-            interconnection.any { computer ->
-                computer.startsWith(firstChar)
+    private fun List<String>.toNetwork(): Network =
+        Network(
+            connectedComputers = map { line ->
+                val (first, second) = line.split('-')
+                first to second
             }
-        }
-
-    private fun findInterconnectionOfSize(size: Int = INITIAL_TUPLE_SIZE): Set<Set<String>> =
-        interconnections.filter { it.size == size }.toSet()
-
-    private fun findAllInterconnections() =
-        connections.keys.forEach { computer ->
-            computer.searchForInterconnections()
-        }
-
-    private fun String.searchForInterconnections() =
-        search(this, setOf(this))
-
-    private fun List<Connection>.populateConnectionMaps() =
-        forEach { (first, second) ->
-            connections.initializeIfNotPresent(first)
-            connections.initializeIfNotPresent(second)
-            connections[first]!!.add(second)
-            connections[second]!!.add(first)
-        }.also { findAllInterconnections() }
-
-    private fun List<String>.toConnections(): List<Connection> =
-        map { line ->
-            val (first, second) = line.split('-').sorted().distinct()
-            first to second
-        }.also {
-            connections.clear()
-            interconnections.clear()
-        }
+        )
 }

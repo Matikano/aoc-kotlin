@@ -1,0 +1,63 @@
+package aoc2024.day_23
+
+import utils.extensions.initializeIfNotPresent
+
+typealias Connection = Pair<String, String>
+
+data class Network(
+    private val connectedComputers: List<Connection>
+) {
+    private val connections = mutableMapOf<String, MutableSet<String>>()
+    private val interconnections = mutableSetOf<Set<String>>()
+
+    init {
+        connectedComputers.populateConnectionMaps()
+    }
+
+    val password: String
+        get() = interconnections.maxOf { it.size }
+            .let { biggestInterconnectionSize ->
+                interconnections
+                    .first { it.size == biggestInterconnectionSize }
+                    .sorted()
+                    .joinToString(",")
+            }
+
+    private fun List<Connection>.populateConnectionMaps() =
+        forEach { (first, second) ->
+            connections.initializeIfNotPresent(first)
+            connections.initializeIfNotPresent(second)
+            connections[first]!!.add(second)
+            connections[second]!!.add(first)
+        }.also { findAllInterconnections() }
+
+    private fun search(computer: String, requiredConnections: Set<String> = setOf(computer)) {
+        val key = requiredConnections.sorted().toSet()
+        if (key in interconnections)
+            return
+        interconnections.add(key)
+
+        connections[computer]!!.forEach { neighbour ->
+            when {
+                neighbour in requiredConnections ||
+                    requiredConnections.any { neighbour !in connections[it]!! } -> return@forEach
+                else -> search(neighbour, requiredConnections + neighbour)
+            }
+        }
+    }
+
+    private fun findAllInterconnections() = connections.keys.forEach(::search)
+
+    private fun findInterconnectionOfSize(size: Int): Set<Set<String>> =
+        interconnections.filter { it.size == size }.toSet()
+
+    fun countOfConnectionThatStartWithOfSize(
+        firstChar: Char,
+        size: Int
+    ): Int = findInterconnectionOfSize(size)
+        .count { interconnection ->
+            interconnection.any { computer ->
+                computer.startsWith(firstChar)
+            }
+        }
+}
