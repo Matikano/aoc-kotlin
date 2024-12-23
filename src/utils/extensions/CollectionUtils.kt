@@ -9,3 +9,8 @@ operator fun <T> Collection<T>.contains(pair: Pair<T, T>): Boolean =
 
 operator fun <T> Collection<Pair<T, T>>.contains(other: T): Boolean =
     other in map { it.first } || other in map { it.second }
+
+fun <K, V> MutableMap<K, MutableSet<V>>.initializeIfNotPresent(key: K) =
+    if (key !in this)
+        this[key] = mutableSetOf()
+    else Unit
