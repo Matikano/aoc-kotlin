@@ -14,3 +14,8 @@ fun <K, V> MutableMap<K, MutableSet<V>>.initializeIfNotPresent(key: K) =
     if (key !in this)
         this[key] = mutableSetOf()
     else Unit
+
+fun <T> MutableMap<T, MutableSet<T>>.safeAdd(pair: Pair<T, T>) {
+    initializeIfNotPresent(pair.first).also { this[pair.first]!!.add(pair.second) }
+    initializeIfNotPresent(pair.second).also { this[pair.second]!!.add(pair.first) }
+}

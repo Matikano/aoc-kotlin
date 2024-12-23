@@ -1,6 +1,6 @@
 package aoc2024.day_23
 
-import utils.extensions.initializeIfNotPresent
+import utils.extensions.safeAdd
 
 typealias Connection = Pair<String, String>
 
@@ -11,7 +11,8 @@ data class Network(
     private val interconnections = mutableSetOf<Set<String>>()
 
     init {
-        connectedComputers.populateConnectionMaps()
+        connectedComputers.storeConnections()
+        storeInterconnections()
     }
 
     val password: String
@@ -23,13 +24,8 @@ data class Network(
                     .joinToString(",")
             }
 
-    private fun List<Connection>.populateConnectionMaps() =
-        forEach { (first, second) ->
-            connections.initializeIfNotPresent(first)
-            connections.initializeIfNotPresent(second)
-            connections[first]!!.add(second)
-            connections[second]!!.add(first)
-        }.also { findAllInterconnections() }
+    private fun List<Connection>.storeConnections() =
+        forEach(connections::safeAdd)
 
     private fun search(computer: String, requiredConnections: Set<String> = setOf(computer)) {
         val key = requiredConnections.sorted().toSet()
@@ -46,7 +42,7 @@ data class Network(
         }
     }
 
-    private fun findAllInterconnections() = connections.keys.forEach(::search)
+    private fun storeInterconnections() = connections.keys.forEach(::search)
 
     private fun findInterconnectionOfSize(size: Int): Set<Set<String>> =
         interconnections.filter { it.size == size }.toSet()
