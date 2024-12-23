@@ -24,10 +24,23 @@ data class Network(
                     .joinToString(",")
             }
 
+    fun countOfConnectionThatStartWithOfSize(
+        firstChar: Char,
+        size: Int
+    ): Int = findInterconnectionsOfSize(size)
+        .count { interconnection ->
+            interconnection.any { computer ->
+                computer.startsWith(firstChar)
+            }
+        }
+
     private fun List<Connection>.storeConnections() =
         forEach(connections::safeAdd)
 
-    private fun search(computer: String, requiredConnections: Set<String> = setOf(computer)) {
+    private fun search(
+        computer: String,
+        requiredConnections: Set<String> = setOf(computer)
+    ) {
         val key = requiredConnections.sorted().toSet()
         if (key in interconnections)
             return
@@ -44,16 +57,6 @@ data class Network(
 
     private fun storeInterconnections() = connections.keys.forEach(::search)
 
-    private fun findInterconnectionOfSize(size: Int): Set<Set<String>> =
+    private fun findInterconnectionsOfSize(size: Int): Set<Set<String>> =
         interconnections.filter { it.size == size }.toSet()
-
-    fun countOfConnectionThatStartWithOfSize(
-        firstChar: Char,
-        size: Int
-    ): Int = findInterconnectionOfSize(size)
-        .count { interconnection ->
-            interconnection.any { computer ->
-                computer.startsWith(firstChar)
-            }
-        }
 }
