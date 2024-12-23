@@ -88,14 +88,16 @@ object Day23: AocTask {
 
         connections[computer]!!.forEach { neighbour ->
             if (neighbour in requiredConnections) return@forEach
-            if (!(requiredConnections.all { query -> neighbour in connections[query]!! })) return@forEach
-            search(neighbour, requiredConnections.plus(setOf(neighbour)))
+            if (requiredConnections.any { query -> neighbour !in connections[query]!! }) return@forEach
+            search(neighbour, requiredConnections + neighbour)
         }
     }
 
     private fun countOfConnectionThatStartWithOfSize(firstChar: Char, size: Int = INITIAL_TUPLE_SIZE): Int =
-        findInterconnectionOfSize(INITIAL_TUPLE_SIZE).count { interconnection ->
-            interconnection.any { computer ->  computer.startsWith(firstChar) }
+        findInterconnectionOfSize(size).count { interconnection ->
+            interconnection.any { computer ->
+                computer.startsWith(firstChar)
+            }
         }
 
     private fun findInterconnectionOfSize(size: Int = INITIAL_TUPLE_SIZE): Set<Set<String>> =
