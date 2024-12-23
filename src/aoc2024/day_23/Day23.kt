@@ -44,8 +44,6 @@ object Day23: AocTask {
         td-yn
     """.trimIndent()
 
-
-
     override val fileName: String
         get() = "src/aoc2024/day_23/input.txt"
 
