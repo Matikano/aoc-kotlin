@@ -17,6 +17,24 @@ data class CrossedWires(
     private val outputGates
         get() = instructions.map { it.outputGate }
 
+    private val xInput: Long
+        get() = decimalValueOfGatesStartingWith('x')
+
+    private val yInput: Long
+        get() = decimalValueOfGatesStartingWith('y')
+
+    private val wrongBitsIndices: List<Int>
+        get() = indicesOfDifferentBits(output, expectedOutput)
+
+    private val areInstructionsValid: Boolean
+        get() = instructions.all { it.inputGates in gates }
+
+    val output: Long
+        get() = decimalValueOfGatesStartingWith('z')
+
+    val expectedOutput: Long
+        get() = xInput + yInput
+
     private fun reset() {
         gates.clear()
         instructions.clear()
@@ -24,27 +42,6 @@ data class CrossedWires(
     }
 
     private fun resetWithSwaps(swaps: Set<Pair<String, String>>) = reset().also { swaps.forEach(::swapOutputs) }
-
-    private operator fun Map<String, Boolean>.contains(pair: Pair<String, String>): Boolean =
-        pair.first in this && pair.second in this
-
-    val output: Long
-        get() = decimalValueOfGatesStartingWith('z')
-
-    private val xInput: Long
-        get() = decimalValueOfGatesStartingWith('x')
-
-    private val yInput: Long
-        get() = decimalValueOfGatesStartingWith('y')
-
-    val expectedOutput: Long
-        get() = xInput + yInput
-
-    private val wrongBitsIndices: List<Int>
-        get() = indicesOfDifferentBits(output, expectedOutput)
-
-    private val areInstructionsValid: Boolean
-        get() = instructions.all { it.inputGates in gates }
 
     private fun decimalValueOfGatesStartingWith(firstChar: Char): Long =
         gates.keys
@@ -189,6 +186,9 @@ data class CrossedWires(
             this[indexOfSecond] = secondSwapped
         }
     }
+
+    private operator fun Map<String, Boolean>.contains(pair: Pair<String, String>): Boolean =
+        pair.first in this && pair.second in this
 
     companion object {
         private const val ARROW = "->"
