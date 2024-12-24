@@ -19,3 +19,9 @@ fun <T> MutableMap<T, MutableSet<T>>.safeAdd(pair: Pair<T, T>) {
     initializeIfNotPresent(pair.first).also { this[pair.first]!!.add(pair.second) }
     initializeIfNotPresent(pair.second).also { this[pair.second]!!.add(pair.first) }
 }
+
+fun List<Int>.minOrMaxInt(): Int = minOrNull() ?: Int.MAX_VALUE
+
+fun <T> Collection<Pair<T, T>>.flattenPairsToSet(): Set<T> = flatMap { listOf(it.first, it.second) }.toSet()
+
+fun <T> Pair<T, T>.reversed(): Pair<T, T> = Pair(first = second, second = first)
