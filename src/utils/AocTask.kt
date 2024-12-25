@@ -15,7 +15,12 @@ abstract class AocTask {
     private val testFileName: String
         get() = "$ROOT_DIR/${this.javaClass.packageName.replace('.', '/')}/$TEST_INPUT_FILE_NAME"
 
-    abstract fun executeTask()
+    protected abstract fun executeTask()
+
+    fun solve() {
+        printHeader()
+        executeTask()
+    }
 
     fun inputToList(): List<String> = readFile(inputFileName).readLines()
 
@@ -24,6 +29,12 @@ abstract class AocTask {
     fun inputToString(fileName: String = inputFileName): String = readFile(fileName).readText()
 
     private fun readFile(fileName: String): BufferedReader = File(fileName).inputStream().bufferedReader()
+
+    private fun printHeader() {
+        println("-------------------------------------")
+        println("AoC 2024 Task ${this.javaClass.simpleName}")
+        println()
+    }
 
     companion object {
         private const val ROOT_DIR = "src"

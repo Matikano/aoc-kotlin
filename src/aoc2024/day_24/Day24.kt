@@ -7,10 +7,6 @@ import kotlin.time.measureTime
 object Day24: AocTask() {
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         measureTime {
             val wires = CrossedWires(testInput)
             wires.processInstructions()

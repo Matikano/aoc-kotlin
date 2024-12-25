@@ -7,10 +7,6 @@ import kotlin.time.measureTime
 object Day19: AocTask() {
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         val (testPatterns, testDesigns) = testInput.lines().readToData()
 
         measureTime {

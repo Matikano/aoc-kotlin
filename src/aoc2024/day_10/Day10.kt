@@ -7,10 +7,6 @@ import utils.models.Position
 object Day10: AocTask() {
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(readToGrid()) {
             // Part 1
             println("Sum of all trail scores = $sumOfAllTrailScores")

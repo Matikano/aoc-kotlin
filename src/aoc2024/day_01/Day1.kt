@@ -7,10 +7,6 @@ import kotlin.math.absoluteValue
 object Day1: AocTask() {
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         val (firstColumn, secondColumn) = readToLists()
 
         // Part 1

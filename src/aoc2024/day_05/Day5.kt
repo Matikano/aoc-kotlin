@@ -14,10 +14,6 @@ object Day5: AocTask() {
     private const val PAGE_SEPARATOR = ','
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         val (orderRules, pages) = readFile()
 
         // Part 1

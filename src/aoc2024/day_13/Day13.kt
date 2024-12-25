@@ -11,10 +11,6 @@ object Day13: AocTask() {
     private const val PART_2_PRIZE_CORRECTION = 10000000000000L
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(inputToString().toClawMachineList()) {
             measureTime {
                 // Part 1

@@ -38,10 +38,6 @@ object Day15: AocTask() {
     private lateinit var bounds: Pair<Int, Int>
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         measureTime {
             inputToString().loadInput()
             predictRobotMovement()

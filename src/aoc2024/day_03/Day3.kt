@@ -11,10 +11,6 @@ object Day3: AocTask() {
     private const val DONT_REGEX = """don't\(\)"""
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         // Part 1
         println("Calculated multiplications = ${readToList().calculateMultiplications()}")
 

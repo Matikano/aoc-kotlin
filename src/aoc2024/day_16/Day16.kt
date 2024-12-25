@@ -9,10 +9,6 @@ import kotlin.time.measureTime
 object Day16: AocTask() {
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(inputToList().toMaze()) {
             measureTime {
                 val mazeResult = solve()

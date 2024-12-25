@@ -9,10 +9,6 @@ object Day23: AocTask() {
     private const val COMPUTER_FIRST_CHAR = 't'
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         measureTime {
             val network = testInput.lines().toNetwork()
             val connectionTriplesWithTSize = network.countOfConnectionThatStartWithOfSize(

@@ -49,10 +49,6 @@ object Day21: AocTask() {
     }
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         measureTime {
             val sumOfComplexities = testInput.lines()
                 .sumOf { it.complexity(PART_1_KEYPAD_ROBOTS_COUNT) }

@@ -5,7 +5,7 @@ import kotlin.math.absoluteValue
 data class Position(
     val colIndex: Int,
     val rowIndex: Int
-) {
+) : Comparable<Position> {
      operator fun plus(direction: Direction): Position =
         Position(
             colIndex + direction.x,
@@ -33,7 +33,7 @@ data class Position(
     fun difference(other: Position): Int =
         (colIndex - other.colIndex).absoluteValue + (rowIndex - other.rowIndex).absoluteValue
 
-    operator fun compareTo(other: Position): Int =
+    override operator fun compareTo(other: Position): Int =
         when {
             rowIndex < other.rowIndex -> -1
             rowIndex > other.rowIndex -> 1
@@ -50,6 +50,12 @@ data class Position(
         Position(
             colIndex = colIndex * factor,
             rowIndex = rowIndex
+        )
+
+    fun reversed(): Position =
+        Position(
+            colIndex = rowIndex,
+            rowIndex = colIndex
         )
 
     companion object {

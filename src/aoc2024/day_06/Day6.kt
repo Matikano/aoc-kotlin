@@ -14,10 +14,6 @@ object Day6: AocTask() {
     private const val CHARACTER = '^'
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         val grid = readToGrid()
         val guard = grid.findGuardAndObstacles()
 

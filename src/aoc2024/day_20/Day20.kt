@@ -12,10 +12,6 @@ object Day20: AocTask() {
     private const val MAX_CHEATS = 20
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(testInput.lines().toMaze()) {
             measureTime {
                 val standardRaceTime = solve()

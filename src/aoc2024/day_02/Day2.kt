@@ -11,10 +11,6 @@ object Day2: AocTask() {
     private const val MAX_DIFFERENCE = 3
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(readToList()) {
             // Part 1
             println("Safe records = ${countSafeRecords()}")

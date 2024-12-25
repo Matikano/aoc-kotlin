@@ -6,10 +6,6 @@ import kotlin.time.measureTime
 object Day9: AocTask() {
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(readToDiskMap()) {
             measureTime {
                 // Part 1

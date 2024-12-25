@@ -17,10 +17,6 @@ object Day2: AocTask() {
     )
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2023 Task ${this.javaClass.simpleName}")
-        println()
-
         with(inputToList().toGames()) {
             measureTime {
                 val sumOfIds = filter { it.isValid() }.sumOf { it.id }

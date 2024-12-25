@@ -18,10 +18,6 @@ object Day1: AocTask() {
     )
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2023 Task ${this.javaClass.simpleName}")
-        println()
-
         with(inputToList().toListOfNumbers()) {
             measureTime {
                 println("Calibration sum = ${calibrationSum()}")

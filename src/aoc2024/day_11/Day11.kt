@@ -13,10 +13,6 @@ object Day11: AocTask() {
     private const val PART_2_ITERATIONS = 75
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(readToList()) {
             measureTime {
                 val sum = sumOf { RecursiveCount(it, PART_1_ITERATIONS) }

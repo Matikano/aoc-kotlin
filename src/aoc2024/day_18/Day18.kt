@@ -16,10 +16,6 @@ object Day18: AocTask() {
     const val BYTE_COUNT = 1024
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         val testCount = 12
         val testWidth = 7
         val testHeight = 7

@@ -46,6 +46,16 @@ fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
     return list
 }
 
+fun <T> uniquePairs(list1: List<T>, list2: List<T>): List<Pair<T, T>> = buildList {
+    if (list1.isEmpty() || list2.isEmpty()) return emptyList()
+
+   list1.forEach { firstListItem ->
+        list2.forEach { secondListItem ->
+            add(firstListItem to secondListItem)
+        }
+    }
+}
+
 fun <T> List<T?>.emptySpaces(): List<IntRange> = buildList {
     var startIndex = 0
     var endIndex = -1

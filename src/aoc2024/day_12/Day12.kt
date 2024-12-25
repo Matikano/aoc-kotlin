@@ -8,10 +8,6 @@ import kotlin.time.measureTime
 object Day12: AocTask() {
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         with(readToGarden()) {
             findAllPlants()
 

@@ -16,10 +16,6 @@ object Day22: AocTask() {
     private val sequenceToTotal: MutableMap<List<Long>, Long> = mutableMapOf()
 
     override fun executeTask() {
-        println("-------------------------------------")
-        println("AoC 2024 Task ${this.javaClass.simpleName}")
-        println()
-
         measureTime {
             testInput.numsLong().sumOf {
                 it.getNthSecretNumber(SECRET_NUMBERS_COUNT)

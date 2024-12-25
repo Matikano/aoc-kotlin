@@ -28,4 +28,13 @@ data class Grid<T>(
         println(row.joinToString("\t") { it.value.toString() })
     }
 
+    companion object {
+        fun <T> Grid<T>.transpose(): Grid<T> = copy(
+            cells = cells.map { cell ->
+                cell.copy(
+                    position = cell.position.reversed()
+                )
+            }.sortedBy { it.position }
+        )
+    }
 }
