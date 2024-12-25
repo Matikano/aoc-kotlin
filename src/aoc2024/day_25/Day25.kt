@@ -17,9 +17,11 @@ object Day25: AocTask() {
     private const val FILLED = '#'
 
     override fun executeTask() {
+        // Test part
         measureTime {
             val (locks, keys) = testInput.toLocksAndKeys()
             val (lockHeights, keyHeights) = locks.map { it.toHeights() } to keys.map { it.toHeights() }
+            // we need to first and last space sine they are baseline
             val maxHeight = locks.first().first().length - 2
             val allLockKeyPairs = uniquePairs(lockHeights, keyHeights)
             val uniqueFittingPairsCount = allLockKeyPairs.count { it.fits(maxHeight) }
@@ -27,9 +29,11 @@ object Day25: AocTask() {
             println("Fitting pairs count = $uniqueFittingPairsCount")
         }.let { println("Test part took $it\n") }
 
+        // Part 1
         measureTime {
             val (locks, keys) = inputToString().toLocksAndKeys()
             val (lockHeights, keyHeights) = locks.map { it.toHeights() } to keys.map { it.toHeights() }
+            // we need to first and last space sine they are baseline
             val maxHeight = locks.first().first().length - 2
             val allLockKeyPairs = uniquePairs(lockHeights, keyHeights)
             val uniqueFittingPairsCount = allLockKeyPairs.count { it.fits(maxHeight) }
