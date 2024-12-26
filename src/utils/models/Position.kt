@@ -12,6 +12,12 @@ data class Position(
             rowIndex + direction.y
         )
 
+    operator fun plus(adjacent: Adjacent): Position =
+        Position(
+            colIndex + adjacent.x,
+            rowIndex + adjacent.y
+        )
+
     operator fun plus(other: Position): Position =
         Position(
             colIndex + other.colIndex,

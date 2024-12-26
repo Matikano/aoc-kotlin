@@ -36,5 +36,17 @@ data class Grid<T>(
                 )
             }.sortedBy { it.position }
         )
+
+        fun String.toGrid(): Grid<Char> =
+            Grid(
+                cells = lines().flatMapIndexed { rowIndex, row ->
+                    row.mapIndexed { colIndex, char ->
+                        GridCell(
+                            position = Position(colIndex, rowIndex),
+                            value = char
+                        )
+                    }
+                }
+            )
     }
 }

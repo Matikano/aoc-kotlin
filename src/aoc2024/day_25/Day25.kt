@@ -3,6 +3,7 @@ package aoc2024.day_25
 import utils.AocTask
 import utils.extensions.uniquePairs
 import utils.models.Grid
+import utils.models.Grid.Companion.toGrid
 import utils.models.Grid.Companion.transpose
 import utils.models.GridCell
 import utils.models.Position
@@ -64,18 +65,6 @@ object Day25: AocTask() {
 
         return locks to keys
     }
-
-    private fun String.toGrid(): Grid<Char> =
-        Grid(
-            cells = lines().flatMapIndexed { rowIndex, row ->
-                row.mapIndexed { colIndex, char ->
-                    GridCell(
-                        position = Position(colIndex, rowIndex),
-                        value = char
-                    )
-                }
-            }
-        )
 
     private fun Grid<Char>.toSchematic(): Schematic =
         cells.windowed(width, width).map { row ->
