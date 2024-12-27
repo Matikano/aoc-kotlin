@@ -31,6 +31,12 @@ data class Grid<T>(
             step = width
         ).forEach(action)
 
+    inline fun forEachRowIndexed(action: (index: Int, row: List<GridCell<T>>) -> Unit) =
+        cells.windowed(
+            size = width,
+            step = width
+        ).forEachIndexed(action)
+
     companion object {
         fun <T> Grid<T>.transpose(): Grid<T> = copy(
             cells = cells.map { cell ->

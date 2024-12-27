@@ -1,6 +1,8 @@
 package utils.models
 
 import kotlin.math.absoluteValue
+import kotlin.math.max
+import kotlin.math.min
 
 data class Position(
     val colIndex: Int,
@@ -36,8 +38,18 @@ data class Position(
             rowIndex - other.rowIndex
         )
 
-    fun difference(other: Position): Int =
+    fun distance(other: Position): Int =
         (colIndex - other.colIndex).absoluteValue + (rowIndex - other.rowIndex).absoluteValue
+
+    fun distanceRanges(other: Position): Pair<IntRange, IntRange> {
+        val colRangeStart = min(colIndex, other.colIndex)
+        val colRangeEnd = max(colIndex, other.colIndex)
+        val rowRangeStart = min(rowIndex, other.rowIndex)
+        val rowRangeEnd = max(rowIndex, other.rowIndex)
+
+        return colRangeStart..colRangeEnd to rowRangeStart..rowRangeEnd
+    }
+
 
     override operator fun compareTo(other: Position): Int =
         when {

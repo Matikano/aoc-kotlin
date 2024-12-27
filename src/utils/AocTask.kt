@@ -5,8 +5,12 @@ import java.io.File
 
 abstract class AocTask {
 
-    open val testInput: String by lazy {
+    val testInput: String by lazy {
         inputToString(testFileName)
+    }
+
+    val input: String by lazy {
+        inputToString(inputFileName)
     }
 
     private val inputFileName: String

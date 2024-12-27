@@ -32,7 +32,7 @@ data class Maze(
             cheatStart to cheatEnd
         }
     }.count { (cheatStart, cheatEnd) ->
-        val difference = cheatEnd.difference(cheatStart)
+        val difference = cheatEnd.distance(cheatStart)
         val optimal = distances[endPosition]!!
 
         difference <= maxRadius &&
