@@ -36,6 +36,15 @@ enum class Direction(val x: Int, val y: Int) {
             NONE -> 'A'
         }
 
+    fun reversed(): Direction =
+        when (this) {
+            UP -> DOWN
+            LEFT -> RIGHT
+            DOWN -> UP
+            RIGHT -> LEFT
+            NONE -> NONE
+        }
+
     companion object {
         val validDirections = Direction.entries.filterNot { it == NONE }
 

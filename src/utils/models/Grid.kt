@@ -21,12 +21,15 @@ data class Grid<T>(
     fun positionOf(value: T): Position =
         cells.first { it.value == value }.position
 
-    fun print() = cells.windowed(
-        size = width,
-        step = width
-    ).forEach { row ->
+    fun print() = forEachRow { row ->
         println(row.joinToString("\t") { it.value.toString() })
     }
+
+    inline fun forEachRow(action: (List<GridCell<T>>) -> Unit) =
+        cells.windowed(
+            size = width,
+            step = width
+        ).forEach(action)
 
     companion object {
         fun <T> Grid<T>.transpose(): Grid<T> = copy(
