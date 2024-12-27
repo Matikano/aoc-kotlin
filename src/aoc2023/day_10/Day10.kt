@@ -9,10 +9,8 @@ object Day10: AocTask() {
     override fun executeTask() {
         with(PipeMaze(testInput.toGrid())) {
             solve()
-            grid.print()
             val numberOfEnclosedPositions = enclosedByLoopCount()
             println("Number of enclosed positions = $numberOfEnclosedPositions")
-            grid.print()
         }
 
         with (PipeMaze(inputToString().toGrid())) {
