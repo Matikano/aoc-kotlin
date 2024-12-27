@@ -139,7 +139,6 @@ data class PipeMaze(
         private const val SOUTH_WEST_PIPE = '7'
         private const val GROUND = '.'
         private const val ENCLOSED_CHAR = 'I'
-        private const val OUTSIDE_CHAR = 'O'
 
         fun Char.toValidDirections(): List<Direction> =
             when(this) {
