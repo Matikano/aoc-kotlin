@@ -6,12 +6,12 @@ import utils.models.Node
 import utils.models.NodeState
 import utils.models.Position
 
-data class Maze(
+data class LavaMaze(
     val grid: Grid<Char>
 ) {
-    val startingNodeState: NodeState = Position(0, 0) to Direction.RIGHT
+    private val startingNodeState: NodeState = Position(0, 0) to Direction.RIGHT
 
-    val possibleStartingStates: List<NodeState> by lazy {
+    private val possibleStartingStates: List<NodeState> by lazy {
         buildList {
             grid.cells.forEach {
                 val position = it.position
@@ -46,24 +46,20 @@ data class Maze(
         val queue = ArrayDeque<Node>().apply {
             add(startingNode)
         }
-        val energized = mutableSetOf<Position>(startingNode.position)
-        val seenStates = mutableSetOf<NodeState>()
+        val seen = mutableSetOf<NodeState>()
 
         while (queue.isNotEmpty()) {
             val current = queue.removeFirst()
 
-            if (current.position !in energized)
-                energized.add(current.position)
-
-            if (current.state !in seenStates)
-                seenStates.add(current.state)
+            if (current.state !in seen)
+                seen.add(current.state)
 
             val field = grid[current.position]!!.value
             val directions = field.nextDirections(current.direction)
             val possibleNodeStates = directions.map { dir ->
                 current.position + dir to dir
             }.filter { (pos, _ ) -> grid.isInBounds(pos) }
-                .filter { possibleNewState -> possibleNewState !in seenStates }
+                .filter { possibleNewState -> possibleNewState !in seen }
 
             possibleNodeStates.forEach { newNodeState ->
                 queue.add(
@@ -76,7 +72,7 @@ data class Maze(
             }
         }
 
-        return energized.toSet()
+        return seen.map { it.first }.toSet()
     }
 
     companion object {

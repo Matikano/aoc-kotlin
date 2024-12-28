@@ -8,7 +8,7 @@ object Day16: AocTask() {
 
     override fun executeTask() {
         measureTime {
-            val testMaze = Maze(testInput.toGrid())
+            val testMaze = LavaMaze(testInput.toGrid())
             val energizedMap = testMaze.solve()
             println("Number of energized test positions = ${energizedMap.size}")
 
@@ -17,13 +17,13 @@ object Day16: AocTask() {
         }.let { println("Test part took $it\n") }
 
         measureTime {
-            val maze = Maze(input.toGrid())
+            val maze = LavaMaze(input.toGrid())
             val energizedMap = maze.solve()
             println("Number of energized positions = ${energizedMap.size}")
         }.let { println("Part 1 took $it\n") }
 
         measureTime {
-            val maze = Maze(input.toGrid())
+            val maze = LavaMaze(input.toGrid())
             println("Best energization = ${maze.bestEnergized}")
         }.let { println("Part 2 took $it\n") }
     }
