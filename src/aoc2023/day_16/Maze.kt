@@ -15,13 +15,13 @@ data class Maze(
         buildList {
             grid.cells.forEach {
                 val position = it.position
-                if (position.rowIndex in 0..<grid.width && position.colIndex == 0)
+                if (position.rowIndex in 0..< grid.width && position.colIndex == 0)
                     add(position to Direction.RIGHT)
-                if (position.rowIndex in 0..<grid.width && position.colIndex == grid.width - 1)
+                if (position.rowIndex in 0..< grid.width && position.colIndex == grid.width - 1)
                     add(position to Direction.LEFT)
-                if (position.colIndex in 0..<grid.height && position.rowIndex == 0)
+                if (position.colIndex in 0..< grid.height && position.rowIndex == 0)
                     add(position to Direction.DOWN)
-                if (position.colIndex in 0..<grid.height && position.rowIndex == grid.height - 1)
+                if (position.colIndex in 0..< grid.height && position.rowIndex == grid.height - 1)
                     add(position to Direction.UP)
             }
         }
@@ -116,6 +116,4 @@ data class Maze(
             }
         }
     }
-
-
 }
