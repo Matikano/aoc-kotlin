@@ -15,3 +15,21 @@ fun String.findCharChainLengths(char: Char): List<Int> =
 
 fun String.tail(): String = drop(1)
 fun String.head(): Char = first()
+
+fun List<String>.transpose(): List<String> {
+    val transposedGrid = mutableListOf<String>()
+    val rows = size
+    val cols = first().length
+
+    for (colIndex in 0 until cols) {
+        var row = ""
+        for (rowIndex in 0 until rows) {
+            row += this[rowIndex][colIndex]
+        }
+        transposedGrid.add(row)
+    }
+
+    return transposedGrid
+}
+
+fun String.transpose(): String = lines().transpose().joinToString("\n")

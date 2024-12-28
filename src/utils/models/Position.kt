@@ -8,6 +8,7 @@ data class Position(
     val colIndex: Int,
     val rowIndex: Int
 ) : Comparable<Position> {
+
      operator fun plus(direction: Direction): Position =
         Position(
             colIndex + direction.x,
