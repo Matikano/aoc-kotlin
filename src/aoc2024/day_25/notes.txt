@@ -1,0 +1,21 @@
+## Test part
+
+in: s >= 1351 -> qqz, so ((s >= 1351 and 838 < m < 1801) or (2770 < s < 3448)) or px -> A
+
+qqz: m < 1801 -> hdj, so  838 < m < 1801 -> A
+     s > 2770 -> A (qs which is always A),
+        so s > 3448 -> A
+        2770 < s < 3448 -> lnx, so A
+     else -> R
+
+hdj: m > 838 -> A,
+qs: A (s > 3448 -> A, else -> A)
+lnx: A  (m > 1548 -> A, else -> A, so it's just A)
+
+px: (a < 2006 and (x < 1416 or x > 2662)) -> A or m > 2090 -> A, -> rfg
+
+qkq: x < 1416 or x > 2662 -> A else -> R
+
+crn: x > 2662 -> else R
+
+gd: R (a > 3333 -> R else R)
