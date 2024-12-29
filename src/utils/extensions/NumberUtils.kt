@@ -6,6 +6,8 @@ fun Long.even(): Boolean = this % 2 == 0L
 
 fun Int.even(): Boolean = this % 2 == 0
 
+fun Int.odd(): Boolean = !even()
+
 // Greatest common divisor
 fun gcd(a: Long, b: Long): Long = GreatestCommonDivisor(a, b)
 
