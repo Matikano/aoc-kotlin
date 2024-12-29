@@ -1,63 +1,40 @@
 package aoc2023.day_18
 
-import aoc2023.day_18.Day18.toEdgePositions
 import utils.AocTask
 import utils.extensions.calculateArea
 import utils.models.Direction
-import utils.models.Grid
-import utils.models.GridCell
 import utils.models.Position
-import kotlin.math.absoluteValue
 import kotlin.time.measureTime
+
+typealias DigPlan = List<DigPlanEntry>
 
 object Day18: AocTask() {
 
     override fun executeTask() {
         measureTime {
             val digPlan = testInput.toDigPlan()
-            val edgePositions = digPlan.toEdgePositions()
             val cornerPositions = digPlan.toCornerPositions()
+            println("Count of by area formula = ${calculateArea(cornerPositions, digPlan.boundaryLength())}")
 
-            val areaCalculatedFilledCount = calculateArea(cornerPositions, edgePositions.size.toLong())
-            println("Count of by area formula = $areaCalculatedFilledCount")
-
-            val correctEdgePositions = digPlan.toCorrectEdgePositions()
             val correctCornerPositions = digPlan.toCorrectCornerPositions()
-            val correctedArea = calculateArea(correctCornerPositions, correctEdgePositions.size.toLong())
-            println("Count of filled correct positions = $correctedArea")
+            println("Count of filled correct positions = ${calculateArea(correctCornerPositions, digPlan.correctBoundaryLength())}")
         }.let { println("Test part took $it\n") }
 
         measureTime {
             val digPlan = input.toDigPlan()
             val corners = digPlan.toCornerPositions()
-            val edgePositions = digPlan.toEdgePositions()
-            println("Count of filled positions = ${calculateArea(corners, edgePositions.size.toLong())}")
+            println("Count of filled positions = ${calculateArea(corners, digPlan.boundaryLength())}")
         }.let { println("Part 1 took $it\n") }
 
         measureTime {
             val digPlan = input.toDigPlan()
-            val edgePositions = digPlan.toCorrectEdgePositions()
             val cornerPositions = digPlan.toCorrectCornerPositions()
 
-            val areaCalculatedFilledCount = calculateArea(cornerPositions, edgePositions.size.toLong())
-
-            println("Count of filled correct positions = $areaCalculatedFilledCount")
+            println("Count of filled correct positions = ${calculateArea(cornerPositions, digPlan.correctBoundaryLength())}")
         }.let { println("Part 2 took $it\n") }
     }
 
-    private fun List<DigPlanEntry>.toEdgePositions(): List<Position> = buildList {
-        var currentPosition = Position(0, 0)
-        add(currentPosition)
-        this@toEdgePositions.forEach { entry ->
-            val (direction, length) = entry.instruction
-            repeat(length) {
-                currentPosition += direction
-                add(currentPosition)
-            }
-        }
-    }
-
-    private fun List<DigPlanEntry>.toCornerPositions(): List<Position> = buildList {
+    private fun DigPlan.toCornerPositions(): List<Position> = buildList {
         var currentPosition = Position(0, 0)
         add(currentPosition)
         this@toCornerPositions.forEach { entry ->
@@ -69,19 +46,11 @@ object Day18: AocTask() {
         }
     }
 
-    private fun List<DigPlanEntry>.toCorrectEdgePositions(): List<Position> = buildList {
-        var currentPosition = Position(0, 0)
-        add(currentPosition)
-        this@toCorrectEdgePositions.forEach { entry ->
-            val (direction, length) = entry.correctInstruction
-            repeat(length) {
-                currentPosition += direction
-                add(currentPosition)
-            }
-        }
-    }
+    private fun DigPlan.boundaryLength(): Long = sumOf { it.length } + 1L
 
-    private fun List<DigPlanEntry>.toCorrectCornerPositions(): List<Position> = buildList {
+    private fun DigPlan.correctBoundaryLength(): Long = sumOf { it.correctInstruction.second.toLong() } + 1
+
+    private fun DigPlan.toCorrectCornerPositions(): List<Position> = buildList {
         var currentPosition = Position(0, 0)
         add(currentPosition)
         this@toCorrectCornerPositions.forEach { entry ->
