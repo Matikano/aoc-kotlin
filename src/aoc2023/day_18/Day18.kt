@@ -1,6 +1,8 @@
 package aoc2023.day_18
 
+import aoc2023.day_18.Day18.toEdgePositions
 import utils.AocTask
+import utils.extensions.calculateArea
 import utils.models.Direction
 import utils.models.Grid
 import utils.models.GridCell
@@ -14,76 +16,33 @@ object Day18: AocTask() {
         measureTime {
             val digPlan = testInput.toDigPlan()
             val edgePositions = digPlan.toEdgePositions()
-            val grid = edgePositions.toGrid()
-            println("Edges grid")
-            grid.print()
-            val gridFilled = grid.fillInside()
-            println("Filled grid")
-            gridFilled.print()
+            val cornerPositions = digPlan.toCornerPositions()
 
-            println("Count of filled positions = ${gridFilled.filledCount()}")
+            val areaCalculatedFilledCount = calculateArea(cornerPositions, edgePositions.size.toLong())
+            println("Count of by area formula = $areaCalculatedFilledCount")
+
+            val correctEdgePositions = digPlan.toCorrectEdgePositions()
+            val correctCornerPositions = digPlan.toCorrectCornerPositions()
+            val correctedArea = calculateArea(correctCornerPositions, correctEdgePositions.size.toLong())
+            println("Count of filled correct positions = $correctedArea")
         }.let { println("Test part took $it\n") }
 
         measureTime {
             val digPlan = input.toDigPlan()
+            val corners = digPlan.toCornerPositions()
             val edgePositions = digPlan.toEdgePositions()
-            val grid = edgePositions.toGrid()
-            println("Grid bounds = " +
-                    "rows: ${grid.cells.minOf { it.position.colIndex } to grid.cells.maxOf { it.position.colIndex }}" +
-                    "cols : ${grid.cells.minOf { it.position.rowIndex } to grid.cells.maxOf { it.position.rowIndex }}")
-            val gridFilled = grid.fillInside()
-            println("Count of filled positions = ${gridFilled.filledCount()}")
+            println("Count of filled positions = ${calculateArea(corners, edgePositions.size.toLong())}")
         }.let { println("Part 1 took $it\n") }
-    }
 
-    private fun Grid<Char>.fillInside(): Grid<Char> {
-        val edgePositions = cells.filter { it.value == '#' }.map { it.position }
-        val startPosition = Position(0, 0)
-        val seen = mutableSetOf(startPosition)
-        val queue = ArrayDeque(setOf(startPosition))
+        measureTime {
+            val digPlan = input.toDigPlan()
+            val edgePositions = digPlan.toCorrectEdgePositions()
+            val cornerPositions = digPlan.toCorrectCornerPositions()
 
-        while (queue.isNotEmpty()) {
-            val current = queue.removeFirst()
-            val possibleNewPositions = Direction.validDirections.map { dir ->
-                current + dir
-            }.filter { isInBounds(it) && it !in edgePositions && it !in seen }
+            val areaCalculatedFilledCount = calculateArea(cornerPositions, edgePositions.size.toLong())
 
-            possibleNewPositions.forEach { newPosition ->
-                seen.add(newPosition)
-                queue.add(newPosition)
-            }
-        }
-
-        val filledPositions = cells.map { it.position }.toSet() - seen
-
-        return copy(
-            cells = cells.map { cell ->
-                if (cell.position in filledPositions) cell.copy(value = '#')
-                else cell
-            }
-        )
-    }
-
-    private fun Grid<Char>.filledCount() = cells.count { it.value == '#' }
-
-    private fun List<Position>.toGrid(): Grid<Char> {
-        val maxRowIndex = maxOf { it.rowIndex }
-        val minRowIndex = minOf { it.rowIndex }
-        val maxColIndex = maxOf { it.colIndex }
-        val minColIndex = minOf { it.colIndex }
-        val colNormalization = minColIndex.absoluteValue
-        val rowNormalization = minRowIndex.absoluteValue
-        return Grid(
-            cells = (minRowIndex - 1..maxRowIndex + 1).flatMap { rowIndex ->
-                (minColIndex - 1..maxColIndex + 1).map { colIndex ->
-                    val position = Position(colIndex, rowIndex)
-                    GridCell(
-                        position = position + (colNormalization + 1 to rowNormalization + 1),
-                        value = if (position in this) '#' else '.'
-                    )
-                }
-            }
-        )
+            println("Count of filled correct positions = $areaCalculatedFilledCount")
+        }.let { println("Part 2 took $it\n") }
     }
 
     private fun List<DigPlanEntry>.toEdgePositions(): List<Position> = buildList {
@@ -95,6 +54,18 @@ object Day18: AocTask() {
                 currentPosition += direction
                 add(currentPosition)
             }
+        }
+    }
+
+    private fun List<DigPlanEntry>.toCornerPositions(): List<Position> = buildList {
+        var currentPosition = Position(0, 0)
+        add(currentPosition)
+        this@toCornerPositions.forEach { entry ->
+            val (direction, length) = entry.instruction
+            repeat(length) {
+                currentPosition += direction
+            }
+            add(currentPosition)
         }
     }
 
@@ -110,6 +81,18 @@ object Day18: AocTask() {
         }
     }
 
+    private fun List<DigPlanEntry>.toCorrectCornerPositions(): List<Position> = buildList {
+        var currentPosition = Position(0, 0)
+        add(currentPosition)
+        this@toCorrectCornerPositions.forEach { entry ->
+            val (direction, length) = entry.correctInstruction
+            repeat(length) {
+                currentPosition += direction
+            }
+            add(currentPosition)
+        }
+    }
+
     private fun String.toDigPlan(): List<DigPlanEntry> = trim().lines().map { it.toDigPlanEntry() }
 
     private fun String.toDigPlanEntry(): DigPlanEntry =
@@ -117,7 +100,7 @@ object Day18: AocTask() {
             DigPlanEntry(
                 direction = dir.toDirection(),
                 length = length.toInt(),
-                colorCode = colorCode.drop(2).dropLast(1)
+                colorCode = colorCode.drop(1).dropLast(1)
             )
         }
 

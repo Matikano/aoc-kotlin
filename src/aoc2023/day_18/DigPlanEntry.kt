@@ -9,15 +9,17 @@ typealias Instruction = Pair<Direction, Int>
 data class DigPlanEntry(
     val direction: Direction,
     val length: Int,
-    private val colorCode: String
+    val colorCode: String
 ) {
     val instruction: Instruction
         get() = direction to length
 
     val correctInstruction: Instruction
         get() {
-            val number = colorCode.substringAfter('#').toInt()
-            return (number % 10).toDirection() to number / 10
+            val hexadecimalCode = colorCode.substringAfter('#')
+            val length = hexadecimalCode.dropLast(1).toInt(radix = 16)
+            val direction = hexadecimalCode.last().digitToInt().toDirection()
+            return direction to length
         }
 
     private fun Int.toDirection(): Direction =
