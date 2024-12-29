@@ -12,7 +12,7 @@ import kotlin.time.measureTime
 typealias Schematic = List<String>
 typealias LockAndKeyHeights = Pair<List<Int>, List<Int>>
 
-object Day25: AocTask() {
+object Day25 : AocTask() {
 
     private const val EMPTY = '.'
     private const val FILLED = '#'
@@ -22,7 +22,7 @@ object Day25: AocTask() {
         measureTime {
             val (locks, keys) = testInput.toLocksAndKeys()
             val (lockHeights, keyHeights) = locks.map { it.toHeights() } to keys.map { it.toHeights() }
-            // we need to first and last space sine they are baseline
+            // we need to skip first and last space sine they are baseline
             val maxHeight = locks.first().first().length - 2
             val allLockKeyPairs = uniquePairs(lockHeights, keyHeights)
             val uniqueFittingPairsCount = allLockKeyPairs.count { it.fits(maxHeight) }
@@ -56,6 +56,7 @@ object Day25: AocTask() {
                 segment.startsWith(FILLED) -> locks.add(
                     segment.toGrid().transpose().toSchematic()
                 )
+
                 segment.startsWith(EMPTY) -> keys.add(
                     segment.toGrid().transpose().toSchematic()
                         .map { it.reversed() }
