@@ -211,3 +211,20 @@ fun cartesianProduct(a: List<*>, vararg sets: List<*>): List<List<*>> =
  * Transform elements of a cartesian product.
  */
 fun <T> List<List<*>>.map(transform: KFunction<T>) = map { transform.call(*it.toTypedArray()) }
+
+fun <T> List<List<T>>.duplicates(): List<List<T>> {
+    val seenLists = mutableMapOf<List<T>, Int>()
+    val allDuplicates = mutableListOf<List<T>>()
+
+    for (list in this) {
+        seenLists[list] = (seenLists[list] ?: 0) + 1
+    }
+
+    for ((list, count) in seenLists) {
+        if (count > 1) {
+            repeat(count) { allDuplicates.add(list) }
+        }
+    }
+
+    return allDuplicates
+}
