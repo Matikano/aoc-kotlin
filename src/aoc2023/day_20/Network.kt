@@ -50,7 +50,7 @@ class Network(
                 moduleLabel.startsWith(BROADCASTER_LABEL) -> Module.Broadcaster(outputs)
                 moduleLabel.startsWith(FLIP_FLOP_SYMBOL) -> Module.FlipFlop(moduleLabel.drop(1), outputs)
                 moduleLabel.startsWith(CONJUNCTION_SYMBOL) -> Module.Conjunction(moduleLabel.drop(1), outputs)
-                else -> throw IllegalArgumentException()
+                else -> throw IllegalArgumentException("Unsupported module label = $moduleLabel")
             }
         }.associate { it.label to it }
 
