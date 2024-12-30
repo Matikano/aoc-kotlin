@@ -11,5 +11,5 @@ data class Brick(
         xRange.overlaps(other.xRange) && yRange.overlaps(other.yRange)
 
     fun supports(other: Brick): Boolean =
-        this.overlaps(other) && zRange.last + 1 == other.zRange.first
+        this.overlaps(other) && other.zRange.first - zRange.last == 1
 }
