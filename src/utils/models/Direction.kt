@@ -47,7 +47,6 @@ enum class Direction(val x: Int, val y: Int) {
 
     companion object {
         val validDirections = Direction.entries.filterNot { it == NONE }
-
         fun List<Direction>.toSequence(): String = map { it.symbol }.joinToString("") { it.toString() }
     }
 }

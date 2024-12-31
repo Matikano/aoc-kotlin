@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     kotlin("jvm") version "2.0.21"
@@ -22,6 +23,7 @@ tasks {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation("org.apache.commons:commons-math3:3.6.1")
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {

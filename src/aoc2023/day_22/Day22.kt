@@ -45,7 +45,6 @@ object Day22: AocTask() {
         indices.forEach { index ->
             val queue = ArrayDeque(supports[index]!!.filter { supportedBy[it]!!.size == 1 })
             val falling = mutableSetOf(*queue.toTypedArray())
-            falling.add(index)
 
             while (queue.isNotEmpty()) {
                 val fallingIndex = queue.removeFirst()
@@ -56,7 +55,8 @@ object Day22: AocTask() {
                     }
                 }
             }
-            total += falling.size - 1
+
+            total += falling.size
         }
 
         return total

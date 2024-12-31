@@ -9,6 +9,8 @@ data class Position(
     val rowIndex: Int
 ) : Comparable<Position> {
 
+    override fun toString(): String = "($colIndex,$rowIndex)"
+
      operator fun plus(direction: Direction): Position =
         Position(
             colIndex + direction.x,
