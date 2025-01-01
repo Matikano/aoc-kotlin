@@ -59,8 +59,8 @@ object Day5: AocTask() {
         val (count, from, to) = numsInt()
         return Instruction(
             count = count,
-            from = from,
-            to = to
+            fromIndex = from - 1,
+            toIndex = to - 1
         )
     }
 
@@ -68,12 +68,10 @@ object Day5: AocTask() {
         instruction: Instruction,
         keepOrder: Boolean = false
     ) {
-        val fromIndex = instruction.from - 1
-        val toIndex = instruction.to - 1
-
-        val partToMove = this[fromIndex].takeLast(instruction.count).let { if (keepOrder) it else it.reversed() }
-        this[fromIndex] = this[fromIndex].dropLast(instruction.count)
-        this[toIndex] = this[toIndex] + partToMove
+        this[instruction.toIndex] += this[instruction.fromIndex]
+            .takeLast(instruction.count)
+            .let { if (keepOrder) it else it.reversed() }
+        this[instruction.fromIndex] = this[instruction.fromIndex].dropLast(instruction.count)
     }
 
     private fun Stacks.endCode(): String = map { it.last() }.joinToString("")
