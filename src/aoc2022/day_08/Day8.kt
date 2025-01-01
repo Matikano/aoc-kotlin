@@ -50,7 +50,7 @@ object Day8: AocTask() {
 
             val visibleColAfter = (colTreesAfter.firstOrNull { it.value >= cell.value }
                 ?.position?.rowIndex
-                ?: cells.maxOf { it.position.rowIndex }) - currentRowIndex
+                    ?: cells.maxOf { it.position.rowIndex }) - currentRowIndex
 
             visibleRowBefore * visibleRowAfter * visibleColBefore * visibleColAfter
         }
