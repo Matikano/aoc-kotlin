@@ -1,8 +1,6 @@
 package aoc2023.day_22
 
 import utils.AocTask
-import utils.extensions.duplicates
-import utils.extensions.emptySpaces
 import utils.extensions.length
 import utils.extensions.numsInt
 import kotlin.math.max
