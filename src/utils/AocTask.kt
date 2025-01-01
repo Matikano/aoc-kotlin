@@ -10,7 +10,7 @@ abstract class AocTask {
     }
 
     val input: String by lazy {
-        inputToString(inputFileName)
+        inputToString(inputFileName).trim()
     }
 
     private val inputFileName: String
