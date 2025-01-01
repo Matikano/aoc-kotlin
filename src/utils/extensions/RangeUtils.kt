@@ -9,5 +9,8 @@ val IntRange.length: Int
 val IntRange.isValid: Boolean
     get() = !isEmpty()
 
-fun IntRange.overlaps(other: IntRange): Boolean =
+infix fun IntRange.overlaps(other: IntRange): Boolean =
         min(last, other.last) >= max(first, other.first)
+
+operator fun IntRange.contains(other: IntRange): Boolean =
+    other.start in this && other.last in this
