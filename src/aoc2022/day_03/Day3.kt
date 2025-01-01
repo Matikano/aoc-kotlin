@@ -1,6 +1,7 @@
 package aoc2022.day_03
 
 import utils.AocTask
+import utils.extensions.mutualItems
 import kotlin.time.measureTime
 
 typealias Compartments = Pair<String, String>
@@ -52,9 +53,14 @@ object Day3: AocTask() {
         }
 
     private fun Compartments.mutualItemPriority(): Int =
-        priorities[first.first { it in second }] ?: 0
+        with(toList().map { it.toList() }.mutualItems()) {
+            assert(size == 1) { "Compared compartments have more than 1 mutual items!" }
+            priorities[first()] ?: 0
+        }
 
     private fun Group.mutualItemPriority(): Int =
-        priorities[first.first { it in second && it in third }] ?: 0
-
+        with(toList().map { it.toList() }.mutualItems()) {
+            assert(size == 1) { "Compared groups have more than 1 mutual items!" }
+            priorities[first()] ?: 0
+        }
 }

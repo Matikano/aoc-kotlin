@@ -25,3 +25,6 @@ fun List<Int>.minOrMaxInt(): Int = minOrNull() ?: Int.MAX_VALUE
 fun <T> Collection<Pair<T, T>>.flattenPairsToSet(): Set<T> = flatMap { listOf(it.first, it.second) }.toSet()
 
 fun <T> Pair<T, T>.reversed(): Pair<T, T> = Pair(first = second, second = first)
+
+fun <T> Collection<Collection<T>>.mutualItems(): Set<T> =
+    tail().fold(head().toSet()) { acc, next -> acc.intersect(next.toSet()) }
