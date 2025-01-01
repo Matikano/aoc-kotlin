@@ -1,13 +1,21 @@
 package aoc2022.day_07
 
 import utils.AocTask
+import utils.extensions.head
 import utils.extensions.numsInt
 import utils.extensions.tail
 import kotlin.time.measureTime
 
 object Day7: AocTask() {
 
-    private const val THRESHOLD = 100000L
+    private const val THRESHOLD = 100000
+    private const val DISK_MAX_SIZE = 70000000
+    private const val UPDATE_SIZE = 30000000
+    private const val ROOT_DIR = "/"
+    private const val DIR = "dir"
+    private const val COMMAND = "$"
+    private const val CURRENT_DIRECTORY = "cd"
+    private const val RETURN = ".."
 
     override fun executeTask() {
         measureTime {
@@ -27,8 +35,8 @@ object Day7: AocTask() {
         measureTime {
             val fileSystem = input.toFileSystem()
             println(fileSystem)
-            val totalSize = fileSystem["/"] ?: 0
-            val requiredSpace = 30000000 - (70000000 - totalSize)
+            val totalSize = fileSystem[ROOT_DIR] ?: 0
+            val requiredSpace = UPDATE_SIZE - (DISK_MAX_SIZE - totalSize)
             val result =  fileSystem.values.filter { it >= requiredSpace }.minOrNull() ?: 0
             println("Sum of directories with size smaller than $THRESHOLD = $result")
         }.let { println("Part 2 took $it\n") }
@@ -40,24 +48,24 @@ object Day7: AocTask() {
         val path: MutableList<String> = mutableListOf()
         val dirs = mutableMapOf<String, Int>()
 
-        lines().map { it.split(" ") }.forEach { l ->
-            when (l[0]) {
-                "$" -> {
-                    when (l[1]) {
-                        "cd" -> {
-                            if (l[2] == "..") {
+        lines().map { it.split(" ") }.forEach { line ->
+            when (line.head()) {
+                COMMAND -> {
+                    when (line.tail().head()) {
+                        CURRENT_DIRECTORY -> {
+                            if (line.last() == RETURN) {
                                 path.removeLast()
                             } else {
-                                path.add(l[2])
+                                path.add(line.last())
                             }
                         }
                     }
                 }
                 else -> {
-                    if (l[0] != "dir") {
+                    if (line.head() != DIR) {
                         for (i in 0 until path.size) {
                             val currentPath = path.subList(0, i + 1).joinToString("/")
-                            dirs[currentPath] = dirs.getOrDefault(currentPath, 0) + l[0].toInt()
+                            dirs[currentPath] = dirs.getOrDefault(currentPath, 0) + line[0].toInt()
                         }
                     }
                 }
