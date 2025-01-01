@@ -38,11 +38,19 @@ object Day8: AocTask() {
             val colTreesAfter = cells.filter { it.position.colIndex == currentColIndex
                     && it.position.rowIndex > currentRowIndex }
 
-            val visibleRowBefore = currentColIndex - (rowTreesBefore.lastOrNull { it.value >= cell.value }?.position?.colIndex ?: 0)
-            val visibleRowAfter = (rowTreesAfter.firstOrNull { it.value >= cell.value }?.position?.colIndex?: cells.maxOf { it.position.colIndex }) - currentColIndex
+            val visibleRowBefore = currentColIndex - (rowTreesBefore.lastOrNull { it.value >= cell.value }
+                ?.position?.colIndex ?: 0)
 
-            val visibleColBefore = currentRowIndex - (colTreesBefore.lastOrNull { it.value >= cell.value }?.position?.rowIndex ?: 0)
-            val visibleColAfter = (colTreesAfter.firstOrNull { it.value >= cell.value }?.position?.rowIndex ?: cells.maxOf { it.position.rowIndex }) - currentRowIndex
+            val visibleRowAfter = (rowTreesAfter.firstOrNull { it.value >= cell.value }
+                ?.position?.colIndex
+                    ?: cells.maxOf { it.position.colIndex }) - currentColIndex
+
+            val visibleColBefore = currentRowIndex - (colTreesBefore.lastOrNull { it.value >= cell.value }
+                ?.position?.rowIndex ?: 0)
+
+            val visibleColAfter = (colTreesAfter.firstOrNull { it.value >= cell.value }
+                ?.position?.rowIndex
+                ?: cells.maxOf { it.position.rowIndex }) - currentRowIndex
 
             visibleRowBefore * visibleRowAfter * visibleColBefore * visibleColAfter
         }
