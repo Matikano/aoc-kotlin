@@ -22,11 +22,13 @@ fun List<String>.transpose(): List<String> {
     val cols = first().length
 
     for (colIndex in 0 until cols) {
-        var row = ""
-        for (rowIndex in 0 until rows) {
-            row += this[rowIndex][colIndex]
-        }
-        transposedGrid.add(row)
+        transposedGrid.add(
+            buildString {
+                for (rowIndex in 0 until rows) {
+                    append(this@transpose[rowIndex][colIndex])
+                }
+            }
+        )
     }
 
     return transposedGrid
