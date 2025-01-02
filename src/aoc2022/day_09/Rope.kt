@@ -14,9 +14,25 @@ class Rope(knotsCount: Int) {
     val tailPosition: Position
         get() = knots.last()
 
-    fun move(direction: Direction) {
+    private fun move(direction: Direction) {
         knots[0] += direction
         moveRope()
+    }
+
+    fun processInstructions(instructions: List<Instruction>): Set<Position> {
+        val queue = ArrayDeque<Instruction>(instructions)
+        val tailPositions = mutableSetOf(tailPosition)
+
+        while (queue.isNotEmpty()) {
+            with(queue.removeFirst()) {
+                repeat(stepCount) {
+                    move(direction)
+                    tailPositions.add(tailPosition)
+                }
+            }
+        }
+
+        return tailPositions
     }
 
     private fun moveRope() {

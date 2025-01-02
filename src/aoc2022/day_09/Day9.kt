@@ -33,22 +33,6 @@ object Day9: AocTask() {
         }.let { println("Part 2 took $it\n") }
     }
 
-    private fun Rope.processInstructions(instructions: List<Instruction>): Set<Position> {
-        val queue = ArrayDeque<Instruction>(instructions)
-        val tailPositions = mutableSetOf(tailPosition)
-
-        while (queue.isNotEmpty()) {
-            with(queue.removeFirst()) {
-                repeat(stepCount) {
-                    move(direction)
-                    tailPositions.add(tailPosition)
-                }
-            }
-        }
-
-        return tailPositions
-    }
-
     private fun String.toDirection(): Direction =
         when (this) {
             "U" -> Direction.UP
