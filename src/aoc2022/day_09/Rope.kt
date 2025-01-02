@@ -7,8 +7,7 @@ class Rope(
     knotsCount: Int
 ) {
     init {
-       if (knotsCount < 2)
-           throw IllegalStateException("Rope cannot have less than 2 knots" )
+       if (knotsCount < 2) throw IllegalStateException("Rope cannot have less than 2 knots" )
     }
 
     private var knots: MutableList<Position> = (0..< knotsCount).map { Position(0, 0) }.toMutableList()

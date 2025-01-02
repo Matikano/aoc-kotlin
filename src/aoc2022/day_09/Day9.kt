@@ -38,11 +38,11 @@ object Day9: AocTask() {
         val tailPositions = mutableSetOf(tailPosition)
 
         while (queue.isNotEmpty()) {
-            val instruction = queue.removeFirst()
-
-            repeat(instruction.stepCount) {
-                move(instruction.direction)
-                tailPositions.add(tailPosition)
+            with(queue.removeFirst()) {
+                repeat(stepCount) {
+                    move(direction)
+                    tailPositions.add(tailPosition)
+                }
             }
         }
 
