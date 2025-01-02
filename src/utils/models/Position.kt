@@ -9,9 +9,12 @@ data class Position(
     val rowIndex: Int
 ) : Comparable<Position> {
 
+    val adjacents: Set<Position>
+        get() = Adjacent.entries.map { this + it }.toSet()
+
     override fun toString(): String = "($colIndex,$rowIndex)"
 
-     operator fun plus(direction: Direction): Position =
+    operator fun plus(direction: Direction): Position =
         Position(
             colIndex + direction.x,
             rowIndex + direction.y
@@ -52,7 +55,6 @@ data class Position(
 
         return colRangeStart..colRangeEnd to rowRangeStart..rowRangeEnd
     }
-
 
     override operator fun compareTo(other: Position): Int =
         when {
