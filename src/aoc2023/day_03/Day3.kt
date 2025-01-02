@@ -78,7 +78,7 @@ object Day3: AocTask() {
 
             loopSkips = numberString.length - 1
             val numberSurroundingPositions = numberPositions.flatMap { position ->
-                Adjacent.entries.map {
+                Adjacent.validEntries.map {
                     position + it
                 }
             }.filter { isInBounds(it) }

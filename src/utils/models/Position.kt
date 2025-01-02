@@ -3,13 +3,14 @@ package utils.models
 import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sign
 
 data class Position(
     val colIndex: Int,
     val rowIndex: Int
 ) : Comparable<Position> {
 
-    val adjacents: Set<Position>
+    val surroundings: Set<Position>
         get() = Adjacent.entries.map { this + it }.toSet()
 
     override fun toString(): String = "($colIndex,$rowIndex)"
@@ -55,6 +56,9 @@ data class Position(
 
         return colRangeStart..colRangeEnd to rowRangeStart..rowRangeEnd
     }
+
+    fun toAdjacent(): Adjacent =
+        Adjacent.entries.first { it.x == colIndex.sign && it.y == rowIndex.sign }
 
     override operator fun compareTo(other: Position): Int =
         when {

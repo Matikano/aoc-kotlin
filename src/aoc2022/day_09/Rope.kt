@@ -39,14 +39,8 @@ class Rope(knotsCount: Int) {
         for (index in 1 ..< knots.size) {
             val head = knots[index - 1]
             val knot = knots[index]
-            if (knot !in head.adjacents) {
-                val difference = head - knot
-                val displacement = Position(
-                    colIndex = difference.colIndex.coerceAtLeast(-1).coerceAtMost(1),
-                    rowIndex = difference.rowIndex.coerceAtLeast(-1).coerceAtMost(1)
-                )
-                knots[index] += displacement
-            }
+            if (knot !in head.surroundings)
+                knots[index] += (head - knot).toAdjacent()
         }
     }
 }

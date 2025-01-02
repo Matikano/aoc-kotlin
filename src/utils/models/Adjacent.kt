@@ -8,5 +8,10 @@ enum class Adjacent(val x: Int, val y: Int) {
     DOWN(0, 1),
     DOWN_LEFT(-1, 1),
     DOWN_RIGHT(1, 1),
-    LEFT(-1, 0)
+    LEFT(-1, 0),
+    NONE(0, 0);
+
+    companion object {
+        val validEntries = Adjacent.entries.filterNot { it == NONE }
+    }
 }
