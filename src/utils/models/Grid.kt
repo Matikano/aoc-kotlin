@@ -31,21 +31,21 @@ data class Grid<T>(
             step = width
         ).forEach(action)
 
-    inline fun forEachRowIndexed(action: (index: Int, row: List<GridCell<T>>) -> Unit) =
+    inline fun forEachRowIndexed(action: (Int, List<GridCell<T>>) -> Unit) =
         cells.windowed(
             size = width,
             step = width
         ).forEachIndexed(action)
 
-    companion object {
-        fun <T> Grid<T>.transpose(): Grid<T> = copy(
-            cells = cells.map { cell ->
-                cell.copy(
-                    position = cell.position.reversed()
-                )
-            }.sortedBy { it.position }
-        )
+    fun transpose(): Grid<T> = copy(
+        cells = cells.map { cell ->
+            cell.copy(
+                position = cell.position.reversed()
+            )
+        }.sortedBy { it.position }
+    )
 
+    companion object {
         fun String.toGrid(): Grid<Char> =
             Grid(
                 cells = lines().flatMapIndexed { rowIndex, row ->

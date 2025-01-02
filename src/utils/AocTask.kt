@@ -5,13 +5,8 @@ import java.io.File
 
 abstract class AocTask {
 
-    val testInput: String by lazy {
-        inputToString(testFileName)
-    }
-
-    val input: String by lazy {
-        inputToString(inputFileName).trim()
-    }
+    val testInput: String by lazy { inputToString(testFileName) }
+    val input: String by lazy { inputToString(inputFileName) }
 
     private val inputFileName: String
         get() = "$ROOT_DIR/${this.javaClass.packageName.replace('.', '/')}/$INPUT_FILE_NAME"
@@ -27,11 +22,8 @@ abstract class AocTask {
     }
 
     fun inputToList(): List<String> = readFile(inputFileName).readLines()
-
     fun inputByLines(action: (String) -> Unit) = readFile(inputFileName).forEachLine(action)
-
-    fun inputToString(fileName: String = inputFileName): String = readFile(fileName).readText()
-
+    fun inputToString(fileName: String = inputFileName): String = readFile(fileName).readText().trim()
     private fun readFile(fileName: String): BufferedReader = File(fileName).inputStream().bufferedReader()
 
     private fun printHeader() {

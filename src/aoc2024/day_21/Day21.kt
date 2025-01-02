@@ -135,7 +135,7 @@ object Day21: AocTask() {
         while (isNotEmpty()) {
             val (position, moves) = poll()
 
-            Direction.validDirections.map { direction ->
+            Direction.validEntries.map { direction ->
                 position + direction to direction
             }.forEach { (newPosition, direction) ->
                 if (!grid.isInBounds(newPosition)) return@forEach

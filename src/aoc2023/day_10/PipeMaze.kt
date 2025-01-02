@@ -43,7 +43,7 @@ data class PipeMaze(
             if (currentPosition == startPosition) {
                 startPipeChar = nextPositions.map { it - startPosition }
                     .map { backwardsDirection ->
-                        Direction.validDirections
+                        Direction.validEntries
                             .first { it.x == backwardsDirection.colIndex
                                     && it.y == backwardsDirection.rowIndex }
                 }.toPipeChar()
@@ -142,7 +142,7 @@ data class PipeMaze(
 
         fun Char.toValidDirections(): List<Direction> =
             when(this) {
-                START_CHAR -> Direction.validDirections
+                START_CHAR -> Direction.validEntries
                 VERTICAL_PIPE -> listOf(Direction.UP, Direction.DOWN)
                 HORIZONTAL_PIPE -> listOf(Direction.RIGHT, Direction.LEFT)
                 NORTH_EAST_PIPE -> listOf(Direction.UP, Direction.RIGHT)

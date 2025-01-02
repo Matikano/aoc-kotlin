@@ -3,8 +3,34 @@ package utils.extensions
 import utils.models.Position
 import kotlin.reflect.KFunction
 
+fun <T> Collection<T>.head(): T = first()
+fun <T> Collection<T>.tail(): Collection<T> = drop(1)
+
+operator fun <T> Collection<T>.contains(pair: Pair<T, T>): Boolean =
+    pair.first in this || pair.second in this
+
+operator fun <T> Collection<Pair<T, T>>.contains(other: T): Boolean =
+    other in map { it.first } || other in map { it.second }
+
+fun <K, V> MutableMap<K, MutableSet<V>>.initializeIfNotPresent(key: K) =
+    if (key !in this)
+        this[key] = mutableSetOf()
+    else Unit
+
+fun <T> MutableMap<T, MutableSet<T>>.safeAdd(pair: Pair<T, T>) {
+    initializeIfNotPresent(pair.first).also { this[pair.first]!!.add(pair.second) }
+    initializeIfNotPresent(pair.second).also { this[pair.second]!!.add(pair.first) }
+}
+
+fun List<Int>.minOrMaxInt(): Int = minOrNull() ?: Int.MAX_VALUE
+fun <T> Collection<Pair<T, T>>.flattenPairsToSet(): Set<T> = flatMap { listOf(it.first, it.second) }.toSet()
+fun <T> Pair<T, T>.reversed(): Pair<T, T> = Pair(first = second, second = first)
+
+fun <T> Collection<Collection<T>>.mutualItems(): Set<T> =
+    tail().fold(head().toSet()) { acc, next -> acc.intersect(next.toSet()) }
+
 fun <T> List<T>.middleElement(): T =
-    if (size % 2 == 0) throw IllegalStateException("List size is even - no middle element")
+    if (size % 2 == 0) error("List size is even - no middle element")
     else this[size / 2]
 
 fun <T> List<T>.swap(firstIndex: Int, secondIndex: Int): List<T> =
@@ -29,7 +55,7 @@ fun <T> List<T>.swapRange(firstRange: List<Int>, secondRange: List<Int>): List<T
 
 fun <T> List<T>.subListsWithOneDroppedElement(): List<List<T>> =
     indices.map {
-       filterIndexed { index, _ -> index != it }
+        filterIndexed { index, _ -> index != it }
     }
 
 fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
@@ -47,7 +73,7 @@ fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
 }
 
 fun <T> uniquePairs(list1: List<T>, list2: List<T>): List<Pair<T, T>> =
-   list1.flatMap { firstListItem ->
+    list1.flatMap { firstListItem ->
         list2.map { secondListItem ->
             firstListItem to secondListItem
         }
@@ -194,24 +220,12 @@ fun <T> List<T>.binarySearchWithCostFunction(startLeft: Int = 0, costFunction: (
     else null
 }
 
-/**
- * Create the cartesian product of any number of sets of any size. Useful for parameterized tests
- * to generate a large parameter space with little code. Note that any type information is lost, as
- * the returned set contains list of any combination of types in the input set.
- *
- *
- * @param sets Sets.
- */
 fun cartesianProduct(a: List<*>, vararg sets: List<*>): List<List<*>> =
     listOf(a).plus(sets).fold(listOf(listOf<Any?>())) { acc, set ->
-            acc.flatMap { list -> set.map { element -> list + element } }
-        }
+        acc.flatMap { list -> set.map { element -> list + element } }
+    }
 
-/**
- * Transform elements of a cartesian product.
- */
 fun <T> List<List<*>>.map(transform: KFunction<T>) = map { transform.call(*it.toTypedArray()) }
-
 fun <T> List<List<T>>.duplicates(): List<List<T>> {
     val seenLists = mutableMapOf<List<T>, Int>()
     val allDuplicates = mutableListOf<List<T>>()

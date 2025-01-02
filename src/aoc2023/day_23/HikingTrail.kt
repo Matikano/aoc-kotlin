@@ -35,7 +35,7 @@ data class HikingTrail(
             if (cell.value == '#')
                 return@forEach
 
-            val neighbours = Direction.validDirections.map { dir ->
+            val neighbours = Direction.validEntries.map { dir ->
                 cell.position + dir
             }.filter { newPosition ->
                 grid.isInBounds(newPosition)
@@ -63,7 +63,7 @@ data class HikingTrail(
                     continue
                 }
 
-                val directions = if (ignoreSlopes) Direction.validDirections else currentChar.toDirections()
+                val directions = if (ignoreSlopes) Direction.validEntries else currentChar.toDirections()
 
                 val neighbours = directions.map { dir ->
                     current + dir
@@ -112,6 +112,6 @@ data class HikingTrail(
         fun Char.toDirections(): List<Direction> =
             Direction.entries.find { it.symbol == this }
                 ?.let { listOf(it) }
-                ?: Direction.validDirections
+                ?: Direction.validEntries
     }
 }

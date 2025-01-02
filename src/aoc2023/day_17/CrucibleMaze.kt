@@ -37,7 +37,7 @@ data class CrucibleMaze(
 
             seenStates.add(current.state)
 
-            val possibleNewNodes = Direction.validDirections
+            val possibleNewNodes = Direction.validEntries
                 .filter {
                     it != current.direction.reversed() &&
                     if (current.sameDirectionCount == 3)
@@ -87,7 +87,7 @@ data class CrucibleMaze(
                 continue
 
             seenStates.add(current.state)
-            val possibleNewNodes = Direction.validDirections
+            val possibleNewNodes = Direction.validEntries
                 .filter {
                     it != current.direction.reversed() &&
                     if (current.sameDirectionCount == 10)

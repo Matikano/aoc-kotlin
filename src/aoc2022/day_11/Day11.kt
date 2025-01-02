@@ -24,18 +24,19 @@ object Day11: AocTask() {
             println("Monkey business level part 2 = ${monkeys2.monkeyBusinessLevel}")
         }.let { println("Test part took $it\n") }
 
-        measureTime {
-            val monkeys = input.toMonkeys()
-            monkeys.processGame(ROUNDS)
-            println("Monkey business level = ${monkeys.monkeyBusinessLevel}")
-        }.let { println("Part 1 took $it\n") }
+        with(input.toMonkeys()) {
+            // Part 1
+            measureTime {
+                processGame(ROUNDS)
+                println("Monkey business level = $monkeyBusinessLevel")
+            }.let { println("Part 1 took $it\n") }
 
-        measureTime {
-            val monkeys = input.toMonkeys()
-            monkeys.processGame(PART_2_ROUNDS, false)
-            println(monkeys.map { it.itemInspectionCount })
-            println("Monkey business level = ${monkeys.monkeyBusinessLevel}")
-        }.let { println("Part 2 took $it\n") }
+            // Part 2
+            measureTime {
+                processGame(PART_2_ROUNDS, false)
+                println("Monkey business level = $monkeyBusinessLevel")
+            }.let { println("Part 2 took $it\n") }
+        }
     }
 
     private val List<Monkey>.monkeyBusinessLevel: Long
@@ -63,9 +64,9 @@ object Day11: AocTask() {
         val (operationString, operand) = operationCode.split(" ").takeLast(2)
 
         return Monkey(
-            items = items.numsLong().map { it.toLong() }.toMutableList(),
+            items = items.numsLong().toMutableList(),
             operation = operationString.toOperation(),
-            operand = operand.toLongOrNull()?.toLong(),
+            operand = operand.toLongOrNull(),
             modulus = modulus.numsInt().first(),
             positiveTestIndex = positiveTest.numsInt().first(),
             negativeTestIndex = negativeTest.numsInt().first()

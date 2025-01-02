@@ -73,7 +73,7 @@ data class Maze(
 
             seen.add(current.position)
 
-            Direction.validDirections.forEach { direction ->
+            Direction.validEntries.forEach { direction ->
                 val newPosition = current.position + direction
                 if (!grid.isInBounds(newPosition) || grid[newPosition]!!.value == WALL || distances[newPosition] != -1)
                     return@forEach

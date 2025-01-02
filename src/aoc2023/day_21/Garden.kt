@@ -151,7 +151,7 @@ data class Garden(
             if (currentPlot.remainingSteps == 0)
                 continue
 
-            val possibleNewPlots = Direction.validDirections
+            val possibleNewPlots = Direction.validEntries
                 .map { direction ->
                     currentPlot.position + direction
                 }

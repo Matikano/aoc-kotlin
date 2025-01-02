@@ -3,7 +3,7 @@ package aoc2022.day_11
 sealed interface Operation {
     fun compute(a: Long, b: Long): Long
 
-    data object Add : Operation {
+    data object Add: Operation {
         override fun compute(a: Long, b: Long): Long = a + b
     }
 
