@@ -3,9 +3,7 @@ package aoc2022.day_09
 import utils.models.Direction
 import utils.models.Position
 
-class Rope(
-    knotsCount: Int
-) {
+class Rope(knotsCount: Int) {
     init {
        if (knotsCount < 2) throw IllegalStateException("Rope cannot have less than 2 knots" )
     }
