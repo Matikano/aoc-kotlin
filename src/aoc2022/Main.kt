@@ -10,6 +10,7 @@ import aoc2022.day_07.Day7
 import aoc2022.day_08.Day8
 import aoc2022.day_09.Day9
 import aoc2022.day_10.Day10
+import aoc2022.day_11.Day11
 
 fun main() {
 //    Day1.solve()
@@ -21,5 +22,6 @@ fun main() {
 //    Day7.solve()
 //    Day8.solve()
 //    Day9.solve()
-    Day10.solve()
+//    Day10.solve()
+    Day11.solve()
 }

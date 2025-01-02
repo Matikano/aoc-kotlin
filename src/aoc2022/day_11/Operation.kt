@@ -1,14 +1,14 @@
 package aoc2022.day_11
 
 sealed interface Operation {
-    fun compute(a: Int, b: Int): Int
+    fun compute(a: Long, b: Long): Long
 
-    object Add : Operation {
-        override fun compute(a: Int, b: Int): Int = a + b
+    data object Add : Operation {
+        override fun compute(a: Long, b: Long): Long = a + b
     }
 
-    object Multiply: Operation {
-        override fun compute(a: Int, b: Int): Int = a * b
+    data object Multiply: Operation {
+        override fun compute(a: Long, b: Long): Long = a * b
     }
 
     companion object {
