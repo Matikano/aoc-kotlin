@@ -4,7 +4,6 @@ import utils.AocTask
 import utils.extensions.uniquePairs
 import utils.models.Grid
 import utils.models.Grid.Companion.toGrid
-import utils.models.Grid.Companion.transpose
 import utils.models.Position
 import kotlin.time.measureTime
 

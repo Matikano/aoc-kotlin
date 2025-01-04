@@ -88,5 +88,7 @@ data class Position(
     companion object {
         operator fun Pair<Position, Position>.plus(direction: Direction): Pair<Position, Position> =
             first + direction to second + direction
+
+        fun topLeftCorner(): Position = Position(0, 0)
     }
 }

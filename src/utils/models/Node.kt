@@ -5,7 +5,8 @@ typealias NodeState = Pair<Position, Direction>
 data class Node(
     val position: Position,
     val direction: Direction,
-    val cost: Int
+    val cost: Int,
+    val previousNode: Node? = null
 ) {
     val state: NodeState
         get() = position to direction
