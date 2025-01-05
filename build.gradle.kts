@@ -25,6 +25,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
