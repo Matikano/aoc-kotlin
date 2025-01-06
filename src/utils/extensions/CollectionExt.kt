@@ -242,3 +242,40 @@ fun <T> List<List<T>>.duplicates(): List<List<T>> {
 
     return allDuplicates
 }
+
+fun findRepeatingCycle(list: List<Int>, cycleLength: Int, startIndex: Int): List<Int>? {
+    val size = list.size
+
+    // Check if the sublist from startIndex with cycleLength repeats
+    val cycle = list.subList(startIndex, startIndex + cycleLength)
+    for (i in startIndex until size - cycleLength) {
+        // Check if the current cycle repeats at this position
+        for (j in cycle.indices) {
+            if (list[i + j] != cycle[j]) {
+                return null  // If any mismatch is found, no repeat
+            }
+        }
+    }
+
+    // If no mismatch, return the cycle as a list
+    return cycle
+}
+
+fun checkAllCycles(list: List<Int>, cycleLength: Int = 1, startIndex: Int = 0): Pair<Int, List<Int>>? {
+    val size = list.size
+
+    // Base case: If we have tried all cycle lengths
+    if (cycleLength > size / 2) return null
+
+    // Try all possible startIndex values for the current cycleLength
+    for (i in startIndex until size - cycleLength) {
+        // If the cycle repeats infinitely starting from this startIndex, return the pair
+        val cycle = findRepeatingCycle(list, cycleLength, i)
+        if (cycle != null) {
+            return Pair(i, cycle)  // Return startIndex and the cycle itself
+        }
+    }
+
+    // Try the next cycle length recursively
+    return checkAllCycles(list, cycleLength + 1, startIndex + 1)
+}

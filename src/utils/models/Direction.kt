@@ -48,5 +48,8 @@ enum class Direction(val x: Int, val y: Int) {
     companion object {
         val validEntries = Direction.entries.filterNot { it == NONE }
         fun List<Direction>.toSequence(): String = map { it.symbol }.joinToString("") { it.toString() }
+
+        fun Char.toDirection(): Direction = validEntries.find { it.symbol == this }
+            ?: error("Unsupported character $this for Direction mapping")
     }
 }
