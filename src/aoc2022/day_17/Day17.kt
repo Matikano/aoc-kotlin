@@ -2,8 +2,7 @@ package aoc2022.day_17
 
 import aoc2022.day_17.Shape.*
 import utils.AocTask
-import utils.extensions.checkAllCycles
-import utils.extensions.findRepeatingCycle
+import utils.extensions.findCycle
 import utils.models.Direction
 import utils.models.Direction.Companion.toDirection
 import utils.models.Grid
@@ -17,6 +16,7 @@ object Day17: AocTask() {
 
     private const val PART_2_BLOCKS = 1000000000000L
     private const val STARTING_ROW_OFFSET = 4
+    private const val STARTING_COLUMN_OFFSET = 3
 
     private fun getShape(index: Int) =
         when (index % 5) {
@@ -34,87 +34,40 @@ object Day17: AocTask() {
         measureTime {
             val directions = testInput.toDirections()
             val towerHeight = towerHeight(directions)
-            println("directions = ${directions.size}")
             println("Tower height after 2022 blocks dropped = $towerHeight")
-            val (cycleStart, cycle) = towerCycles(directions)!!
-            val cycleLength = cycle.size
-            println("Cycle start = ${cycleStart}, cycleLength = $cycleLength, cycle = $cycle")
 
-            val towerHeightBeforeCycle = towerHeight(directions, cycleStart.toLong())
-            val cycleHeightIncrement = cycle.sum()
-            val cycles = (PART_2_BLOCKS - cycleStart) / cycleLength
-            val cycleReminder = (PART_2_BLOCKS - cycleStart) % cycleLength
-            println("Cycle height increment = $cycleHeightIncrement, cycle reminder = $cycleReminder, heightBeforeCycle = $towerHeightBeforeCycle")
-            val finalHeight = cycles * cycleHeightIncrement + towerHeightBeforeCycle + cycle.take(cycleReminder.toInt()).sum()
-            println("Final Height = $finalHeight")
+            val finalHeight = towerHeight(directions, PART_2_BLOCKS)
+            println("Tower height after $PART_2_BLOCKS blocks dropped = $finalHeight")
         }.let { println("Test part took $it\n") }
-
-//        measureTime {
-//            val directions = input.toDirections()
-//            val towerHeight = towerHeight(directions)
-//            println("directions = ${directions.size}")
-//            println("Tower height after 2022 blocks dropped = $towerHeight")
-//        }.let { println("Part 1 took $it\n") }
 
         measureTime {
             val directions = input.toDirections()
-            val towerHeight = towerHeight(directions, 5000)
-            println("directions = ${directions.size}")
+            val towerHeight = towerHeight(directions)
             println("Tower height after 2022 blocks dropped = $towerHeight")
-            val (cycleStart, cycleLength) = towerCycles(directions)!!
-            println("Cycle start = $cycleStart, cycle length = $cycleLength")
+        }.let { println("Part 1 took $it\n") }
+
+        measureTime {
+            val directions = input.toDirections()
+            val towerHeight = towerHeight(directions, PART_2_BLOCKS)
+            println("Final height after $PART_2_BLOCKS rock drops = $towerHeight")
         }.let { println("Part 2 took $it\n") }
-    }
-
-    private fun towerCycles(directions: List<Direction>): Pair<Int, List<Int>>? {
-        var iteration = 0
-        var fallenBlocks = 0
-        var oldHeight = 0
-        val heightDiffs = mutableListOf<Int>()
-        val blockedPositions: MutableSet<Position> = bounds.map { Position(it, 0) }.toMutableSet()
-
-        while (fallenBlocks < 5000) {
-            val shape = getShape(fallenBlocks)
-            val startingRow = blockedPositions.minOf { it.rowIndex } - STARTING_ROW_OFFSET - shape.height + 1
-            val startingOffset = Position(colIndex = 3, rowIndex = startingRow )
-            shape.positions = shape.positions.map { it + startingOffset }.toSet()
-
-            while (!shape.fallen) {
-                val direction = directions[iteration++ % directions.size]
-                val positionsAfterBlow = shape.positions.map { it + direction }
-
-                if (positionsAfterBlow.all { it.colIndex in bounds && it !in blockedPositions })
-                    shape.positions = positionsAfterBlow.toSet()
-
-                val positionsAfterFall = shape.positions.map { it + Direction.DOWN }
-
-                if (positionsAfterFall.any { it in blockedPositions }) {
-                    fallenBlocks++
-                    oldHeight = blockedPositions.minOf { it.rowIndex }.absoluteValue
-                    blockedPositions.addAll(shape.positions)
-                    shape.fallen = true
-                    heightDiffs.add(blockedPositions.minOf { it.rowIndex }.absoluteValue - oldHeight)
-                } else shape.positions = positionsAfterFall.toSet()
-            }
-        }
-
-        return checkAllCycles(heightDiffs)
     }
 
     private fun towerHeight(
         directions: List<Direction>,
         blocksToDrop: Long = 2022
-    ): Int {
+    ): Long {
         var iteration = 0
         var fallenBlocks = 0
         var oldHeight = 0
         var heightDiffs = mutableListOf<Int>()
+        var cycles: Pair<List<Int>, Int>? = null
         val blockedPositions: MutableSet<Position> = bounds.map { Position(it, 0) }.toMutableSet()
 
         while (fallenBlocks < blocksToDrop) {
             val shape = getShape(fallenBlocks)
             val startingRow = blockedPositions.minOf { it.rowIndex } - STARTING_ROW_OFFSET - shape.height + 1
-            val startingOffset = Position(colIndex = 3, rowIndex = startingRow )
+            val startingOffset = Position(colIndex = STARTING_COLUMN_OFFSET, rowIndex = startingRow )
             shape.positions = shape.positions.map { it + startingOffset }.toSet()
 
             while (!shape.fallen) {
@@ -127,15 +80,27 @@ object Day17: AocTask() {
                 val positionsAfterFall = shape.positions.map { it + Direction.DOWN }
 
                 if (positionsAfterFall.any { it in blockedPositions }) {
+                    shape.fallen = true
                     fallenBlocks++
                     oldHeight = blockedPositions.minOf { it.rowIndex }.absoluteValue
                     blockedPositions.addAll(shape.positions)
-                    shape.fallen = true
                     heightDiffs.add(blockedPositions.minOf { it.rowIndex }.absoluteValue - oldHeight)
                 } else shape.positions = positionsAfterFall.toSet()
             }
+
+            if (fallenBlocks > 4000)
+                cycles = heightDiffs.findCycle(20)
+
+            cycles?.let { (cycle, cycleStart) ->
+                val cycles = (blocksToDrop - cycleStart) / cycle.size
+                val cycleReminder = (blocksToDrop - cycleStart) % cycle.size
+                return heightDiffs.take(cycleStart).sum() +
+                        cycles * cycle.sum() +
+                        cycle.take(cycleReminder.toInt()).sum()
+            }
         }
-        return blockedPositions.minOf { it.rowIndex }.absoluteValue
+
+        return blockedPositions.minOf { it.rowIndex }.absoluteValue.toLong()
     }
 
     private fun printTower(blockedPositions: Set<Position>, shapePositions: Set<Position>) {
