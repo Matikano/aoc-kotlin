@@ -39,8 +39,8 @@ object Day18: AocTask() {
 
     val List<Cube>.interiorEmptyCubes: List<Cube>
         get() = (1 .. maxOf { it.x }).flatMap { x ->
-                    (1 .. maxOf { it.y} ).flatMap { y ->
-                        (1 .. maxOf { it.z } ).mapNotNull { z ->
+                    (1 .. maxOf { it.y}).flatMap { y ->
+                        (1 .. maxOf { it.z }).mapNotNull { z ->
                            val cube = Cube(x, y, z)
                            if (isTrapped(cube) && cube !in this) cube
                            else null
