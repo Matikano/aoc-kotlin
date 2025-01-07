@@ -2,10 +2,11 @@ package aoc2022.day_18
 
 import utils.AocTask
 import utils.extensions.numsInt
-import kotlin.math.max
 import kotlin.time.measureTime
 
 object Day18: AocTask() {
+
+    private const val CUBE_FACES = 6
 
     override fun executeTask() {
         measureTime {
@@ -37,25 +38,19 @@ object Day18: AocTask() {
             any { it.x < cube.x && it.y == cube.y && it.z == cube.z }
 
     val List<Cube>.interiorEmptyCubes: List<Cube>
-        get() {
-            var trapped = mutableListOf<Cube>()
-
-            for (x in 1..maxOf { it.x }) {
-                for (y in 1..maxOf { it.y} ){
-                    for (z in 1..maxOf { it.z }) {
-                        val cube = Cube(x, y, z)
-                        if (isTrapped(cube) && cube !in this)
-                           trapped.add(cube)
+        get() = (1 .. maxOf { it.x }).flatMap { x ->
+                    (1 .. maxOf { it.y} ).flatMap { y ->
+                        (1 .. maxOf { it.z } ).mapNotNull { z ->
+                           val cube = Cube(x, y, z)
+                           if (isTrapped(cube) && cube !in this) cube
+                           else null
+                        }
                     }
                 }
-            }
-
-            return trapped
-        }
 
     val List<Cube>.surfaceArea: Int
         get() = sumOf { cube ->
-            6 - count { other -> cube.isAdjacent(other) }
+            CUBE_FACES - count { other -> cube.isAdjacent(other) }
         }
 
     val List<Cube>.exteriorSurfaceArea: Int
