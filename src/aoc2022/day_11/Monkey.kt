@@ -1,5 +1,7 @@
 package aoc2022.day_11
 
+import utils.models.Operation
+
 data class Monkey(
     val items: MutableList<Long>,
     val operation: Operation,

@@ -1,6 +1,6 @@
 package aoc2022.day_11
 
-import aoc2022.day_11.Operation.Companion.toOperation
+import utils.models.Operation.Companion.toOperation
 import utils.AocTask
 import utils.extensions.lcm
 import utils.extensions.numsInt
