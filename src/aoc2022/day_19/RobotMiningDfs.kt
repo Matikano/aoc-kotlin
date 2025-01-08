@@ -16,7 +16,6 @@ class RobotMiningDfs(
 
         when (time) {
             0 -> ores[OreType.GEODE]!!
-            1 -> ores[OreType.GEODE]!! + robots[OreType.GEODE]!!
             else -> {
                 var maxVal = ores[OreType.GEODE]!! + robots[OreType.GEODE]!! * time
 
