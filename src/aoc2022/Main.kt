@@ -18,6 +18,7 @@ import aoc2022.day_15.Day15
 import aoc2022.day_16.Day16
 import aoc2022.day_17.Day17
 import aoc2022.day_18.Day18
+import aoc2022.day_19.Day19
 
 fun main() {
 //    Day1.solve()
@@ -37,5 +38,6 @@ fun main() {
 //    Day15.solve()
 //    Day16.solve()
 //    Day17.solve()
-    Day18.solve()
+//    Day18.solve()
+    Day19.solve()
 }
