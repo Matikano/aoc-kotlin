@@ -21,7 +21,7 @@ class RobotMiningDfs(
                 var maxVal = ores[OreType.GEODE]!! + robots[OreType.GEODE]!! * time
 
                 for ((oreType, recipe) in blueprint.recipes) {
-                    if (oreType != OreType.GEODE && robots[oreType]!! >= blueprint.maxSpend[oreType]!!)
+                    if (oreType != OreType.GEODE && robots[oreType]!! * time >= blueprint.maxSpend[oreType]!! * time - ores[oreType]!!)
                         continue
 
                     var wait = 0
