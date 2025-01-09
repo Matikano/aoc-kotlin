@@ -196,7 +196,7 @@ data class MonkeyMap(
 
     private fun isInBounds(position: Position, direction: Direction): Boolean =
         when (direction) {
-            Direction.UP -> position.rowIndex >= validWithRocks.filter { it.colIndex == posit   ion.colIndex }.minOf { it.rowIndex }
+            Direction.UP -> position.rowIndex >= validWithRocks.filter { it.colIndex == position.colIndex }.minOf { it.rowIndex }
             Direction.DOWN -> position.rowIndex <= validWithRocks.filter { it.colIndex == position.colIndex }.maxOf { it.rowIndex }
             Direction.RIGHT -> position.colIndex <= validWithRocks.filter { it.rowIndex == position.rowIndex }.maxOf { it.colIndex }
             Direction.LEFT ->  position.colIndex >= validWithRocks.filter { it.rowIndex == position.rowIndex }.minOf { it.colIndex }
