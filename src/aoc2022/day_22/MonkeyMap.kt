@@ -10,19 +10,19 @@ data class MonkeyMap(
     val grid: Grid<Char>
 ) {
 
-    val validPositions: Set<Position>
+    private val validPositions: Set<Position>
         get() = grid.cells.filter { it.value == '.' }.map { it.position }.toSet()
 
-    val invalidPositions:  Set<Position>
+    private val invalidPositions:  Set<Position>
         get() = grid.cells.filter { it.value == ' ' }.map { it.position }.toSet()
 
-    val rocks: Set<Position>
+    private val rocks: Set<Position>
         get() = grid.cells.filter { it.value == '#' }.map { it.position }.toSet()
 
-    val startPosition: Position
+    private val startPosition: Position
         get() = validPositions.minBy { it.rowIndex }
 
-    val validWithRocks: Set<Position> by lazy {
+    private val validWithRocks: Set<Position> by lazy {
        (validPositions + rocks).sorted().toSet()
     }
 
@@ -30,7 +30,7 @@ data class MonkeyMap(
         instructions: List<Instruction>,
         folded: Boolean = false
     ): Int {
-        var currentNode = Node(
+        var currentState = Node(
             position = startPosition,
             direction = Direction.RIGHT,
         ).state
@@ -38,13 +38,13 @@ data class MonkeyMap(
         val queue = instructions.toMutableList()
 
         while (queue.isNotEmpty())
-            currentNode = processInstruction(
+            currentState = processInstruction(
                 instruction = queue.removeFirst(),
-                currentState = currentNode,
+                currentState = currentState,
                 folded = folded
             )
 
-        return currentNode.toPassword()
+        return currentState.toPassword()
     }
 
     fun processInstruction(
@@ -64,6 +64,15 @@ data class MonkeyMap(
 
         return position to direction.makeATurn(instruction.turn)
     }
+
+    private fun isInBounds(position: Position, direction: Direction): Boolean =
+        when (direction) {
+            Direction.UP -> position.rowIndex >= validWithRocks.filter { it.colIndex == position.colIndex }.minOf { it.rowIndex }
+            Direction.DOWN -> position.rowIndex <= validWithRocks.filter { it.colIndex == position.colIndex }.maxOf { it.rowIndex }
+            Direction.RIGHT -> position.colIndex <= validWithRocks.filter { it.rowIndex == position.rowIndex }.maxOf { it.colIndex }
+            Direction.LEFT ->  position.colIndex >= validWithRocks.filter { it.rowIndex == position.rowIndex }.minOf { it.colIndex }
+            Direction.NONE -> throw IllegalStateException("Unexpected direction NONE for password value")
+        }
 
     private fun Position.step(
         direction: Direction,
@@ -193,16 +202,6 @@ data class MonkeyMap(
             Direction.LEFT -> validWithRocks.last { it.rowIndex == rowIndex }
             else -> throw IllegalStateException("Unexpected direction NONE for movement")
         } to direction
-
-    private fun isInBounds(position: Position, direction: Direction): Boolean =
-        when (direction) {
-            Direction.UP -> position.rowIndex >= validWithRocks.filter { it.colIndex == position.colIndex }.minOf { it.rowIndex }
-            Direction.DOWN -> position.rowIndex <= validWithRocks.filter { it.colIndex == position.colIndex }.maxOf { it.rowIndex }
-            Direction.RIGHT -> position.colIndex <= validWithRocks.filter { it.rowIndex == position.rowIndex }.maxOf { it.colIndex }
-            Direction.LEFT ->  position.colIndex >= validWithRocks.filter { it.rowIndex == position.rowIndex }.minOf { it.colIndex }
-            Direction.NONE -> throw IllegalStateException("Unexpected direction NONE for password value")
-        }
-
 
     private fun NodeState.toPassword(): Int = 1000 * (first.rowIndex + 1) + 4 * (first.colIndex + 1) + second.toPasswordValue()
 
