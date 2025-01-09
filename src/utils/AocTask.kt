@@ -23,7 +23,7 @@ abstract class AocTask {
 
     fun inputToList(): List<String> = readFile(inputFileName).readLines()
     fun inputByLines(action: (String) -> Unit) = readFile(inputFileName).forEachLine(action)
-    fun inputToString(fileName: String = inputFileName): String = readFile(fileName).readText().trim()
+    fun inputToString(fileName: String = inputFileName): String = readFile(fileName).readText().trimIndent()
     private fun readFile(fileName: String): BufferedReader = File(fileName).inputStream().bufferedReader()
 
     private fun printHeader() {

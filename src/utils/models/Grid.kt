@@ -23,13 +23,13 @@ data class Grid<T>(
 
     fun print() = forEachRow { row ->
         println(row.joinToString("") { it.value.toString() })
-    }.also { println() }
+    }
 
     inline fun forEachRow(action: (List<GridCell<T>>) -> Unit) =
-        cells.windowed(
-            size = width,
-            step = width
-        ).forEach(action)
+        (cells.minOf { it.position.colIndex } .. cells.maxOf { it.position.colIndex })
+            .forEach { rowIndex ->
+                action(cells.filter { it.position.rowIndex == rowIndex })
+            }
 
     inline fun forEachRowIndexed(action: (Int, List<GridCell<T>>) -> Unit) =
         cells.windowed(
