@@ -32,7 +32,7 @@ data class MonkeyMap(
     ): Int {
         var currentState = Node(
             position = startPosition,
-            direction = Direction.RIGHT,
+            direction = Direction.RIGHT
         ).state
 
         val queue = instructions.toMutableList()
@@ -81,9 +81,10 @@ data class MonkeyMap(
         val nextPosition = this + direction
 
         return when {
-            nextPosition in invalidPositions || !isInBounds(nextPosition, direction) ->
-                if (fold) nextPosition.folded(direction)
-                else nextPosition.wrapped(direction)
+            nextPosition in invalidPositions
+                || !isInBounds(nextPosition, direction) ->
+                    if (fold) nextPosition.folded(direction)
+                    else nextPosition.wrapped(direction)
             else -> nextPosition to direction
         }.let { if (it.first in rocks) (this to direction) else it }
     }
@@ -203,7 +204,8 @@ data class MonkeyMap(
             else -> throw IllegalStateException("Unexpected direction NONE for movement")
         } to direction
 
-    private fun NodeState.toPassword(): Int = 1000 * (first.rowIndex + 1) + 4 * (first.colIndex + 1) + second.toPasswordValue()
+    private fun NodeState.toPassword(): Int =
+        1000 * (first.rowIndex + 1) + 4 * (first.colIndex + 1) + second.toPasswordValue()
 
     private fun Direction.toPasswordValue(): Int =
         when (this) {
