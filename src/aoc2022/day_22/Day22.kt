@@ -1,7 +1,6 @@
 package aoc2022.day_22
 
 import utils.AocTask
-import utils.models.Grid
 import utils.models.Grid.Companion.toGrid
 import kotlin.time.measureTime
 
