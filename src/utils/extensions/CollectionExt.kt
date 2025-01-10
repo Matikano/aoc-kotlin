@@ -116,18 +116,17 @@ fun <T> List<T?>.indexOfNextNull(startIndex: Int): Int {
 }
 
 fun List<Position>.printPositions(
-    gridBounds: Pair<Int, Int>,
     markerChar: Char = '#',
     emptyChar: Char = '.'
 ) {
-    val (rows, cols) = gridBounds
+    val (rows, cols) = maxOf { it.rowIndex } - minOf { it.rowIndex } + 1 to maxOf { it.colIndex } - minOf { it.colIndex } + 1
     val grid = Array(rows) { CharArray(cols) { emptyChar } }
+    val rowOffset = 0 - minOf { it.rowIndex }
+    val colOffset = 0 - minOf { it.colIndex }
 
     forEach { position ->
         val (colIndex, rowIndex) = position
-        if (rowIndex in 0 ..< rows && colIndex in 0 ..< cols) {
-            grid[rowIndex][colIndex] = markerChar
-        }
+        grid[rowIndex + rowOffset][colIndex + colOffset] = markerChar
     }
 
     for (row in grid) {

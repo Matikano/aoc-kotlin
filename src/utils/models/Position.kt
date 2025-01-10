@@ -11,7 +11,7 @@ data class Position(
 ) : Comparable<Position> {
 
     val surroundings: Set<Position>
-        get() = Adjacent.entries.map { this + it }.toSet()
+        get() = Adjacent.validEntries.map { this + it }.toSet()
 
     override fun toString(): String = "($colIndex,$rowIndex)"
 
