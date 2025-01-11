@@ -23,6 +23,7 @@ import aoc2022.day_20.Day20
 import aoc2022.day_21.Day21
 import aoc2022.day_22.Day22
 import aoc2022.day_23.Day23
+import aoc2022.day_24.Day24
 
 fun main() {
 //    Day1.solve()
@@ -47,5 +48,6 @@ fun main() {
 //    Day20.solve()
 //    Day21.solve()
 //    Day22.solve()
-    Day23.solve()
+//    Day23.solve()
+    Day24.solve()
 }
