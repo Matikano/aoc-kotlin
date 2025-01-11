@@ -3,6 +3,7 @@ package aoc2021.day_01
 import utils.AocTask
 import utils.extensions.numsInt
 import utils.extensions.tail
+import utils.extensions.toInt
 import kotlin.time.measureTime
 
 object Day1: AocTask() {
@@ -21,7 +22,6 @@ object Day1: AocTask() {
 
         measureTime {
             val numbers = input.toIntList()
-            println("Count of increasing numbers = ${numbers.increasingCount()}")
             println("Count of increasing windows = ${numbers.increasingWindowedCount()}")
         }.let { println("Part 2 took $it\n") }
     }
@@ -30,8 +30,9 @@ object Day1: AocTask() {
         windowed(size = windowSize).map { it.sum() }.increasingCount()
 
     private fun List<Int>.increasingCount(): Int =
-        zip(tail()) { a, b -> b - a }
-            .count { it > 0 }
+        tail().foldIndexed(0) { index, acc, number ->
+            acc + (number > this[index]).toInt()
+        }
 
     private fun String.toIntList(): List<Int> = numsInt()
 
