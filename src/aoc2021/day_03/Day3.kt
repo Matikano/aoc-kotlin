@@ -2,7 +2,6 @@ package aoc2021.day_03
 
 import utils.AocTask
 import utils.extensions.binaryNegation
-import utils.extensions.transpose
 import kotlin.time.measureTime
 
 object Day3: AocTask() {
