@@ -19,3 +19,6 @@ object GreatestCommonDivisor: RecursiveMemo2<Long, Long, Long>() {
         else recurse(b, a % b)
     }
 }
+
+val Int.binaryNegation: Int get() = this xor binaryMask
+val Int.binaryMask: Int get() = (takeHighestOneBit() shl 1) - 1
