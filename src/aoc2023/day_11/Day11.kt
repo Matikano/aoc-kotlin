@@ -3,7 +3,7 @@ package aoc2023.day_11
 import utils.AocTask
 import utils.extensions.uniquePairs
 import utils.models.Grid
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import utils.models.Position
 import kotlin.time.measureTime
 
@@ -17,12 +17,12 @@ object Day11: AocTask() {
     override fun executeTask() {
 
         measureTime {
-            val grid = testInput.toGrid()
+            val grid = testInput.toCharGrid()
             val minimumDistancesBetweenGalaxies = grid.minimumDistancesBetweenGalaxies(PART_1_EXPANSION_FACTOR)
             println("Sum of minimal distances between all galaxy pairs = ${minimumDistancesBetweenGalaxies.sum()}")
         }.let { println("Test part took $it\n") }
 
-        with(input.toGrid()) {
+        with(input.toCharGrid()) {
             measureTime {
                 val minimumDistancesBetweenGalaxies = minimumDistancesBetweenGalaxies(PART_1_EXPANSION_FACTOR)
                 println("Sum of minimal distances between all galaxy pairs = ${minimumDistancesBetweenGalaxies.sum()}")

@@ -2,7 +2,7 @@ package aoc2023.day_14
 
 import utils.AocTask
 import utils.models.Grid
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import utils.models.Position
 import kotlin.time.measureTime
 
@@ -14,7 +14,7 @@ object Day14: AocTask() {
     private const val CYCLES_COUNT = 1000000000
 
     override fun executeTask() {
-        with(input.toGrid()) {
+        with(input.toCharGrid()) {
             measureTime {
                 val slided = slideRocksNorth()
 

@@ -5,7 +5,7 @@ import utils.extensions.uniquePairs
 import utils.models.Adjacent
 import utils.models.Direction
 import utils.models.Grid
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import utils.models.Position
 import kotlin.time.measureTime
 
@@ -13,7 +13,7 @@ import kotlin.time.measureTime
 object Day3: AocTask() {
 
     override fun executeTask() {
-        with(inputToString().toGrid()) {
+        with(inputToString().toCharGrid()) {
             // Part 1
             measureTime {
                 val numbersInGrid = toNumbersInGrid()

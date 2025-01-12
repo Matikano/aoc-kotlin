@@ -1,7 +1,7 @@
 package aoc2022.day_22
 
 import utils.AocTask
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import kotlin.time.measureTime
 
 object Day22: AocTask() {
@@ -40,6 +40,6 @@ object Day22: AocTask() {
                 )
             }.toList()
 
-        return MonkeyMap(grid.toGrid()) to instructions
+        return MonkeyMap(grid.toCharGrid()) to instructions
     }
 }

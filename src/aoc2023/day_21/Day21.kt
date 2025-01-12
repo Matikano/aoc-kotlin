@@ -1,7 +1,7 @@
 package aoc2023.day_21
 
 import utils.AocTask
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import kotlin.time.measureTime
 
 object Day21: AocTask() {
@@ -10,7 +10,7 @@ object Day21: AocTask() {
 
     override fun executeTask() {
         measureTime {
-            val testGarden = Garden(testInput.toGrid())
+            val testGarden = Garden(testInput.toCharGrid())
             println("Test garden")
             testGarden.grid.print()
             println()
@@ -19,7 +19,7 @@ object Day21: AocTask() {
 
         }.let { println("Test part took $it\n") }
 
-        with(Garden(input.toGrid())) {
+        with(Garden(input.toCharGrid())) {
             measureTime {
                 println("Number of unique reachable garden plots after $STEPS_TO_TAKE steps = ${uniquePlotsAfterSteps(steps = STEPS_TO_TAKE)}")
             }.let { println("Part 1 took $it\n") }

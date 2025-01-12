@@ -1,7 +1,7 @@
 package aoc2023.day_17
 
 import utils.AocTask
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import kotlin.time.measureTime
 
 object Day17: AocTask() {
@@ -9,7 +9,7 @@ object Day17: AocTask() {
     override fun executeTask() {
 
         measureTime {
-            val testMaze = CrucibleMaze(testInput.toGrid())
+            val testMaze = CrucibleMaze(testInput.toCharGrid())
             val leastHeatLossPath = testMaze.findLeastHeatLossPath()
             val leastHeatLoss = leastHeatLossPath.first().cost
             println("Least heat loss for test maze = $leastHeatLoss")
@@ -18,7 +18,7 @@ object Day17: AocTask() {
             println("Least ultra heat loss for test maze = $leastHeatLossUltra")
         }.let { println("Test part took $it\n") }
 
-        with(CrucibleMaze(input.toGrid())) {
+        with(CrucibleMaze(input.toCharGrid())) {
             measureTime {
                 val leastHeatLossPath = findLeastHeatLossPath()
                 val leastHeatLoss = leastHeatLossPath.first().cost

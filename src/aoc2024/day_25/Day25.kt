@@ -3,7 +3,7 @@ package aoc2024.day_25
 import utils.AocTask
 import utils.extensions.uniquePairs
 import utils.models.Grid
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import kotlin.time.measureTime
 
 typealias Schematic = List<String>
@@ -51,11 +51,11 @@ object Day25 : AocTask() {
         segments.forEach { segment ->
             when {
                 segment.startsWith(FILLED) -> locks.add(
-                    segment.toGrid().transpose().toSchematic()
+                    segment.toCharGrid().transpose().toSchematic()
                 )
 
                 segment.startsWith(EMPTY) -> keys.add(
-                    segment.toGrid().transpose().toSchematic()
+                    segment.toCharGrid().transpose().toSchematic()
                         .map { it.reversed() }
                 )
             }

@@ -1,20 +1,20 @@
 package aoc2023.day_10
 
 import utils.AocTask
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import kotlin.time.measureTime
 
 object Day10: AocTask() {
 
     override fun executeTask() {
         // Test part
-        with(PipeMaze(testInput.toGrid())) {
+        with(PipeMaze(testInput.toCharGrid())) {
             solve()
             val numberOfEnclosedPositions = enclosedByLoopCount()
             println("Number of enclosed positions = $numberOfEnclosedPositions")
         }
 
-        with (PipeMaze(inputToString().toGrid())) {
+        with (PipeMaze(inputToString().toCharGrid())) {
             // Part 1
             measureTime {
                 solve()

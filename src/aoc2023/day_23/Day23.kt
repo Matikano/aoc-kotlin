@@ -1,15 +1,14 @@
 package aoc2023.day_23
 
-import aoc2023.day_23.HikingTrail.Companion.toDirections
 import utils.AocTask
-import utils.models.Grid.Companion.toGrid
+import utils.models.Grid.Companion.toCharGrid
 import kotlin.time.measureTime
 
 object Day23: AocTask() {
 
     override fun executeTask() {
         measureTime {
-            val hikingTrail = HikingTrail(testInput.toGrid())
+            val hikingTrail = HikingTrail(testInput.toCharGrid())
 
             println("Start to end = ${hikingTrail.startPosition to hikingTrail.endPosition}")
             println("Graph positions = ${hikingTrail.graphPositions}")
@@ -26,12 +25,12 @@ object Day23: AocTask() {
         }.let { println("Test part took $it\n") }
 
         measureTime {
-            val hikingTrail = HikingTrail(input.toGrid())
+            val hikingTrail = HikingTrail(input.toCharGrid())
             println("Longest trail length = ${hikingTrail.findLongestTrail()}")
         }.let { println("Part 1 took $it\n") }
 
         measureTime {
-            val hikingTrail = HikingTrail(input.toGrid())
+            val hikingTrail = HikingTrail(input.toCharGrid())
             println("Longest trail length ignoring slopes = ${hikingTrail.findLongestTrailIgnoringSlopes()}")
         }.let { println("Part 2 took $it\n") }
     }

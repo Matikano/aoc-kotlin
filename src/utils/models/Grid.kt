@@ -1,5 +1,7 @@
 package utils.models
 
+import utils.extensions.numsInt
+
 data class Grid<T>(
     val cells: List<GridCell<T>>
 ) {
@@ -46,13 +48,25 @@ data class Grid<T>(
     )
 
     companion object {
-        fun String.toGrid(): Grid<Char> =
+        fun String.toCharGrid(): Grid<Char> =
             Grid(
                 cells = lines().flatMapIndexed { rowIndex, row ->
                     row.mapIndexed { colIndex, char ->
                         GridCell(
                             position = Position(colIndex, rowIndex),
                             value = char
+                        )
+                    }
+                }
+            )
+
+        fun String.toIntGrid(): Grid<Int> =
+            Grid(
+                cells = lines().flatMapIndexed { rowIndex, row ->
+                    row.numsInt().mapIndexed { colIndex, value ->
+                        GridCell(
+                            position = Position(colIndex, rowIndex),
+                            value = value
                         )
                     }
                 }
