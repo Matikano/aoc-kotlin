@@ -34,7 +34,9 @@ data class SevenSegment(
         val six = input.first { it.toSet().containsAll(listOf(eKey, dKey)) && it.length == 6 }.toSet()
 
         val cKey = (eight - six).first()
-        val two = input.first { it.length == 5 && setOf(aKey, cKey, dKey, eKey).all { key -> key in it.toSet() } }.toSet()
+        val two = input.first {
+            it.length == 5 && setOf(aKey, cKey, dKey, eKey).all { key -> key in it.toSet() }
+        }.toSet()
 
         val gKey = (two - setOf(aKey, cKey, dKey, eKey)).first()
         val fKey = (zero - two - setOf(bKey)).first()
