@@ -1,5 +1,6 @@
 package utils.extensions
 
+import utils.abstractions.RecursiveMemo1
 import utils.abstractions.RecursiveMemo2
 
 fun Long.even(): Boolean = this % 2 == 0L
@@ -22,3 +23,12 @@ object GreatestCommonDivisor: RecursiveMemo2<Long, Long, Long>() {
 
 val Int.binaryNegation: Int get() = this xor binaryMask
 val Int.binaryMask: Int get() = (takeHighestOneBit() shl 1) - 1
+
+object NthSum: RecursiveMemo1<Long, Long>() {
+    override fun MutableMap<Long, Long>.recurse(n: Long): Long = getOrPut(n) {
+        when (n) {
+            0L -> 0L
+            else -> n + recurse(n - 1)
+        }
+    }
+}
