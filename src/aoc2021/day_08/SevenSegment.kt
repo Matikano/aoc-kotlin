@@ -1,10 +1,10 @@
 package aoc2021.day_08
 
 data class SevenSegment(
-    val input: List<String>,
-    val output: List<String>
+    private val input: List<String>,
+    private val output: List<String>
 ) {
-    val charMap: MutableMap<Char, Char> = mutableMapOf()
+    private val charMap: MutableMap<Char, Char> = mutableMapOf()
 
     init {
         initializeMap()
