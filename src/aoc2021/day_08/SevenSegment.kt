@@ -26,14 +26,16 @@ data class SevenSegment(
         val aKey = (seven - one).first()
         val bKey = (four - three).first()
         val dKey = ((four - one ) - bKey).first()
+
+        val zero = eight - dKey
         val nine = input.first { it.length == 6 && it.toSet().containsAll(one + dKey) }.toSet()
 
         val eKey = (eight - nine).first()
         val six = input.first { it.toSet().containsAll(listOf(eKey, dKey)) && it.length == 6 }.toSet()
-        val zero = eight - dKey
 
         val cKey = (eight - six).first()
         val two = input.first { it.length == 5 && setOf(aKey, cKey, dKey, eKey).all { key -> key in it.toSet() } }.toSet()
+
         val gKey = (two - setOf(aKey, cKey, dKey, eKey)).first()
         val fKey = (zero - two - setOf(bKey)).first()
 
