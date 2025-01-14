@@ -10,8 +10,11 @@ data class Position(
     val rowIndex: Int
 ) : Comparable<Position> {
 
-    val surroundings: Set<Position>
+    val adjacents: Set<Position>
         get() = Adjacent.validEntries.map { this + it }.toSet()
+
+    val neighbours: Set<Position>
+        get() = Direction.validEntries.map { this + it }.toSet()
 
     override fun toString(): String = "($colIndex,$rowIndex)"
 

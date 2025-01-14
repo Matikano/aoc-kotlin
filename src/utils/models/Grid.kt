@@ -71,5 +71,17 @@ data class Grid<T>(
                     }
                 }
             )
+
+        fun String.toDigitGrid(): Grid<Int> =
+            Grid(
+                cells = lines().flatMapIndexed { rowIndex, row ->
+                    row.mapIndexed { colIndex, char ->
+                        GridCell(
+                            position = Position(colIndex, rowIndex),
+                            value = char.digitToInt()
+                        )
+                    }
+                }
+            )
     }
 }

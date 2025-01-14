@@ -67,7 +67,7 @@ object Day23: AocTask() {
     private fun Set<Position>.moveElves(): Set<Position> {
         val list = toMutableList()
         val elvesToMove = list.mapIndexedNotNull { index, elf ->
-            if (elf.surroundings.any { it in list }) index to elf
+            if (elf.adjacents.any { it in list }) index to elf
             else null
         }
 
