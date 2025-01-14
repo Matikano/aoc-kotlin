@@ -13,8 +13,8 @@ data class Grid<T>(
 
     fun isInBounds(position: Position): Boolean =
         with(position) {
-            colIndex in 0 ..< width &&
-                rowIndex in 0 ..< height
+            colIndex in 0 ..< cells.maxOf { it.position.colIndex } &&
+                rowIndex in 0 ..< cells.maxOf { it.position.rowIndex }
         }
 
     operator fun get(position: Position): GridCell<T>? =
@@ -24,7 +24,7 @@ data class Grid<T>(
         cells.first { it.value == value }.position
 
     fun print() = forEachRow { row ->
-        println(row.joinToString("") { it.value.toString() })
+        println(row.joinToString("\t") { it.value.toString() })
     }
 
     inline fun forEachRow(action: (List<GridCell<T>>) -> Unit) =
