@@ -29,10 +29,10 @@ object Day13: AocTask() {
         }.let { println("Part 2 took $it\n") }
     }
 
-    private fun String.toDotsAndFolds(): Pair<Set<Position>, List<Fold>> {
-        val (dotsSegment, foldsSegment) = split("\n\n")
-        return dotsSegment.toDots() to foldsSegment.toFolds()
-    }
+    private fun String.toDotsAndFolds(): Pair<Set<Position>, List<Fold>> =
+         split("\n\n").let { (dotsSegment, foldsSegment) ->
+             dotsSegment.toDots() to foldsSegment.toFolds()
+         }
 
     private fun String.toFolds(): List<Fold> = lines().map { it.toFold() }
     private fun String.toDots(): Set<Position> =
