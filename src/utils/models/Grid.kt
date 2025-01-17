@@ -13,8 +13,8 @@ data class Grid<T>(
 
     fun isInBounds(position: Position): Boolean =
         with(position) {
-            colIndex in 0 ..< cells.maxOf { it.position.colIndex } &&
-                rowIndex in 0 ..< cells.maxOf { it.position.rowIndex }
+            colIndex in 0 .. cells.maxOf { it.position.colIndex } &&
+                rowIndex in 0 .. cells.maxOf { it.position.rowIndex }
         }
 
     operator fun get(position: Position): GridCell<T>? =
