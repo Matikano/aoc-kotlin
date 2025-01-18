@@ -24,7 +24,7 @@ data class Grid<T>(
         cells.first { it.value == value }.position
 
     fun print() = forEachRow { row ->
-        println(row.joinToString("\t") { it.value.toString() })
+        println(row.joinToString("") { it.value.toString() })
     }
 
     inline fun forEachRow(action: (List<GridCell<T>>) -> Unit) =
