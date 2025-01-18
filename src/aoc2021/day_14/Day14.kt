@@ -49,13 +49,11 @@ object Day14: AocTask() {
         val newMap = toMutableMap()
         keys.forEach { pair ->
             val count = this[pair]!!
+            newMap[pair] = newMap[pair]!! - count
             val newPair1 = "${pair.first()}${template[pair]!!}"
             val newPair2 = "${template[pair]!!}${pair.last()}"
             newMap[newPair1] = newMap.getOrDefault(newPair1, 0) + count
             newMap[newPair2] = newMap.getOrDefault(newPair2, 0) + count
-        }
-        keys.forEach { pair ->
-            newMap[pair] = newMap[pair]!! - this[pair]!!
         }
         return newMap
     }
