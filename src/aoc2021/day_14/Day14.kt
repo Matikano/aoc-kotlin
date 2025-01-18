@@ -12,10 +12,8 @@ object Day14: AocTask() {
 
         measureTime {
             val (polymer, template) = testInput.toPolymerAndTemplate()
-            val polymerPairs = polymer.polymerToPairCount()
-            val pairsCount = polymerPairs.grow(40, template)
-            val charCount = pairsCount.toCharCount(polymer.first(), polymer.last())
-            println("Score = ${charCount.values.max() - charCount.values.min()}")
+            println("Polymer score after 10 steps = ${polymer.polymerScoreAfterSteps(10, template)}")
+            println("Polymer score after 40 steps = ${polymer.polymerScoreAfterSteps(40, template)}")
         }.let { println("Test part took $it\n") }
 
         measureTime {
