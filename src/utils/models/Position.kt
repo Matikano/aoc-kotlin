@@ -1,5 +1,6 @@
 package utils.models
 
+import aoc2024.day_14.Velocity
 import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.min
@@ -40,6 +41,12 @@ data class Position(
         Position(
             colIndex + other.first,
             rowIndex + other.second
+        )
+
+    operator fun plus(velocity: Velocity): Position =
+        Position(
+            colIndex + velocity.dx,
+            rowIndex + velocity.dy
         )
 
     operator fun minus(other: Position): Position =
