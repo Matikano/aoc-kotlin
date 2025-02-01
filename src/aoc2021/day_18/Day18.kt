@@ -32,7 +32,8 @@ object Day18: AocTask() {
         }.let { println("Part 2 took $it\n") }
     }
 
-    private fun String.toBinaryTreeList(): List<BinaryTree> = lines().mapNotNull { it.toBinaryTree() }
+    private fun String.toBinaryTreeList(): List<BinaryTree> =
+        lines().mapNotNull { it.toBinaryTree() }
 
     private fun List<BinaryTree>.magnitudeAfterSum(): Int =
         tail().fold(head()) { acc, next -> acc + next }.magnitude
