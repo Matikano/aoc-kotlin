@@ -72,6 +72,15 @@ fun <T> List<T>.uniquePairs(): List<Pair<T, T>> {
     return list
 }
 
+fun <T> List<T>.orderedPairs(): List<Pair<T, T>> =
+    if (size < 2) emptyList()
+    else indices.flatMap { i ->
+        indices.mapNotNull { j ->
+            if (i == j) null
+            else this[i] to this[j]
+        }
+    }
+
 fun <T> uniquePairs(list1: List<T>, list2: List<T>): List<Pair<T, T>> =
     list1.flatMap { firstListItem ->
         list2.map { secondListItem ->

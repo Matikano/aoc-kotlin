@@ -26,6 +26,7 @@ dependencies {
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
