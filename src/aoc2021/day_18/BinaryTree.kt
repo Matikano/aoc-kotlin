@@ -41,19 +41,19 @@ sealed class BinaryTree(
         val leftNeighbor: Leaf?
             get() {
                 var current: BinaryTree? = this
-                while (current?.parent is Branch && current == (current.parent as Branch).left)
-                    current = current.parent
+                while (current == (current?.parent as? Branch)?.left)
+                    current = current?.parent
 
-                return (current?.parent as? Branch)?.let { findRightmostLeaf(it.left) }
+                return findRightmostLeaf((current?.parent as? Branch)?.left)
             }
 
         val rightNeighbor: Leaf?
             get() {
                 var current: BinaryTree? = this
-                while (current?.parent is Branch && current == (current.parent as Branch).right)
-                    current = current.parent
+                while (current == (current?.parent as? Branch)?.right)
+                    current = current?.parent
 
-                return (current?.parent as? Branch)?.let { findLeftmostLeaf(it.right) }
+                return findLeftmostLeaf((current?.parent as? Branch)?.right)
             }
 
         private fun findRightmostLeaf(node: BinaryTree?): Leaf? {
