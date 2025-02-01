@@ -2,9 +2,6 @@ package aoc2021.day_18
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import utils.extensions.tail
-import kotlin.compareTo
-import kotlin.div
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -17,7 +14,7 @@ sealed class BinaryTree(
             is Branch -> 3 * left.magnitude + 2 * right.magnitude
         }
 
-    fun copy(): BinaryTree = toString().toBinaryTree()!!
+    fun copy(): BinaryTree = toString().toBinaryTree() ?: error("Error while copying BinaryTree")
 
     operator fun plus(other: BinaryTree): BinaryTree =
         Branch(
@@ -40,48 +37,38 @@ sealed class BinaryTree(
         var left: BinaryTree,
         var right: BinaryTree
     ): BinaryTree(parent) {
+
         val leftNeighbor: Leaf?
-            get() = findLeftNeighbor()
+            get() {
+                var current: BinaryTree? = this
+                while (current?.parent is Branch && current == (current.parent as Branch).left)
+                    current = current.parent
+
+                return (current?.parent as? Branch)?.let { findRightmostLeaf(it.left) }
+            }
 
         val rightNeighbor: Leaf?
-            get() = findRightNeighbor()
+            get() {
+                var current: BinaryTree? = this
+                while (current?.parent is Branch && current == (current.parent as Branch).right)
+                    current = current.parent
 
-        private fun findLeftNeighbor(): Leaf? {
-            var current: BinaryTree? = this
-            while (current?.parent is Branch && current == (current.parent as Branch).left) {
-                current = current.parent
+                return (current?.parent as? Branch)?.let { findLeftmostLeaf(it.right) }
             }
-            if (current?.parent is Branch) {
-                return findRightmostLeaf((current.parent as Branch).left)
-            }
-            return null
-        }
 
         private fun findRightmostLeaf(node: BinaryTree?): Leaf? {
             var current = node
-            while (current is Branch) {
+            while (current is Branch)
                 current = current.right
-            }
+
             return current as? Leaf
-        }
-
-
-        private fun findRightNeighbor(): Leaf? {
-            var current: BinaryTree? = this
-            while (current?.parent is Branch && current == (current.parent as Branch).right) {
-                current = current.parent
-            }
-            if (current?.parent is Branch) {
-                return findLeftmostLeaf((current.parent as Branch).right)
-            }
-            return null
         }
 
         private fun findLeftmostLeaf(node: BinaryTree?): Leaf? {
             var current = node
-            while (current is Branch) {
+            while (current is Branch)
                 current = current.left
-            }
+
             return current as? Leaf
         }
     }
@@ -95,112 +82,93 @@ sealed class BinaryTree(
         while (explode() || split()) {}
     }
 
-    fun explode(): Boolean = explodeRecursive(this, 0)
+    fun explode(): Boolean = explode(this, 0)
+    fun split(): Boolean = split(this)
 
-    fun split(): Boolean = splitRecursive(this)
+    private fun split(node: BinaryTree): Boolean =
+         when (node) {
+            is Leaf -> (node.value >= SPLIT_VALUE).also { shouldSplit ->
+                if (shouldSplit) {
+                    val leftLeaf = Leaf(value = floor(node.value / 2f).toInt())
+                    val rightLeaf = Leaf(value = ceil(node.value / 2f).toInt())
 
-    private fun splitRecursive(node: BinaryTree): Boolean {
-        return when (node) {
-            is Leaf -> {
-                if (node.value >= 10) {
-                    val leftValue = floor(node.value / 2f).toInt()
-                    val rightValue = ceil(node.value / 2f).toInt()
-
-                    val leftLeaf = Leaf(value = leftValue)
-                    val rightLeaf = Leaf(value = rightValue)
-                    val branch = Branch(
+                    Branch(
                         left = leftLeaf,
                         right = rightLeaf,
                         parent = node.parent
-                    )
+                    ).also { splitBranch ->
+                        leftLeaf.parent = splitBranch
+                        rightLeaf.parent = splitBranch
+                        val parent = node.parent as Branch
 
-                    leftLeaf.parent = branch
-                    rightLeaf.parent = branch
-
-                    if (node.parent is Branch) {
-                        if ((node.parent as Branch).left == node) {
-                            (node.parent as Branch).left = branch
-                        } else {
-                            (node.parent as Branch).right = branch
-                        }
+                        if (parent.left == node) parent.left = splitBranch
+                        else parent.right = splitBranch
                     }
-                    true
-                } else false
+                }
             }
-            is Branch -> splitRecursive(node.left) || splitRecursive(node.right)
+
+            is Branch -> split(node.left) || split(node.right)
         }
-    }
 
+    private fun explode(node: BinaryTree, depth: Int): Boolean =
+        when (node) {
+            is Branch -> if (depth >= EXPLODE_DEPTH && node.left is Leaf && node.right is Leaf) {
+                val leftLeaf = node.left as Leaf
+                val rightLeaf = node.right as Leaf
+                val parent = node.parent as Branch
 
-    private fun explodeRecursive(node: BinaryTree, depth: Int): Boolean {
-        return if (node is Branch) {
-            if (depth >= 4 && node.left is Leaf && node.right is Leaf) {
-                    val leftLeaf = node.left as Leaf
-                    val rightLeaf = node.right as Leaf
+                node.leftNeighbor?.apply { value += leftLeaf.value }
+                node.rightNeighbor?.apply { value += rightLeaf.value }
 
-                    node.leftNeighbor?.apply {
-                        value += leftLeaf.value
-                    }
-                    node.rightNeighbor?.apply {
-                        value += rightLeaf.value
-                    }
+                // Replace the branch with a leaf with value 0
+                Leaf(value = 0, parent = node.parent).also { zeroLeaf ->
+                    if (parent.left == node) parent.left = zeroLeaf
+                    else parent.right = zeroLeaf
+                }
 
-                    // Replace the branch with a leaf with value 0
-                    val zeroLeaf = Leaf(value = 0, parent = node.parent)
-                    if (node.parent is Branch) {
-                        if ((node.parent as Branch).left == node) {
-                            (node.parent as Branch).left = zeroLeaf
-                        } else {
-                            (node.parent as Branch).right = zeroLeaf
-                        }
-                    }
-                    true // Explosion occurred
-            } else explodeRecursive(node.left, depth + 1) || explodeRecursive(node.right, depth + 1)
-        } else false // No explosion occurred in this subtree
-    }
+                true
+            } else explode(node.left, depth + 1) || explode(node.right, depth + 1)
+
+            is Leaf -> false
+        }
 
     companion object {
-        fun String.toBinaryTree(): BinaryTree? {
-            val gson = Gson()
-            return try {
-                val list: List<Any?>? = gson.fromJson(this, object : TypeToken<List<Any?>>() {}.type)
-                list.asBinaryTree()
-            } catch (e: Exception) {
-                error("Invalid input string for BinaryTree parsing $this")
-                null
-            }
-        }
+        private const val SPLIT_VALUE = 10
+        private const val EXPLODE_DEPTH = 4
 
-        fun Any?.asBinaryTree(parent: BinaryTree? = null): BinaryTree? =
+        fun String.toBinaryTree(): BinaryTree? =
+            with(Gson()) {
+                try {
+                    val list: List<Any?>? = fromJson(this@toBinaryTree, object : TypeToken<List<Any?>>() {}.type)
+                    list.asBinaryTree()
+                } catch (_: Exception) {
+                    error("Invalid input string for BinaryTree parsing $this")
+                    null
+                }
+            }
+
+        private fun Any?.asBinaryTree(parent: BinaryTree? = null): BinaryTree? =
             when (this) {
                 is Double, is Float -> Leaf(value = toInt(), parent = parent)
                 is Int -> Leaf(value = this, parent = parent)
-                is List<*> -> {
-                    if (isEmpty())
-                        null
-                    else {
-                        val leftChild = if (isNotEmpty()) first().asBinaryTree() else null
-                        val rightChild = if (size > 1) tail().first().asBinaryTree() else null
+                is List<*> -> takeIf { it.isNotEmpty() }?.let {
+                    val leftChild = first().asBinaryTree()
+                    val rightChild = if (size > 1) last().asBinaryTree() else null
 
-                        if (leftChild == null && rightChild == null) {
-                            if (size == 1) {
-                                when (val value = first()) {
-                                    is Double, is Float -> Leaf(value = value.toInt(), parent = parent)
-                                    is Int -> Leaf(value = value, parent = parent)
-                                    else -> null
-                                }
-                            } else null
-                        } else {
-                            val branch = Branch(
-                                left = leftChild!!,
-                                right = rightChild!!,
-                                parent = parent
-                            )
-
-                            leftChild.parent = branch
-                            rightChild.parent = branch
-
-                            branch
+                    if (leftChild == null && rightChild == null) {
+                        when (val value = firstOrNull()) {
+                            is Double, is Float -> Leaf(value = value.toInt(), parent = parent)
+                            is Int -> Leaf(value = value, parent = parent)
+                            else -> null
+                        }
+                    } else {
+                        Branch(
+                            left = leftChild!!,
+                            right = rightChild!!,
+                            parent = parent
+                        ).also {
+                            leftChild.parent = it
+                            rightChild.parent = it
                         }
                     }
                 }
