@@ -17,6 +17,8 @@ sealed class BinaryTree(
             is Branch -> 3 * left.magnitude + 2 * right.magnitude
         }
 
+    fun copy(): BinaryTree = toString().toBinaryTree()!!
+
     operator fun plus(other: BinaryTree): BinaryTree =
         Branch(
             left = this,
