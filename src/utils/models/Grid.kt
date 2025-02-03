@@ -28,7 +28,7 @@ data class Grid<T>(
     }
 
     inline fun forEachRow(action: (List<GridCell<T>>) -> Unit) =
-        (cells.minOf { it.position.colIndex } .. cells.maxOf { it.position.colIndex })
+        (cells.minOf { it.position.rowIndex } .. cells.maxOf { it.position.rowIndex })
             .forEach { rowIndex ->
                 action(cells.filter { it.position.rowIndex == rowIndex })
             }
