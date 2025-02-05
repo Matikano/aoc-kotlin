@@ -278,3 +278,23 @@ fun <T> List<T>.findCycle(minimumCycleLength: Int): Pair<List<T>, Int>? {
 
     return null // No cycle found
 }
+
+fun <T> List<T>.permutationsWithRepetition(size: Int): List<List<T>> {
+    val result = mutableListOf<List<T>>()
+
+    fun generate(k: Int = 0, current: MutableList<T> = mutableListOf()) {
+        if (k == size) {
+            result.add(current.toList())
+            return
+        }
+
+        for (element in this) {
+            current.add(element)
+            generate(k + 1, current)
+            current.removeAt(current.size - 1)
+        }
+    }
+
+    generate()
+    return result
+}
